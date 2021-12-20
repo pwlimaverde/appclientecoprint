@@ -1,0 +1,40 @@
+name: dependency_module
+description: Modulo responsável pelo gerenciamento das dependencias
+publish_to: 'none'
+version: 0.0.0-alpha.2
+homepage:
+
+environment:
+  sdk: ">=2.15.1 <3.0.0"
+  flutter: ">=2.8.1"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  return_success_or_error: ^0.3.1
+  get: ^4.6.1
+  get_storage: ^2.0.3
+  font_awesome_flutter: ^9.1.0
+  hasura_connect: ^3.0.6
+  intl: ^0.17.0
+
+  # Modulos
+  ecoprint_design_system_module:
+    path: ../ecoprint_design_system_module
+  core_module:
+    path: ../core_module
+  splash_module:
+    path: ../splash_module
+  home_module:
+    path: ../home_module
+  ops_module:
+    path: ../ops_module
+  upload_csv_module:
+    path: ../upload_csv_module
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+
+flutter:

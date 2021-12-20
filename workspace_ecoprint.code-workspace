@@ -1,0 +1,29 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "app_cliente_ecoprint"
+		},
+		{
+			"path": "modulos\\dependency_module"
+		},
+		{
+			"path": "modulos\\ecoprint_design_system_module"
+		},
+		{
+			"path": "modulos\\core_module"
+		},
+		{
+			"path": "modulos\\home_module"
+		},
+		{
+			"path": "modulos\\ops_module"
+		},
+		{
+			"path": "modulos\\upload_csv_module"
+		},
+	],
+	"settings": {}
+}
