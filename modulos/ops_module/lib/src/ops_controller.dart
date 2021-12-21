@@ -40,9 +40,20 @@ class OpsController extends GetxController
   }
 
   final formKey = GlobalKey<FormState>();
+
   final crtlBusca = TextEditingController();
 
+  final buscando = false.obs;
+
+  final busca = Rxn<String>();
+
   final opsListAll = <OpsModel>[].obs;
+
+  void limparBusca() {
+    buscando(false);
+    crtlBusca.clear();
+    busca.value = null;
+  }
 
   void getOpsListAll() async {
     try {
