@@ -24,10 +24,11 @@ class OpsController extends GetxController
   TabController get tabController => _tabController;
 
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
     getOpsListAll();
     _tabController = TabController(vsync: this, length: myTabs.length);
+    await setIndex();
   }
 
   @override
@@ -53,6 +54,13 @@ class OpsController extends GetxController
     buscando(false);
     crtlBusca.clear();
     busca.value = null;
+  }
+
+  Future<void> setIndex() async {
+    final result = await Get.find<GetStorage>().read("opstabIndex");
+    if (result == null) {
+      Get.find<GetStorage>().write("opstabIndex", 0);
+    }
   }
 
   void getOpsListAll() async {
