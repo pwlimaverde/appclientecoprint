@@ -19,16 +19,41 @@ class OpsController extends GetxController
     const Tab(text: "Todas Ops"),
   ];
 
-  late TabController tabController;
+  late TabController _tabController;
+
+  TabController get tabController => _tabController;
 
   @override
   void onInit() {
     super.onInit();
     getOpsListAll();
-    tabController = TabController(vsync: this, length: myTabs.length);
+    _tabController = TabController(vsync: this, length: myTabs.length);
   }
 
+  @override
+  void onReady() async {
+    _tabController.index = await Get.find<GetStorage>().read("opstabIndex");
+    _tabController.addListener(() {
+      Get.find<GetStorage>().write("opstabIndex", _tabController.index);
+    });
+    super.onReady();
+  }
+
+  final formKey = GlobalKey<FormState>();
+
+  final crtlBusca = TextEditingController();
+
+  final buscando = false.obs;
+
+  final busca = Rxn<String>();
+
   final opsListAll = <OpsModel>[].obs;
+
+  void limparBusca() {
+    buscando(false);
+    crtlBusca.clear();
+    busca.value = null;
+  }
 
   void getOpsListAll() async {
     try {
