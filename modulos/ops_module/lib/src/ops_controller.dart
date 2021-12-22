@@ -24,7 +24,7 @@ class OpsController extends GetxController
   TabController get tabController => _tabController;
 
   @override
-  void onInit() async{
+  void onInit() async {
     super.onInit();
     getOpsListAll();
     _tabController = TabController(vsync: this, length: myTabs.length);
@@ -48,7 +48,17 @@ class OpsController extends GetxController
 
   final busca = Rxn<String>();
 
-  final opsListAll = <OpsModel>[].obs;
+  final _opsListAll = <OpsModel>[].obs;
+
+  List<OpsModel> get opsListAll => buscando.value && busca.value != null
+      ? _opsListAll.where(
+          (element) {
+            String termos =
+                "${element.op} - ${element.cliente} - ${element.servico} - ${element.quant} - ${element.vendedor} - ${element.obs}";
+            return termos.toLowerCase().contains(busca.value!.toLowerCase());
+          },
+        ).toList()
+      : _opsListAll;
 
   void limparBusca() {
     buscando(false);
@@ -75,7 +85,7 @@ class OpsController extends GetxController
         ),
       );
       if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
-        opsListAll.bindStream(allOps.result);
+        _opsListAll.bindStream(allOps.result);
       } else {
         coreModuleController.message(
           MessageModel(
@@ -108,7 +118,7 @@ class OpsController extends GetxController
         ),
       );
       if (allOps is SuccessReturn<List<OpsModel>>) {
-        opsListAll(allOps.result);
+        _opsListAll(allOps.result);
       } else {
         coreModuleController.message(
           MessageModel(
