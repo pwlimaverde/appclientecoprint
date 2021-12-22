@@ -83,9 +83,9 @@ class DesignSystemController extends GetxController {
   }
 
   void _setLimpar() {
-    _setBuscando();
     opsController.crtlBusca.clear();
-    opsController.busca(null);
+    opsController.busca.value = null;
+    _setBuscando();
   }
 
   Widget _body({
