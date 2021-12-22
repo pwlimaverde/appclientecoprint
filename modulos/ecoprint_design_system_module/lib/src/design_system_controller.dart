@@ -1,11 +1,18 @@
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
+
+import 'widgets/botoes/botao_form/botao_form_widget.dart';
+import 'widgets/botoes/botao_limpar/botao_limpar_widget.dart';
+import 'widgets/botoes/botao_search/botao_search_widget.dart';
+import 'widgets/forms/form_geral/form_geral_widget.dart';
 import 'widgets/header/header_widget.dart';
 import 'widgets/menu/menu_widget.dart';
 import 'widgets/opslist/opslist_widget.dart';
 import 'widgets/right/right_widget.dart';
 
 class DesignSystemController extends GetxController {
+
+  
   //Widgets Pages
   Scaffold scaffold({
     required Widget body,
@@ -22,10 +29,13 @@ class DesignSystemController extends GetxController {
               ),
             )
           : null,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(hederHeight),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(hederHeight),
         child: HeaderWidget(
           titulo: "Sistema Ecoprint",
+          actions: <Widget>[
+            _iconButtonSearch(),
+          ],
         ),
       ),
       backgroundColor: Get.theme.primaryColor,
@@ -40,6 +50,42 @@ class DesignSystemController extends GetxController {
         ],
       ),
     );
+  }
+
+  Widget _iconButtonSearch() {
+    return Obx(
+      () {
+        return opsController.buscando.value
+            ? BotaoForm(
+                form: FormGeral(
+                  controllerText: opsController.crtlBusca,
+                  hintText: "Digite a busca",
+                  labelText: "Busca",
+                  onChanged: (String value) {
+                    opsController.busca(value);
+                  },
+                ),
+                button: BotaoLimpar(
+                  size: 20,
+                  onPressed: _setLimpar,
+                ),
+              )
+            : BotaoSearch(
+                size: 20,
+                onPressed: _setBuscando,
+              );
+      },
+    );
+  }
+
+  void _setBuscando() {
+    opsController.buscando(!opsController.buscando.value);
+  }
+
+  void _setLimpar() {
+    _setBuscando();
+    opsController.crtlBusca.clear();
+    opsController.busca(null);
   }
 
   Widget _body({

@@ -1,4 +1,3 @@
-import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
 
 class BotaoForm extends StatelessWidget {
@@ -13,7 +12,7 @@ class BotaoForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 130,
+      width: 180,
       child: Row(
         children: <Widget>[
           Container(
