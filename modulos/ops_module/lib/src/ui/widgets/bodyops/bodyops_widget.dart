@@ -151,7 +151,7 @@ testeFunc(OpsModel o) {
   print("op: ${o.op}");
 }
 
-_pdf() async {
+_pdf() {
   return PdfPreview(
     build: (format) => _generatePdf(format, "teste impressão"),
   );
