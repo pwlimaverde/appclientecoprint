@@ -40,10 +40,7 @@ class OpslistWidget extends StatelessWidget {
         itemCount: filtro != null ? filtro?.length : 0,
         itemBuilder: (context, index) {
           OpsModel o = filtro![index];
-          double size = coreModuleController.getWidthProporcao(
-            context: context,
-            proporcao: 100,
-          );
+          double size = coreModuleController.size;
           String cliente =
               o.cliente.length >= 35 ? o.cliente.substring(0, 35) : o.cliente;
           return Card(
