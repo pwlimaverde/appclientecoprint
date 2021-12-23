@@ -8,6 +8,7 @@ export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:hasura_connect/hasura_connect.dart';
 export 'package:intl/intl.dart';
 
+
 ///Modulos
 export 'package:ecoprint_design_system_module/ecoprint_design_system_module.dart';
 export 'package:core_module/core_module.dart';

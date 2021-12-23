@@ -1,5 +1,7 @@
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart';
 
 import 'widgets/botoes/botao_form/botao_form_widget.dart';
 import 'widgets/botoes/botao_limpar/botao_limpar_widget.dart';
@@ -7,12 +9,11 @@ import 'widgets/botoes/botao_search/botao_search_widget.dart';
 import 'widgets/forms/form_geral/form_geral_widget.dart';
 import 'widgets/header/header_widget.dart';
 import 'widgets/menu/menu_widget.dart';
+import 'widgets/opslist/opslist_print_widget.dart';
 import 'widgets/opslist/opslist_widget.dart';
 import 'widgets/right/right_widget.dart';
 
 class DesignSystemController extends GetxController {
-
-  
   //Widgets Pages
   Scaffold scaffold({
     required Widget body,
@@ -128,6 +129,14 @@ class DesignSystemController extends GetxController {
                 )
         ],
       ),
+    );
+  }
+
+  pw.Widget opslistPrintWidget({
+    required filtro,
+  }) {
+    return OpslistPrintWidget(
+      filtro: filtro,
     );
   }
 
@@ -281,5 +290,25 @@ class DesignSystemController extends GetxController {
       return Colors.yellowAccent[100];
     }
     return Colors.grey[100];
+  }
+
+  PdfColor? getPrintCorCard(OpsModel model) {
+    final df = DateFormat('yyyy-MM-dd');
+    var now = DateTime.parse(df.format(DateTime.now()));
+    int dif = int.parse(now.difference(model.entrega).inDays.toString());
+    if (model.cancelada == true) {
+      return PdfColors.grey100;
+    } else if (model.entregue != null) {
+      return PdfColors.grey100;
+    } else if (model.produzido != null) {
+      return PdfColors.grey100;
+    } else if (dif > 0) {
+      return PdfColors.red100;
+    } else if (dif == 0) {
+      return PdfColors.orange100;
+    } else if (dif == -1) {
+      return PdfColors.yellow100;
+    }
+    return PdfColors.grey100;
   }
 }
