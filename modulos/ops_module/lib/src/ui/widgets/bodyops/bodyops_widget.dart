@@ -56,6 +56,7 @@ _tabBarView() {
       children: [
         _emArteFinal(),
         _emProducao(),
+        _emUrgencia(),
         _emExpedicao(),
         _todasOps(),
       ],
@@ -76,6 +77,16 @@ _emArteFinal() {
 _emProducao() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmProducao,
+    can: testeFunc,
+    check: testeFunc,
+    save: testeFunc,
+    up: false,
+  );
+}
+
+_emUrgencia() {
+  return designSystemController.opslistWidget(
+    filtro: opsController.opsListEmUrgencia,
     can: testeFunc,
     check: testeFunc,
     save: testeFunc,
