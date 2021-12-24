@@ -15,6 +15,7 @@ class OpsController extends GetxController
   final List<Tab> myTabs = <Tab>[
     const Tab(text: "Liberação Arte Final"),
     const Tab(text: "Em Produção"),
+    const Tab(text: "Em Urgência"),
     const Tab(text: "Em Expedição"),
     const Tab(text: "Todas Ops"),
   ];
@@ -54,11 +55,18 @@ class OpsController extends GetxController
 
   final _opsListAll = <OpsModel>[].obs;
 
-  List<OpsModel> get filtroPrint => indexPrint.value == 0
-      ? opsListEmArteFinal
-      : indexPrint.value == 1
-          ? opsListEmProducao
-          : opsListEmExpedicao;
+  List<OpsModel> get filtroPrint {
+    switch (indexPrint.value) {
+      case 1:
+        return opsListEmProducao;
+      case 2:
+        return opsListEmUrgencia;
+      case 3:
+        return opsListEmExpedicao;
+      default:
+        return opsListEmArteFinal;
+    }
+  }
 
   List<OpsModel> get opsListAll => buscando.value && busca.value != null
       ? _opsListAll.where(
@@ -90,6 +98,20 @@ class OpsController extends GetxController
             element.cancelada == false &&
             element.artefinal != null &&
             element.entregue == null,
+      )
+      .toList()
+    ..sort(
+      (a, b) => a.entrega.compareTo(b.entrega),
+    );
+  
+  List<OpsModel> get opsListEmUrgencia => opsListAll
+      .where(
+        (element) =>
+            element.produzido == null &&
+            element.cancelada == false &&
+            element.artefinal != null &&
+            element.entregue == null &&
+            element.prioridade == true,
       )
       .toList()
     ..sort(

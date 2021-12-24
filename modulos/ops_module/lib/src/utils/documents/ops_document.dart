@@ -20,6 +20,7 @@ subscription{
     flexo
     artefinal
     orderpcp
+    prioridade
   }
 }
 """;

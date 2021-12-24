@@ -87,13 +87,16 @@ class DesignSystemController extends GetxController {
   Widget _iconButtonPrint() {
     return Obx(
       () {
-        return opsController.indexPrint != 3
+        return opsController.indexPrint.value != 4
             ? BotaoPrint(
                 size: 20,
                 ativo: true,
                 onPressed: _showPrintDialog,
               )
-            : BotaoPrint(size: 20, ativo: false);
+            : const BotaoPrint(
+                size: 20,
+                ativo: false,
+              );
       },
     );
   }
@@ -346,7 +349,8 @@ class DesignSystemController extends GetxController {
           ),
           child: _pdf2(
             filtro: opsController.filtroPrint,
-            titulo: opsController.myTabs[opsController.indexPrint.value].text.toString(),
+            titulo: opsController.myTabs[opsController.indexPrint.value].text
+                .toString(),
           ),
         ),
       ),

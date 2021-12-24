@@ -20,6 +20,7 @@ class OpsModel {
   bool? sm4c;
   bool? flexo;
   DateTime? artefinal;
+  bool? prioridade;
   OpsModel({
     required this.op,
     required this.servico,
@@ -40,6 +41,7 @@ class OpsModel {
     this.sm4c,
     this.flexo,
     this.artefinal,
+    this.prioridade,
   });
 
   OpsModel copyWith({
@@ -62,6 +64,7 @@ class OpsModel {
     bool? sm4c,
     bool? flexo,
     DateTime? artefinal,
+    bool? prioridade,
   }) {
     return OpsModel(
       op: op ?? this.op,
@@ -83,6 +86,7 @@ class OpsModel {
       sm4c: sm4c ?? this.sm4c,
       flexo: flexo ?? this.flexo,
       artefinal: artefinal ?? this.artefinal,
+      prioridade: prioridade ?? this.prioridade,
     );
   }
 
@@ -113,6 +117,7 @@ class OpsModel {
       flexo: map['flexo'],
       artefinal:
           map['artefinal'] != null ? DateTime.parse(map['artefinal']) : null,
+      prioridade: map['prioridade'],
     );
   }
 
@@ -147,7 +152,8 @@ class OpsModel {
         other.sm2c == sm2c &&
         other.sm4c == sm4c &&
         other.flexo == flexo &&
-        other.artefinal == artefinal;
+        other.artefinal == artefinal &&
+        other.prioridade == prioridade;
   }
 
   @override
@@ -170,6 +176,7 @@ class OpsModel {
         sm2c.hashCode ^
         sm4c.hashCode ^
         flexo.hashCode ^
-        artefinal.hashCode;
+        artefinal.hashCode ^
+        prioridade.hashCode;
   }
 }
