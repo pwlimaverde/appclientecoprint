@@ -137,11 +137,11 @@ class OpslistWidget extends StatelessWidget {
                                 SwitcherWidget(
                                   imp: o.impressao,
                                   title: "SM 4c ",
-                                  crtL: o.sm4c ?? false,
+                                  crtL: o.ryobi750 ?? false,
                                   mini: true,
                                   onTap: () {
-                                    o.sm4c =
-                                        o.impressao != null ? false : !o.sm4c!;
+                                    o.ryobi750 =
+                                        o.impressao != null ? false : !o.ryobi750!;
                                     save(o);
                                   },
                                 ),
@@ -198,11 +198,11 @@ class OpslistWidget extends StatelessWidget {
                                 return IconbuttonWidget(
                                   isImp: o.ryobi! ||
                                       o.sm2c! ||
-                                      o.sm4c! ||
+                                      o.ryobi750! ||
                                       o.flexo!,
                                   icon: Icons.check,
                                   color:
-                                      o.ryobi! || o.sm2c! || o.sm4c! || o.flexo!
+                                      o.ryobi! || o.sm2c! || o.ryobi750! || o.flexo!
                                           ? Colors.green
                                           : Colors.grey,
                                   onPressed: () {
@@ -507,14 +507,14 @@ class OpslistWidget extends StatelessWidget {
                         ),
                         SwitcherWidget(
                           imp: model.impressao,
-                          title: "SM 4 cor ",
-                          crtL: model.sm4c ?? false,
-                          crtC: designSystemController.colorCrtSm4c.value,
+                          title: "Ryobi750 ",
+                          crtL: model.ryobi750 ?? false,
+                          crtC: designSystemController.colorCrtryobi750.value,
                           onTap: () {
-                            designSystemController.setColorCrtSm4c(
-                                model.impressao != null ? false : !model.sm4c!);
-                            model.sm4c =
-                                model.impressao != null ? false : !model.sm4c!;
+                            designSystemController.setColorCrtryobi750(
+                                model.impressao != null ? false : !model.ryobi750!);
+                            model.ryobi750 =
+                                model.impressao != null ? false : !model.ryobi750!;
                             save(model);
                           },
                         ),
@@ -568,7 +568,7 @@ class OpslistWidget extends StatelessWidget {
                               model.impressao = designSystemController.now;
                               model.ryobi = false;
                               model.sm2c = false;
-                              model.sm4c = false;
+                              model.ryobi750 = false;
                               model.flexo = false;
                             }
                             save(model);
@@ -590,7 +590,7 @@ class OpslistWidget extends StatelessWidget {
           // ),
           onPressed: () {
             designSystemController.setColorCrtRyobi(false);
-            designSystemController.setColorCrtSm4c(false);
+            designSystemController.setColorCrtryobi750(false);
             designSystemController.setColorCrtSm2c(false);
             designSystemController.setColorCrtFlexo(false);
             Get.back();
@@ -609,7 +609,7 @@ class OpslistWidget extends StatelessWidget {
           onPressed: () {
             save(model);
             designSystemController.setColorCrtRyobi(false);
-            designSystemController.setColorCrtSm4c(false);
+            designSystemController.setColorCrtryobi750(false);
             designSystemController.setColorCrtSm2c(false);
             designSystemController.setColorCrtFlexo(false);
             Get.back();
