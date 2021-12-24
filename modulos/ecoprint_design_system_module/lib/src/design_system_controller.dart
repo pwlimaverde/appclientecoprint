@@ -210,10 +210,10 @@ class DesignSystemController extends GetxController {
     colorCrtSm2c(crt);
   }
 
-  final colorCrtSm4c = false.obs;
+  final colorCrtryobi750 = false.obs;
 
-  void setColorCrtSm4c(bool crt) {
-    colorCrtSm4c(crt);
+  void setColorCrtryobi750(bool crt) {
+    colorCrtryobi750(crt);
   }
 
   final colorCrtFlexo = false.obs;
