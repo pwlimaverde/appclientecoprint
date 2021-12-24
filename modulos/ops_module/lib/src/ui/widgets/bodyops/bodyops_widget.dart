@@ -1,10 +1,5 @@
-import 'dart:typed_data';
-
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
-import 'package:pdf/pdf.dart';
-import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 
 class BodyOpsWidget extends StatelessWidget {
   const BodyOpsWidget({Key? key}) : super(key: key);
@@ -62,28 +57,15 @@ _tabBarView() {
         _emArteFinal(),
         _emProducao(),
         _emExpedicao(),
-        // _todasOps(),
-        _pdf2(),
+        _todasOps(),
       ],
     ),
   );
 }
 
 _emArteFinal() {
-  final filtro = opsController.opsListAll
-      .where(
-        (element) =>
-            element.produzido == null &&
-            element.cancelada == false &&
-            element.artefinal == null &&
-            element.entregue == null,
-      )
-      .toList()
-    ..sort(
-      (a, b) => a.entrega.compareTo(b.entrega),
-    );
   return designSystemController.opslistWidget(
-    filtro: filtro,
+    filtro: opsController.opsListEmArteFinal,
     can: testeFunc,
     check: testeFunc,
     save: testeFunc,
@@ -92,20 +74,8 @@ _emArteFinal() {
 }
 
 _emProducao() {
-  final filtro = opsController.opsListAll
-      .where(
-        (element) =>
-            element.produzido == null &&
-            element.cancelada == false &&
-            element.artefinal != null &&
-            element.entregue == null,
-      )
-      .toList()
-    ..sort(
-      (a, b) => a.entrega.compareTo(b.entrega),
-    );
   return designSystemController.opslistWidget(
-    filtro: filtro,
+    filtro: opsController.opsListEmProducao,
     can: testeFunc,
     check: testeFunc,
     save: testeFunc,
@@ -114,20 +84,8 @@ _emProducao() {
 }
 
 _emExpedicao() {
-  final filtro = opsController.opsListAll
-      .where(
-        (element) =>
-            element.produzido != null &&
-            element.cancelada == false &&
-            element.artefinal != null &&
-            element.entregue == null,
-      )
-      .toList()
-    ..sort(
-      (a, b) => a.entrega.compareTo(b.entrega),
-    );
   return designSystemController.opslistWidget(
-    filtro: filtro,
+    filtro: opsController.opsListEmExpedicao,
     can: testeFunc,
     check: testeFunc,
     save: testeFunc,
@@ -147,89 +105,4 @@ _todasOps() {
 
 testeFunc(OpsModel o) {
   print("op: ${o.op}");
-}
-
-_pdf() {
-  return PdfPreview(
-    build: (format) => _generatePdf(format, "teste impressão"),
-  );
-}
-
-Future<Uint8List> _generatePdf(PdfPageFormat format, String title) async {
-  final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-  final font = await PdfGoogleFonts.nunitoExtraLight();
-
-  pdf.addPage(
-    pw.Page(
-      pageFormat: format,
-      build: (context) {
-        return pw.Column(
-          children: [
-            pw.SizedBox(
-              height: 30,
-              child: pw.FittedBox(
-                child: pw.Text(title, style: pw.TextStyle(font: font)),
-              ),
-            ),
-            pw.SizedBox(height: 20),
-            pw.Flexible(
-              child: designSystemController.opslistPrintWidget(
-                filtro: opsController.opsListAll,
-              ),
-            ),
-          ],
-        );
-      },
-    ),
-  );
-
-  return pdf.save();
-}
-
-_pdf2() {
-  return PdfPreview(
-    build: (format) => _generatePdf2(format, "teste impressão"),
-  );
-}
-
-Future<Uint8List> _generatePdf2(PdfPageFormat format, String title) async {
-  final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-  final font = await PdfGoogleFonts.nunitoExtraLight();
-
-  pdf.addPage(
-    pw.MultiPage(
-      pageFormat: format.copyWith(
-          marginBottom: 10,
-          marginLeft: 20,
-          marginRight: 20,
-          marginTop: 20,
-        ),
-      build: (context) => [
-        pw.SizedBox(
-              height: 30,
-              child: pw.FittedBox(
-                child: pw.Text(title, style: pw.TextStyle(font: font)),
-              ),
-            ),
-        pw.SizedBox(height: 20),
-        designSystemController.opslistPrintWidget(
-          filtro: opsController.opsListAll
-              .where(
-                (element) =>
-                    element.produzido == null &&
-                    element.cancelada == false &&
-                    element.artefinal != null &&
-                    element.entregue == null,
-              )
-              .toList()
-            ..sort(
-              (a, b) => a.entrega.compareTo(b.entrega),
-            ),
-        ),
-        pw.SizedBox(height: 20),
-      ],
-    ),
-  );
-
-  return pdf.save();
 }

@@ -34,8 +34,10 @@ class OpsController extends GetxController
   @override
   void onReady() async {
     _tabController.index = await Get.find<GetStorage>().read("opstabIndex");
+    indexPrint(Get.find<GetStorage>().read("opstabIndex"));
     _tabController.addListener(() {
       Get.find<GetStorage>().write("opstabIndex", _tabController.index);
+      indexPrint(_tabController.index);
     });
     super.onReady();
   }
@@ -48,7 +50,15 @@ class OpsController extends GetxController
 
   final busca = Rxn<String>();
 
+  final indexPrint = 3.obs;
+
   final _opsListAll = <OpsModel>[].obs;
+
+  List<OpsModel> get filtroPrint => indexPrint.value == 0
+      ? opsListEmArteFinal
+      : indexPrint.value == 1
+          ? opsListEmProducao
+          : opsListEmExpedicao;
 
   List<OpsModel> get opsListAll => buscando.value && busca.value != null
       ? _opsListAll.where(
@@ -59,6 +69,45 @@ class OpsController extends GetxController
           },
         ).toList()
       : _opsListAll;
+
+  List<OpsModel> get opsListEmArteFinal => opsListAll
+      .where(
+        (element) =>
+            element.produzido == null &&
+            element.cancelada == false &&
+            element.artefinal == null &&
+            element.entregue == null,
+      )
+      .toList()
+    ..sort(
+      (a, b) => a.entrega.compareTo(b.entrega),
+    );
+
+  List<OpsModel> get opsListEmProducao => opsListAll
+      .where(
+        (element) =>
+            element.produzido == null &&
+            element.cancelada == false &&
+            element.artefinal != null &&
+            element.entregue == null,
+      )
+      .toList()
+    ..sort(
+      (a, b) => a.entrega.compareTo(b.entrega),
+    );
+
+  List<OpsModel> get opsListEmExpedicao => opsListAll
+      .where(
+        (element) =>
+            element.produzido != null &&
+            element.cancelada == false &&
+            element.artefinal != null &&
+            element.entregue == null,
+      )
+      .toList()
+    ..sort(
+      (a, b) => a.entrega.compareTo(b.entrega),
+    );
 
   void limparBusca() {
     buscando(false);
