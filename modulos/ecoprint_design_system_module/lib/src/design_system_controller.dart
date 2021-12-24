@@ -1,10 +1,14 @@
+import 'dart:typed_data';
+
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
 
 import 'widgets/botoes/botao_form/botao_form_widget.dart';
 import 'widgets/botoes/botao_limpar/botao_limpar_widget.dart';
+import 'widgets/botoes/botao_print/botao_print_widget.dart';
 import 'widgets/botoes/botao_search/botao_search_widget.dart';
 import 'widgets/forms/form_geral/form_geral_widget.dart';
 import 'widgets/header/header_widget.dart';
@@ -36,6 +40,7 @@ class DesignSystemController extends GetxController {
           titulo: "Sistema Ecoprint",
           actions: <Widget>[
             _iconButtonSearch(),
+            _iconButtonPrint(),
           ],
         ),
       ),
@@ -75,6 +80,20 @@ class DesignSystemController extends GetxController {
                 size: 20,
                 onPressed: _setBuscando,
               );
+      },
+    );
+  }
+
+  Widget _iconButtonPrint() {
+    return Obx(
+      () {
+        return opsController.indexPrint != 3
+            ? BotaoPrint(
+                size: 20,
+                ativo: true,
+                onPressed: _showPrintDialog,
+              )
+            : BotaoPrint(size: 20, ativo: false);
       },
     );
   }
@@ -310,5 +329,72 @@ class DesignSystemController extends GetxController {
       return PdfColors.yellow100;
     }
     return PdfColors.grey100;
+  }
+
+  _showPrintDialog() {
+    return Get.dialog(
+      AlertDialog(
+        title: const Text("Impressão da listagem das Ops"),
+        content: SizedBox(
+          width: coreModuleController.getSizeProporcao(
+            size: coreModuleController.size,
+            proporcao: 70,
+          ),
+          height: coreModuleController.getSizeProporcao(
+            size: coreModuleController.sizeH,
+            proporcao: 70,
+          ),
+          child: _pdf2(
+            filtro: opsController.filtroPrint,
+            titulo: opsController.myTabs[opsController.indexPrint.value].text.toString(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _pdf2({
+    required List<OpsModel> filtro,
+    required String titulo,
+  }) {
+    return PdfPreview(
+      build: (format) =>
+          _generatePdf2(format: format, title: titulo, filtro: filtro),
+    );
+  }
+
+  Future<Uint8List> _generatePdf2({
+    required PdfPageFormat format,
+    required String title,
+    required List<OpsModel> filtro,
+  }) async {
+    final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
+    final font = await PdfGoogleFonts.nunitoExtraLight();
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: format.copyWith(
+          marginBottom: 10,
+          marginLeft: 20,
+          marginRight: 20,
+          marginTop: 20,
+        ),
+        build: (context) => [
+          pw.SizedBox(
+            height: 20,
+            child: pw.FittedBox(
+              child: pw.Text(title, style: pw.TextStyle(font: font)),
+            ),
+          ),
+          pw.SizedBox(height: 10),
+          designSystemController.opslistPrintWidget(
+            filtro: filtro,
+          ),
+          pw.SizedBox(height: 20),
+        ],
+      ),
+    );
+
+    return pdf.save();
   }
 }
