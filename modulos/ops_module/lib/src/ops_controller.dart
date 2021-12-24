@@ -51,7 +51,7 @@ class OpsController extends GetxController
 
   final busca = Rxn<String>();
 
-  final indexPrint = 3.obs;
+  final indexPrint = 4.obs;
 
   final _opsListAll = <OpsModel>[].obs;
 
