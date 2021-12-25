@@ -38,12 +38,12 @@ class DesignSystemController extends GetxController {
         preferredSize: const Size.fromHeight(hederHeight),
         child: HeaderWidget(
           titulo: "Sistema Ecoprint",
-          actions: <Widget>[
-            _iconButtonSearch(),
-            coreModuleController.pageAtual.value == 2
-                ? _iconButtonPrint()
-                : Container(),
-          ],
+          actions: coreModuleController.pageAtual.value == 2
+              ? <Widget>[
+                  _iconButtonSearch(),
+                  _iconButtonPrint(),
+                ]
+              : [],
         ),
       ),
       backgroundColor: Get.theme.primaryColor,
