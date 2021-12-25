@@ -243,7 +243,7 @@ class DesignSystemController extends GetxController {
   }
 
   void setOpCheckCan() async {
-    await 900.milliseconds.delay();
+    await 400.milliseconds.delay();
     loadOpCheck(0);
   }
 
@@ -254,7 +254,7 @@ class DesignSystemController extends GetxController {
   }
 
   void setOpCanCan() async {
-    await 900.milliseconds.delay();
+    await 400.milliseconds.delay();
     loadOpCan(0);
   }
 
@@ -265,7 +265,7 @@ class DesignSystemController extends GetxController {
   }
 
   void setOpPrioridadeCheckCan() async {
-    await 900.milliseconds.delay();
+    await 400.milliseconds.delay();
     loadOpPrioridadeCheck(0);
   }
 

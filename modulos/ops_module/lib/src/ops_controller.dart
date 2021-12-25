@@ -103,7 +103,7 @@ class OpsController extends GetxController
     ..sort(
       (a, b) => a.entrega.compareTo(b.entrega),
     );
-  
+
   List<OpsModel> get opsListEmUrgencia => opsListAll
       .where(
         (element) =>
@@ -116,6 +116,12 @@ class OpsController extends GetxController
       .toList()
     ..sort(
       (a, b) => a.entrega.compareTo(b.entrega),
+    )
+    ..sort(
+      (a, b) =>
+          (a.orderpcp == null ? opsListAll.length : a.orderpcp!).compareTo(
+        (b.orderpcp == null ? opsListAll.length : b.orderpcp!),
+      ),
     );
 
   List<OpsModel> get opsListEmExpedicao => opsListAll
