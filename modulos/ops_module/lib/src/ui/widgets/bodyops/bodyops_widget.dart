@@ -70,6 +70,7 @@ _emArteFinal() {
     can: testeFunc,
     check: testeFunc,
     save: testeFunc,
+    prioridade: testeFunc,
     up: false,
   );
 }
@@ -80,6 +81,7 @@ _emProducao() {
     can: testeFunc,
     check: testeFunc,
     save: testeFunc,
+    prioridade: testeFunc,
     up: false,
   );
 }
@@ -90,6 +92,7 @@ _emUrgencia() {
     can: testeFunc,
     check: testeFunc,
     save: testeFunc,
+    prioridade: testeFunc,
     up: false,
   );
 }
@@ -100,6 +103,7 @@ _emExpedicao() {
     can: testeFunc,
     check: testeFunc,
     save: testeFunc,
+    prioridade: testeFunc,
     up: false,
   );
 }
@@ -110,6 +114,7 @@ _todasOps() {
     can: testeFunc,
     check: testeFunc,
     save: testeFunc,
+    prioridade: testeFunc,
     up: false,
   );
 }

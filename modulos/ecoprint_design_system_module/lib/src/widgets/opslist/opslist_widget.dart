@@ -11,6 +11,7 @@ class OpslistWidget extends StatelessWidget {
   final void Function(OpsModel) check;
   final void Function(OpsModel) can;
   final void Function(OpsModel) save;
+  final void Function(OpsModel) prioridade;
   final bool up;
   final List<OpsModel>? filtro;
 
@@ -20,6 +21,7 @@ class OpslistWidget extends StatelessWidget {
     required this.check,
     required this.can,
     required this.save,
+    required this.prioridade,
     required this.up,
     this.filtro,
   }) : super(key: key);
@@ -140,8 +142,9 @@ class OpslistWidget extends StatelessWidget {
                                   crtL: o.ryobi750 ?? false,
                                   mini: true,
                                   onTap: () {
-                                    o.ryobi750 =
-                                        o.impressao != null ? false : !o.ryobi750!;
+                                    o.ryobi750 = o.impressao != null
+                                        ? false
+                                        : !o.ryobi750!;
                                     save(o);
                                   },
                                 ),
@@ -180,18 +183,46 @@ class OpslistWidget extends StatelessWidget {
                       child: Column(
                         children: <Widget>[
                           SizedBox(
-                            height: 31,
+                            height: 22,
+                            child: Obx(() {
+                              if (designSystemController
+                                      .loadOpPrioridadeCheck.value ==
+                                  o.op) {
+                                return const CircularprogressWidget(
+                                  left: 0,
+                                  right: 0,
+                                  top: 6,
+                                  bottom: 6,
+                                  swidth: 9,
+                                  sheight: 9,
+                                  strok: 1,
+                                  color: Colors.orange,
+                                );
+                              } else {
+                                return IconbuttonWidget(
+                                  isImp: true,
+                                  icon: Icons.priority_high,
+                                  color: Colors.orange,
+                                  onPressed: () {
+                                    prioridade(o);
+                                  },
+                                );
+                              }
+                            }),
+                          ),
+                          SizedBox(
+                            height: 22,
                             child: Obx(() {
                               if (designSystemController.loadOpCheck.value ==
                                   o.op) {
                                 return const CircularprogressWidget(
                                   left: 0,
                                   right: 0,
-                                  top: 9,
-                                  bottom: 9,
-                                  swidth: 12,
-                                  sheight: 12,
-                                  strok: 2,
+                                  top: 6,
+                                  bottom: 6,
+                                  swidth: 9,
+                                  sheight: 9,
+                                  strok: 1,
                                   color: Colors.green,
                                 );
                               } else {
@@ -201,10 +232,12 @@ class OpslistWidget extends StatelessWidget {
                                       o.ryobi750! ||
                                       o.flexo!,
                                   icon: Icons.check,
-                                  color:
-                                      o.ryobi! || o.sm2c! || o.ryobi750! || o.flexo!
-                                          ? Colors.green
-                                          : Colors.grey,
+                                  color: o.ryobi! ||
+                                          o.sm2c! ||
+                                          o.ryobi750! ||
+                                          o.flexo!
+                                      ? Colors.green
+                                      : Colors.grey,
                                   onPressed: () {
                                     check(o);
                                   },
@@ -213,18 +246,18 @@ class OpslistWidget extends StatelessWidget {
                             }),
                           ),
                           SizedBox(
-                            height: 31,
+                            height: 22,
                             child: Obx(() {
                               if (designSystemController.loadOpCan.value ==
                                   o.op) {
                                 return const CircularprogressWidget(
                                   left: 0,
                                   right: 0,
-                                  top: 9,
-                                  bottom: 9,
-                                  swidth: 12,
-                                  sheight: 12,
-                                  strok: 2,
+                                  top: 6,
+                                  bottom: 6,
+                                  swidth: 9,
+                                  sheight: 9,
+                                  strok: 1,
                                   color: Colors.red,
                                 );
                               } else {
@@ -512,9 +545,12 @@ class OpslistWidget extends StatelessWidget {
                           crtC: designSystemController.colorCrtryobi750.value,
                           onTap: () {
                             designSystemController.setColorCrtryobi750(
-                                model.impressao != null ? false : !model.ryobi750!);
-                            model.ryobi750 =
-                                model.impressao != null ? false : !model.ryobi750!;
+                                model.impressao != null
+                                    ? false
+                                    : !model.ryobi750!);
+                            model.ryobi750 = model.impressao != null
+                                ? false
+                                : !model.ryobi750!;
                             save(model);
                           },
                         ),

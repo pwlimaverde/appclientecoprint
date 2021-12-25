@@ -169,6 +169,7 @@ class DesignSystemController extends GetxController {
     required filtro,
     required check,
     required Function(OpsModel) can,
+    required Function(OpsModel) prioridade,
     required save,
     required up,
   }) {
@@ -188,6 +189,11 @@ class DesignSystemController extends GetxController {
       },
       save: (OpsModel o) {
         save(o);
+      },
+      prioridade: (OpsModel o) {
+        setOpPrioridadeCheck(o);
+        prioridade(o);
+        setOpPrioridadeCheckCan();
       },
     );
   }
@@ -237,7 +243,7 @@ class DesignSystemController extends GetxController {
   }
 
   void setOpCheckCan() async {
-    await 300.milliseconds.delay();
+    await 900.milliseconds.delay();
     loadOpCheck(0);
   }
 
@@ -248,8 +254,19 @@ class DesignSystemController extends GetxController {
   }
 
   void setOpCanCan() async {
-    await 300.milliseconds.delay();
+    await 900.milliseconds.delay();
     loadOpCan(0);
+  }
+
+  final loadOpPrioridadeCheck = 0.obs;
+
+  void setOpPrioridadeCheck(OpsModel op) {
+    loadOpPrioridadeCheck(op.op);
+  }
+
+  void setOpPrioridadeCheckCan() async {
+    await 900.milliseconds.delay();
+    loadOpPrioridadeCheck(0);
   }
 
   String getAtraso(OpsModel model) {
