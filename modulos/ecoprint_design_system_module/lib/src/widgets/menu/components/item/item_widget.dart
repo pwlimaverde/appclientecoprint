@@ -35,5 +35,7 @@ class ItemWidget extends StatelessWidget {
         : nav != null
             ? Get.offAllNamed("$nav")
             : null;
+    coreModuleController.pageAtual(indice);
+    Get.find<GetStorage>().write("pageAtual", indice);
   }
 }

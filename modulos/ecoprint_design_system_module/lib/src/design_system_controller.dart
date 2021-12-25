@@ -40,7 +40,9 @@ class DesignSystemController extends GetxController {
           titulo: "Sistema Ecoprint",
           actions: <Widget>[
             _iconButtonSearch(),
-            _iconButtonPrint(),
+            coreModuleController.pageAtual.value == 2
+                ? _iconButtonPrint()
+                : Container(),
           ],
         ),
       ),
