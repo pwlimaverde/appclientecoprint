@@ -177,6 +177,7 @@ class OpslistWidget extends StatelessWidget {
                       : Container(),
                   Card(
                     elevation: 0.5,
+                    color: o.prioridade == true ? Colors.yellow[100] : null,
                     child: SizedBox(
                       width: 30,
                       height: 72,
@@ -202,7 +203,9 @@ class OpslistWidget extends StatelessWidget {
                                 return IconbuttonWidget(
                                   isImp: true,
                                   icon: Icons.priority_high,
-                                  color: Colors.orange,
+                                  color: o.prioridade == true
+                                      ? Colors.orange
+                                      : Colors.grey,
                                   onPressed: () {
                                     prioridade(o);
                                   },

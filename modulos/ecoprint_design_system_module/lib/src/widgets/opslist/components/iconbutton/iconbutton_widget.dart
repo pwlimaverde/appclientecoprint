@@ -22,6 +22,7 @@ class IconbuttonWidget extends StatelessWidget {
         size: 15,
         color: color,
       ),
+      splashRadius: 10,
       padding: const EdgeInsets.all(4),
       onPressed: isImp! ? onPressed : null,
     );
