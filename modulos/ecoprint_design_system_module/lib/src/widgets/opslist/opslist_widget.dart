@@ -208,6 +208,8 @@ class OpslistWidget extends StatelessWidget {
                                       : Colors.grey,
                                   onPressed: () {
                                     prioridade(o);
+                                    o.prioridade =
+                                        o.prioridade == true ? false : true;
                                   },
                                 );
                               }
@@ -270,6 +272,7 @@ class OpslistWidget extends StatelessWidget {
                                   color: Colors.red,
                                   onPressed: () {
                                     can(o);
+                                    o.cancelada = !o.cancelada;
                                   },
                                 );
                               }
