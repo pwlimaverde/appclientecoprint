@@ -185,7 +185,7 @@ class DesignSystemController extends GetxController {
       can: (OpsModel o) {
         setOpCan(o);
         can(o);
-        setOpCanCan();
+        setOpCanCan(o);
       },
       save: (OpsModel o) {
         save(o);
@@ -253,9 +253,21 @@ class DesignSystemController extends GetxController {
     loadOpCan(op.op);
   }
 
-  void setOpCanCan() async {
-    await 400.milliseconds.delay();
-    loadOpCan(0);
+  void setOpCanCan(OpsModel op) async {
+    print(op.cancelada);
+    OpsModel result = opsController.opsListAll.where(
+      (element) {
+        String termos = "${element.op}";
+        return termos.contains(op.op.toString());
+      },
+    ).toList()[0];
+    print(result.cancelada);
+    if (result.cancelada == !op.cancelada) {
+      print(result);
+      loadOpCan(0);
+    }
+
+    // await 400.milliseconds.delay();
   }
 
   final loadOpPrioridadeCheck = 0.obs;
