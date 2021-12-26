@@ -59,6 +59,14 @@ mutation CanOps(\$op: Int, \$cancelada: Boolean) {
 }
 """;
 
+const String opsPrioridadeMutation = """
+mutation CanOps(\$op: Int, \$prioridade: Boolean) {
+  update_ops(where: {op: {_eq: \$op}}, _set: {prioridade: \$prioridade}) {
+    affected_rows
+  }
+}
+""";
+
 const String opsCan = """
 query (\$op: Int) {
   ops(where: {op: {_eq: \$op}}) {

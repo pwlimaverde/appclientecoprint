@@ -1,7 +1,10 @@
 import 'package:dependency_module/dependency_module.dart';
 
-class ParametrosCancelarOpsMutation implements ParametersReturnResult {
-  final OpsModel model;
+class ParametrosOpsMutation implements ParametersReturnResult {
+  final String mutation;
+  final Map<String, dynamic> variables;
+  final MessageModel messageInfo;
+  final MessageModel messageError;
   @override
   final AppError error;
   @override
@@ -9,8 +12,11 @@ class ParametrosCancelarOpsMutation implements ParametersReturnResult {
   @override
   final String nameFeature;
 
-  ParametrosCancelarOpsMutation({
-    required this.model,
+  ParametrosOpsMutation({
+    required this.mutation,
+    required this.variables,
+    required this.messageInfo,
+    required this.messageError,
     required this.error,
     required this.showRuntimeMilliseconds,
     required this.nameFeature,

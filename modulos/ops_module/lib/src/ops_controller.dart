@@ -1,6 +1,7 @@
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
 import 'features/mutation_ops/domain/usecase/mutation_ops_mutation.dart';
+import 'utils/documents/ops_document.dart';
 import 'utils/errors/erros_ops.dart';
 import 'utils/parametros/parametros.dart';
 
@@ -221,44 +222,67 @@ class OpsController extends GetxController
   }
 
   void setCancelarOP(OpsModel model) {
-    _cancelarOp(
-      parametros: ParametrosCancelarOpsMutation(
-        nameFeature: 'Caancelar OP',
-        error: ErroCancelarOp(message: 'Erro ao alterar o cancelamento'),
-        model: model,
+    _mutationOps(
+      parametros: ParametrosOpsMutation(
+        nameFeature: 'Cancelar OP',
+        error: ErroMutationOp(message: 'Erro ao alterar o cancelamento'),
         showRuntimeMilliseconds: false,
+        mutation: opsCanMutation,
+        variables: {"op": model.op, "cancelada": !model.cancelada},
+        messageError: MessageModel.error(
+          message: 'Cancelamento de Op',
+          title: 'Erro ao alterar o status de Cancelamento da Op',
+        ),
+        messageInfo: MessageModel.info(
+            title: "Cancelamento de Op",
+            message: model.cancelada
+                ? "O status de cancelamento da op ${model.op} foi alterado com sucesso!"
+                : "A op ${model.op} foi cancelada com sucesso!"),
       ),
     );
   }
 
-  Future<void> _cancelarOp(
-      {required ParametrosCancelarOpsMutation parametros}) async {
+  void setPrioridadeOP(OpsModel model) {
+    _mutationOps(
+      parametros: ParametrosOpsMutation(
+        nameFeature: 'Prioridade da Op',
+        error: ErroMutationOp(message: 'Erro ao alterar a prioridade'),
+        showRuntimeMilliseconds: false,
+        mutation: opsPrioridadeMutation,
+        variables: {
+          "op": model.op,
+          "prioridade": model.prioridade == true ? false : true
+        },
+        messageError: MessageModel.error(
+          message: 'Prioridade da Op',
+          title: 'Erro ao alterar a Prioridade da Op',
+        ),
+        messageInfo: MessageModel.info(
+          title: "Prioridade da Op",
+          message:
+              "O status da Prioridade da op ${model.op} foi alterado com sucesso!",
+        ),
+      ),
+    );
+  }
+
+  Future<void> _mutationOps({required ParametrosOpsMutation parametros}) async {
     try {
       final result = await mutationOpsUsecase(
         parameters: parametros,
       );
       if (result is SuccessReturn<bool>) {
         coreModuleController.message(
-          MessageModel.info(
-              title: "Cancelamento de Op",
-              message: parametros.model.cancelada
-                  ? "O status de cancelamento da op ${parametros.model.op} foi alterado com sucesso!"
-                  : "A op ${parametros.model.op} foi cancelada com sucesso!"),
+          parametros.messageInfo,
         );
       } else {
         coreModuleController.message(
-          MessageModel.error(
-            message: 'Cancelamento de Op',
-            title: 'Erro ao alterar o status de Cancelamento da Op',
-          ),
+          parametros.messageError,
         );
       }
     } catch (e) {
       coreModuleController.message(
-        MessageModel.error(
-          message: 'Cancelamento de Op',
-          title: 'Erro ao alterar o status de Cancelamento da Op',
-        ),
+        parametros.messageError,
       );
     }
   }

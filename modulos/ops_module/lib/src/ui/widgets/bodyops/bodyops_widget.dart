@@ -116,7 +116,7 @@ _todasOps() {
     can: opsController.setCancelarOP,
     check: testeFunc,
     save: testeFunc,
-    prioridade: testeFunc,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }

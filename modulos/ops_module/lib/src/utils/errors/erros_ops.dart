@@ -13,15 +13,15 @@ class ErroCarregarTodasOps implements AppError {
   }
 }
 
-class ErroCancelarOp implements AppError {
+class ErroMutationOp implements AppError {
   @override
   String message;
-  ErroCancelarOp({
+  ErroMutationOp({
     required this.message,
   });
 
   @override
   String toString() {
-    return "ErroCarregarTodasOps - $message";
+    return "ErroMutationOp - $message";
   }
 }
