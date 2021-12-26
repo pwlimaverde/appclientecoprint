@@ -231,7 +231,8 @@ class OpsController extends GetxController
     );
   }
 
-  void _cancelarOp({required ParametrosCancelarOpsMutation parametros}) async {
+  Future<void> _cancelarOp(
+      {required ParametrosCancelarOpsMutation parametros}) async {
     try {
       final result = await mutationOpsUsecase(
         parameters: parametros,
