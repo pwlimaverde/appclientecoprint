@@ -1,5 +1,7 @@
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
+import 'package:ops_module/src/utils/errors/erros_ops.dart';
+import 'package:ops_module/src/utils/parametros/parametros.dart';
 
 class BodyOpsWidget extends StatelessWidget {
   const BodyOpsWidget({Key? key}) : super(key: key);
@@ -111,7 +113,7 @@ _emExpedicao() {
 _todasOps() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListAll,
-    can: testeFunc,
+    can: opsController.setCancelarOP,
     check: testeFunc,
     save: testeFunc,
     prioridade: testeFunc,

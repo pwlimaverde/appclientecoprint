@@ -12,3 +12,16 @@ class ErroCarregarTodasOps implements AppError {
     return "ErroCarregarTodasOps - $message";
   }
 }
+
+class ErroCancelarOp implements AppError {
+  @override
+  String message;
+  ErroCancelarOp({
+    required this.message,
+  });
+
+  @override
+  String toString() {
+    return "ErroCarregarTodasOps - $message";
+  }
+}

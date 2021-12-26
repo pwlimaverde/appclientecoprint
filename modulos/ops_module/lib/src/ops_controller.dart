@@ -1,15 +1,19 @@
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
+import 'features/mutation_ops/domain/usecase/mutation_ops_mutation.dart';
 import 'utils/errors/erros_ops.dart';
+import 'utils/parametros/parametros.dart';
 
 class OpsController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final CarregarTodasOpsUsecase carregarTodasOpsUsecase;
   final CarregarTodasOpsQueryUsecase carregarTodasOpsQueryUsecase;
+  final MutationOpsUsecase mutationOpsUsecase;
 
   OpsController({
     required this.carregarTodasOpsUsecase,
     required this.carregarTodasOpsQueryUsecase,
+    required this.mutationOpsUsecase,
   });
 
   final List<Tab> myTabs = <Tab>[
@@ -211,6 +215,48 @@ class OpsController extends GetxController
           message: 'Erro ao carregar as Ops',
           title: 'Erro Ops',
           type: MessageType.error,
+        ),
+      );
+    }
+  }
+
+  void setCancelarOP(OpsModel model) {
+    _cancelarOp(
+      parametros: ParametrosCancelarOpsMutation(
+        nameFeature: 'Caancelar OP',
+        error: ErroCancelarOp(message: 'Erro ao alterar o cancelamento'),
+        model: model,
+        showRuntimeMilliseconds: false,
+      ),
+    );
+  }
+
+  void _cancelarOp({required ParametrosCancelarOpsMutation parametros}) async {
+    try {
+      final result = await mutationOpsUsecase(
+        parameters: parametros,
+      );
+      if (result is SuccessReturn<bool>) {
+        coreModuleController.message(
+          MessageModel.info(
+              title: "Cancelamento de Op",
+              message: parametros.model.cancelada
+                  ? "O status de cancelamento da op ${parametros.model.op} foi alterado com sucesso!"
+                  : "A op ${parametros.model.op} foi cancelada com sucesso!"),
+        );
+      } else {
+        coreModuleController.message(
+          MessageModel.error(
+            message: 'Cancelamento de Op',
+            title: 'Erro ao alterar o status de Cancelamento da Op',
+          ),
+        );
+      }
+    } catch (e) {
+      coreModuleController.message(
+        MessageModel.error(
+          message: 'Cancelamento de Op',
+          title: 'Erro ao alterar o status de Cancelamento da Op',
         ),
       );
     }

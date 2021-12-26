@@ -15,9 +15,11 @@ class CancelarOpsMutationDatasource implements Datasource<bool> {
               "cancelada": !parameters.model.cancelada
             });
 
-        print(result);
-
-        return true;
+        if (result["data"]["update_ops"]["affected_rows"].toString() == "1") {
+          return true;
+        } else {
+          return false;
+        }
       } else {
         return false;
       }
