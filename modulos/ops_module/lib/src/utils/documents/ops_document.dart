@@ -67,14 +67,6 @@ mutation CanOps(\$op: Int, \$prioridade: Boolean) {
 }
 """;
 
-const String opsCan = """
-query (\$op: Int) {
-  ops(where: {op: {_eq: \$op}}) {
-    cancelada
-  }
-}
-""";
-
 const String opsArteFinalMutation = """
 mutation ProdOps(\$op: Int, \$artefinal: date) {
   update_ops(where: {op: {_eq: \$op}}, _set: {artefinal: \$artefinal}) {
@@ -95,6 +87,14 @@ const String opsEntMutation = """
 mutation EntOps(\$op: Int, \$entregue: date) {
   update_ops(where: {op: {_eq: \$op}}, _set: {entregue: \$entregue}) {
     affected_rows
+  }
+}
+""";
+
+const String opsCan = """
+query (\$op: Int) {
+  ops(where: {op: {_eq: \$op}}) {
+    cancelada
   }
 }
 """;

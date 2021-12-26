@@ -70,7 +70,7 @@ _emArteFinal() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmArteFinal,
     can: opsController.setCancelarOP,
-    check: testeFunc,
+    check: opsController.setCheckOP,
     save: testeFunc,
     prioridade: opsController.setPrioridadeOP,
     up: false,
@@ -81,7 +81,7 @@ _emProducao() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmProducao,
     can: opsController.setCancelarOP,
-    check: testeFunc,
+    check: opsController.setCheckOP,
     save: testeFunc,
     prioridade: opsController.setPrioridadeOP,
     up: false,
@@ -92,7 +92,7 @@ _emUrgencia() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmUrgencia,
     can: opsController.setCancelarOP,
-    check: testeFunc,
+    check: opsController.setCheckOP,
     save: testeFunc,
     prioridade: opsController.setPrioridadeOP,
     up: false,
@@ -103,7 +103,7 @@ _emExpedicao() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmExpedicao,
     can: opsController.setCancelarOP,
-    check: testeFunc,
+    check: opsController.setCheckOP,
     save: testeFunc,
     prioridade: opsController.setPrioridadeOP,
     up: false,
@@ -114,7 +114,7 @@ _todasOps() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListAll,
     can: opsController.setCancelarOP,
-    check: testeFunc,
+    check: opsController.setCheckOP,
     save: testeFunc,
     prioridade: opsController.setPrioridadeOP,
     up: false,

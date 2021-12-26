@@ -245,6 +245,84 @@ class OpsController extends GetxController
     }
   }
 
+  void setCheckOP(OpsModel model) {
+    if (model.artefinal != null &&
+        model.produzido != null &&
+        model.entregue != null) {
+      return;
+    }
+    if (model.artefinal == null) {
+      _mutationOps(
+        parametros: ParametrosOpsMutation(
+          nameFeature: 'Check Arte Final',
+          error: ErroMutationOp(message: 'Erro ao alterar o Check Arte Final'),
+          showRuntimeMilliseconds: false,
+          mutation: opsArteFinalMutation,
+          variables: {
+            "op": model.op,
+            "artefinal":
+                designSystemController.df.format(designSystemController.now)
+          },
+          messageError: MessageModel.error(
+            message: 'Check Arte Final',
+            title: 'Erro ao confirmar Arte Final!',
+          ),
+          messageInfo: MessageModel.info(
+            title: "Check Arte Final",
+            message:
+                "O status Check Arte Final da op ${model.op} foi alterado com sucesso!",
+          ),
+        ),
+      );
+    } else if (model.produzido == null) {
+      _mutationOps(
+        parametros: ParametrosOpsMutation(
+          nameFeature: 'Check Produzido',
+          error: ErroMutationOp(message: 'Erro ao alterar o Check Produzido'),
+          showRuntimeMilliseconds: false,
+          mutation: opsProdMutation,
+          variables: {
+            "op": model.op,
+            "produzido":
+                designSystemController.df.format(designSystemController.now)
+          },
+          messageError: MessageModel.error(
+            message: 'Check Produzido',
+            title: 'Erro ao confirmar a produção!',
+          ),
+          messageInfo: MessageModel.info(
+            title: "Check Produzido",
+            message:
+                "O status Check Produzidol da op ${model.op} foi alterado com sucesso!",
+          ),
+        ),
+      );
+    } else {
+      _mutationOps(
+        parametros: ParametrosOpsMutation(
+          nameFeature: 'Check Entregue',
+          error: ErroMutationOp(message: 'Erro ao alterar o Check Entregue'),
+          showRuntimeMilliseconds: false,
+          mutation: opsEntMutation,
+          variables: {
+            "op": model.op,
+            "entregue":
+                designSystemController.df.format(designSystemController.now)
+          },
+          messageError: MessageModel.error(
+            message: 'Check Arte Final',
+            title: 'Erro ao confirmar Arte Final!',
+          ),
+          messageInfo: MessageModel.info(
+            title: "Check Arte Final",
+            message:
+                "O status Check Arte Final da op ${model.op} foi alterado com sucesso!",
+          ),
+        ),
+      );
+    }
+  }
+
   void setPrioridadeOP(OpsModel model) {
     if (model.cancelada == false) {
       _mutationOps(
