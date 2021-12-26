@@ -208,8 +208,10 @@ class OpslistWidget extends StatelessWidget {
                                       : Colors.grey,
                                   onPressed: () {
                                     prioridade(o);
-                                    o.prioridade =
-                                        o.prioridade == true ? false : true;
+                                    if (o.cancelada == false) {
+                                      o.prioridade =
+                                          o.prioridade == true ? false : true;
+                                    }
                                   },
                                 );
                               }

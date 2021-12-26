@@ -3,7 +3,7 @@ import 'package:dependency_module/dependency_module.dart';
 class ParametrosOpsMutation implements ParametersReturnResult {
   final String mutation;
   final Map<String, dynamic> variables;
-  final MessageModel messageInfo;
+  final MessageModel? messageInfo;
   final MessageModel messageError;
   @override
   final AppError error;

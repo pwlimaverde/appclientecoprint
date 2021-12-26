@@ -231,7 +231,7 @@ class OpsController extends GetxController
         variables: {"op": model.op, "cancelada": !model.cancelada},
         messageError: MessageModel.error(
           message: 'Cancelamento de Op',
-          title: 'Erro ao alterar o status de Cancelamento da Op',
+          title: 'Erro ao alterar o status de Cancelamento da Op!',
         ),
         messageInfo: MessageModel.info(
             title: "Cancelamento de Op",
@@ -240,30 +240,42 @@ class OpsController extends GetxController
                 : "A op ${model.op} foi cancelada com sucesso!"),
       ),
     );
+    if (model.prioridade == true) {
+      setPrioridadeOP(model);
+    }
   }
 
   void setPrioridadeOP(OpsModel model) {
-    _mutationOps(
-      parametros: ParametrosOpsMutation(
-        nameFeature: 'Prioridade da Op',
-        error: ErroMutationOp(message: 'Erro ao alterar a prioridade'),
-        showRuntimeMilliseconds: false,
-        mutation: opsPrioridadeMutation,
-        variables: {
-          "op": model.op,
-          "prioridade": model.prioridade == true ? false : true
-        },
-        messageError: MessageModel.error(
+    if (model.cancelada == false) {
+      _mutationOps(
+        parametros: ParametrosOpsMutation(
+          nameFeature: 'Prioridade da Op',
+          error: ErroMutationOp(message: 'Erro ao alterar a prioridade!'),
+          showRuntimeMilliseconds: false,
+          mutation: opsPrioridadeMutation,
+          variables: {
+            "op": model.op,
+            "prioridade": model.prioridade == true ? false : true
+          },
+          messageError: MessageModel.error(
+            message: 'Prioridade da Op',
+            title: 'Erro ao alterar a Prioridade da Op!',
+          ),
+          messageInfo: MessageModel.info(
+            title: "Prioridade da Op",
+            message:
+                "O status da Prioridade da op ${model.op} foi alterado com sucesso!",
+          ),
+        ),
+      );
+    } else {
+      coreModuleController.message(
+        MessageModel.error(
           message: 'Prioridade da Op',
-          title: 'Erro ao alterar a Prioridade da Op',
+          title: 'Erro ao alterar a Prioridade da Op, pois ela está cancelada!',
         ),
-        messageInfo: MessageModel.info(
-          title: "Prioridade da Op",
-          message:
-              "O status da Prioridade da op ${model.op} foi alterado com sucesso!",
-        ),
-      ),
-    );
+      );
+    }
   }
 
   Future<void> _mutationOps({required ParametrosOpsMutation parametros}) async {

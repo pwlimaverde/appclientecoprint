@@ -69,10 +69,10 @@ _tabBarView() {
 _emArteFinal() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmArteFinal,
-    can: testeFunc,
+    can: opsController.setCancelarOP,
     check: testeFunc,
     save: testeFunc,
-    prioridade: testeFunc,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
@@ -80,10 +80,10 @@ _emArteFinal() {
 _emProducao() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmProducao,
-    can: testeFunc,
+    can: opsController.setCancelarOP,
     check: testeFunc,
     save: testeFunc,
-    prioridade: testeFunc,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
@@ -91,10 +91,10 @@ _emProducao() {
 _emUrgencia() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmUrgencia,
-    can: testeFunc,
+    can: opsController.setCancelarOP,
     check: testeFunc,
     save: testeFunc,
-    prioridade: testeFunc,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
@@ -102,10 +102,10 @@ _emUrgencia() {
 _emExpedicao() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmExpedicao,
-    can: testeFunc,
+    can: opsController.setCancelarOP,
     check: testeFunc,
     save: testeFunc,
-    prioridade: testeFunc,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
