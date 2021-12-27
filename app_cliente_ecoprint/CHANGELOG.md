@@ -27,3 +27,6 @@ Ajustes no versionamento.
 
 ## [0.0.0-alpha.8] - 12/12/2021.
 Reinicio do versionamento pelo Gitflow.
+
+## [0.0.0-alpha.9] - 26/12/2021.
+Configuração da api hasura no modulo OPS finalizada.

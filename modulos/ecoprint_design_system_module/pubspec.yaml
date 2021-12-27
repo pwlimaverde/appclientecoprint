@@ -1,7 +1,7 @@
 name: ecoprint_design_system_module
 description: Modulo responsável pelo gerenciamento do design system
 publish_to: 'none'
-version: 0.0.0-alpha.3
+version: 0.0.0-alpha.4
 homepage:
 
 environment:
