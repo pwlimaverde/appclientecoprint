@@ -38,10 +38,12 @@ class DesignSystemController extends GetxController {
         preferredSize: const Size.fromHeight(hederHeight),
         child: HeaderWidget(
           titulo: "Sistema Ecoprint",
-          actions: <Widget>[
-            _iconButtonSearch(),
-            _iconButtonPrint(),
-          ],
+          actions: coreModuleController.pageAtual.value == 2
+              ? <Widget>[
+                  _iconButtonSearch(),
+                  _iconButtonPrint(),
+                ]
+              : [],
         ),
       ),
       backgroundColor: Get.theme.primaryColor,
@@ -165,9 +167,10 @@ class DesignSystemController extends GetxController {
   //Widgets OpsList
   Widget opslistWidget({
     required filtro,
-    required check,
+    required Function(OpsModel) check,
     required Function(OpsModel) can,
-    required save,
+    required Function(OpsModel) prioridade,
+    required Function(OpsModel) save,
     required up,
   }) {
     return OpslistWidget(
@@ -186,6 +189,11 @@ class DesignSystemController extends GetxController {
       },
       save: (OpsModel o) {
         save(o);
+      },
+      prioridade: (OpsModel o) {
+        setOpPrioridadeCheck(o);
+        prioridade(o);
+        setOpPrioridadeCheckCan();
       },
     );
   }
@@ -235,7 +243,7 @@ class DesignSystemController extends GetxController {
   }
 
   void setOpCheckCan() async {
-    await 300.milliseconds.delay();
+    await 800.milliseconds.delay();
     loadOpCheck(0);
   }
 
@@ -246,8 +254,19 @@ class DesignSystemController extends GetxController {
   }
 
   void setOpCanCan() async {
-    await 300.milliseconds.delay();
+    await 800.milliseconds.delay();
     loadOpCan(0);
+  }
+
+  final loadOpPrioridadeCheck = 0.obs;
+
+  void setOpPrioridadeCheck(OpsModel op) {
+    loadOpPrioridadeCheck(op.op);
+  }
+
+  void setOpPrioridadeCheckCan() async {
+    await 800.milliseconds.delay();
+    loadOpPrioridadeCheck(0);
   }
 
   String getAtraso(OpsModel model) {

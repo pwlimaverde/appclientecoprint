@@ -3,7 +3,7 @@ import 'dart:convert';
 class OpsModel {
   final int op;
   final String servico;
-  final bool cancelada;
+  bool cancelada;
   final String cliente;
   final int quant;
   final String vendedor;

@@ -1,5 +1,7 @@
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
+import 'package:ops_module/src/utils/errors/erros_ops.dart';
+import 'package:ops_module/src/utils/parametros/parametros.dart';
 
 class BodyOpsWidget extends StatelessWidget {
   const BodyOpsWidget({Key? key}) : super(key: key);
@@ -67,9 +69,10 @@ _tabBarView() {
 _emArteFinal() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmArteFinal,
-    can: testeFunc,
-    check: testeFunc,
-    save: testeFunc,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
@@ -77,9 +80,10 @@ _emArteFinal() {
 _emProducao() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmProducao,
-    can: testeFunc,
-    check: testeFunc,
-    save: testeFunc,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
@@ -87,9 +91,10 @@ _emProducao() {
 _emUrgencia() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmUrgencia,
-    can: testeFunc,
-    check: testeFunc,
-    save: testeFunc,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
@@ -97,9 +102,10 @@ _emUrgencia() {
 _emExpedicao() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListEmExpedicao,
-    can: testeFunc,
-    check: testeFunc,
-    save: testeFunc,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
@@ -107,13 +113,10 @@ _emExpedicao() {
 _todasOps() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListAll,
-    can: testeFunc,
-    check: testeFunc,
-    save: testeFunc,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
-}
-
-testeFunc(OpsModel o) {
-  print("op: ${o.op}");
 }
