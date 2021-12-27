@@ -91,6 +91,14 @@ mutation EntOps(\$op: Int, \$entregue: date) {
 }
 """;
 
+const String opsInfoMutation = """
+mutation InfoOps(\$op: Int, \$orderpcp : Int, \$entrega: date, \$entregaprog: date, \$obs: String, \$ryobi: Boolean, \$sm2c: Boolean, \$ryobi750: Boolean, \$flexo: Boolean, \$impressao: date) {
+  update_ops(where: {op: {_eq: \$op}}, _set: {orderpcp: \$orderpcp, entrega: \$entrega, entregaprog: \$entregaprog, obs: \$obs, ryobi: \$ryobi, sm2c: \$sm2c, ryobi750: \$ryobi750, flexo: \$flexo, impressao: \$impressao}) {
+    affected_rows
+  }
+}
+""";
+
 const String opsCan = """
 query (\$op: Int) {
   ops(where: {op: {_eq: \$op}}) {
@@ -99,13 +107,7 @@ query (\$op: Int) {
 }
 """;
 
-const String opsInfoMutation = """
-mutation InfoOps(\$op: Int, \$entrega: date, \$entregaprog: date, \$obs: String, \$ryobi: Boolean, \$sm2c: Boolean, \$ryobi750: Boolean, \$flexo: Boolean, \$impressao: date) {
-  update_ops(where: {op: {_eq: \$op}}, _set: {entrega: \$entrega, entregaprog: \$entregaprog, obs: \$obs, ryobi: \$ryobi, sm2c: \$sm2c, ryobi750: \$ryobi750, flexo: \$flexo, impressao: \$impressao}) {
-    affected_rows
-  }
-}
-""";
+
 
 //const String opsQuery = """
 //query{ops{op servico acabamento acm cancelada cliente coa colagem com corte cva cvm1 cvm2 entrada entrega entregue flexo id impressao lam1 laminacao obs orcamento produzido quant ryobi sm2c ryobi750 valor vendedor}}

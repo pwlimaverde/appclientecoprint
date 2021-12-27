@@ -32,7 +32,6 @@ class OpslistWidget extends StatelessWidget {
   }
 
   _listOpsProdL(context) {
-//    if (!showMenu) {
     return Container(
       padding: const EdgeInsets.all(4),
       child: ListView.builder(
@@ -61,14 +60,14 @@ class OpslistWidget extends StatelessWidget {
                     labelT: "OP:",
                     labelS: "Entrada:",
                     subTile: designSystemController.f.format(o.entrada),
-                    heightT: 25,
-                    heightS: 35,
+                    heightT: 30,
+                    heightS: 40,
                   ),
                   Expanded(
                     child: OpslisttileWidget(
                       cardAux: true,
-                      heightT: 25,
-                      heightS: 35,
+                      heightT: 30,
+                      heightS: 40,
                       sizeGeral: size,
                       sizeCont: 65,
                       sizeFontTile: 1.5,
@@ -83,8 +82,8 @@ class OpslistWidget extends StatelessWidget {
                     ),
                   ),
                   OpslisttileWidget(
-                    heightT: 25,
-                    heightS: 35,
+                    heightT: 30,
+                    heightS: 40,
                     sizeGeral: size,
                     sizeCont: 10,
                     sizeFontTile: 1.8,
@@ -98,11 +97,11 @@ class OpslistWidget extends StatelessWidget {
                   ),
                   OpslisttileWidget(
                     select: false,
-                    heightT: 25,
-                    heightS: 35,
+                    heightT: 30,
+                    heightS: 40,
                     sizeGeral: size,
                     sizeCont: 10,
-                    sizeFontTile: 1.5,
+                    sizeFontTile: 1.3,
                     sizeFontSubTile: 1.2,
                     line: 2,
                     labelT: o.entregaprog != null
@@ -110,7 +109,7 @@ class OpslistWidget extends StatelessWidget {
                         : "Entrega:",
                     title: designSystemController.f.format(o.entrega),
                     subTile:
-                        "${o.obs != null ? o.obs!.length >= 68 ? o.obs!.substring(0, 68) : o.obs : ""}",
+                        "${o.orderpcp != null ? "Sequência: ${o.orderpcp}; " : ""} ${o.obs != null ? o.obs!.length >= 68 ? o.obs!.substring(0, 68) : o.obs : ""}",
                     ontap: () {
                       _showDialog(o);
                     },
@@ -121,7 +120,7 @@ class OpslistWidget extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.all(2),
                             width: 75,
-                            height: 72,
+                            height: 82,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -138,7 +137,7 @@ class OpslistWidget extends StatelessWidget {
                                 ),
                                 SwitcherWidget(
                                   imp: o.impressao,
-                                  title: "SM 4c ",
+                                  title: "Ry750 ",
                                   crtL: o.ryobi750 ?? false,
                                   mini: true,
                                   onTap: () {
@@ -177,10 +176,16 @@ class OpslistWidget extends StatelessWidget {
                       : Container(),
                   Card(
                     elevation: 0.5,
-                    color: o.prioridade == true ? Colors.yellow[100] : null,
+                    color: o.entregue != null
+                        ? Colors.green[100]
+                        : o.cancelada == true
+                            ? Colors.red[100]
+                            : o.prioridade == true
+                                ? Colors.yellow[100]
+                                : null,
                     child: SizedBox(
                       width: 30,
-                      height: 72,
+                      height: 82,
                       child: Column(
                         children: <Widget>[
                           SizedBox(
@@ -208,7 +213,8 @@ class OpslistWidget extends StatelessWidget {
                                       : Colors.grey,
                                   onPressed: () {
                                     prioridade(o);
-                                    if (o.cancelada == false) {
+                                    if (o.cancelada == false &&
+                                        o.entregue == null) {
                                       o.prioridade =
                                           o.prioridade == true ? false : true;
                                     }
@@ -271,7 +277,9 @@ class OpslistWidget extends StatelessWidget {
                                 return IconbuttonWidget(
                                   isImp: true,
                                   icon: Icons.cancel,
-                                  color: Colors.red,
+                                  color: o.cancelada == true
+                                      ? Colors.red
+                                      : Colors.grey,
                                   onPressed: () {
                                     can(o);
                                     o.cancelada = !o.cancelada;
@@ -284,54 +292,6 @@ class OpslistWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-
-//                    Container(
-//                      width: controller.getSize(size, 3),
-//                      child: allOps == false
-//                          ? Column(
-//                              children: <Widget>[
-//                                ObserverbuttonWidget(
-//                                  upProd: upProd,
-//                                  crt: crt,
-//                                  model: o,
-//                                  color: Colors.green,
-//                                  icon: Icons.check,
-//                                  controller: controller,
-//                                ),
-//                                ObserverbuttonWidget(
-//                                  upProd: upProd,
-//                                  crt: can,
-//                                  model: o,
-//                                  color: Colors.red,
-//                                  icon: Icons.clear,
-//                                  controller: controller,
-//                                  cancelarOP: true,
-//                                ),
-//                              ],
-//                            )
-//                          : Column(
-//                              children: <Widget>[
-//                                o.cancelada == false
-//                                    ? ObserverbuttonWidget(
-//                                        crt: can,
-//                                        model: o,
-//                                        color: Colors.red,
-//                                        icon: Icons.clear,
-//                                        controller: controller,
-//                                        cancelarOP: true,
-//                                      )
-//                                    : ObserverbuttonWidget(
-//                                        crt: can,
-//                                        model: o,
-//                                        color: Colors.green,
-//                                        icon: Icons.settings_backup_restore,
-//                                        controller: controller,
-//                                        cancelarOP: true,
-//                                        reativarOP: true,
-//                                      ),
-//                              ],
-//                            ),
-//                    ),
                 ],
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -341,121 +301,6 @@ class OpslistWidget extends StatelessWidget {
         },
       ),
     );
-//    }
-//    return Container(
-//      padding: EdgeInsets.all(12),
-//      child: ListView.builder(
-//        itemCount: filtro != null ? filtro.length : 0,
-//        itemBuilder: (context, index) {
-//          OpsModel o = filtro[index];
-//          var size = controller.getQueryMed(context, 70, showMenu);
-//          bool crt = false;
-//          bool can = false;
-//          return Card(
-//            child: Container(
-//              width: size,
-//              child: Row(
-//                children: <Widget>[
-//                  ListtilesizeWidget(
-//                    controller: controller,
-//                    sizeGeral: size,
-//                    sizeCont: 14,
-//                    sizeFontTile: 3.5,
-//                    sizeFontSubTile: 2.5,
-//                    title: "${o.op}",
-//                    subTile: "${o.entrada}",
-//                  ),
-//                  ListtilesizeWidget(
-//                    controller: controller,
-//                    threeLine: true,
-//                    line: 3,
-//                    sizeGeral: size,
-//                    sizeCont: 40,
-//                    sizeFontTile: 3.5,
-//                    sizeFontSubTile: 2.5,
-//                    title:
-//                        "${o.cancelada == false ? o.cliente.length >= 35 ? o.cliente.substring(0, 35) : o.cliente : o.cliente.length >= 25 ? o.cliente.substring(0, 25) + " - OP CANCELADA" : o.cliente + " - OP CANCELADA"}",
-//                    subTile:
-//                        "${o.servico.length >= 150 ? o.servico.substring(0, 150) : o.servico}",
-//                  ),
-//                  ListtilesizeWidget(
-//                    controller: controller,
-//                    sizeGeral: size,
-//                    sizeCont: 15,
-//                    sizeFontTile: 3.5,
-//                    sizeFontSubTile: 2.5,
-//                    title: "${o.quant}",
-//                    subTile:
-//                        "${o.vendedor.length >= 8 ? o.vendedor.substring(0, 8) : o.vendedor}",
-//                  ),
-//                  ListtilesizeWidget(
-//                    controller: controller,
-//                    threeLine: true,
-//                    line: 3,
-//                    sizeGeral: size,
-//                    sizeCont: 18,
-//                    sizeFontTile: 3.5,
-//                    sizeFontSubTile: 2.5,
-//                    title: "Ent: ${o.entrega}",
-//                    subTile:
-//                        "${o.obs != null ? o.obs.length >= 68 ? o.obs.substring(0, 68) : o.obs : ""}",
-//                  ),
-//                  Container(
-//                    width: controller.getSize(size, 3),
-//                    child: allOps == false
-//                        ? Column(
-//                            children: <Widget>[
-//                              ObserverbuttonWidget(
-//                                upProd: upProd,
-//                                crt: crt,
-//                                model: o,
-//                                color: Colors.green,
-//                                icon: Icons.check,
-//                                controller: controller,
-//                              ),
-//                              ObserverbuttonWidget(
-//                                upProd: upProd,
-//                                crt: can,
-//                                model: o,
-//                                color: Colors.red,
-//                                icon: Icons.clear,
-//                                controller: controller,
-//                                cancelarOP: true,
-//                              ),
-//                            ],
-//                          )
-//                        : Column(
-//                            children: <Widget>[
-//                              o.cancelada == false
-//                                  ? ObserverbuttonWidget(
-//                                      crt: can,
-//                                      model: o,
-//                                      color: Colors.red,
-//                                      icon: Icons.clear,
-//                                      controller: controller,
-//                                      cancelarOP: true,
-//                                    )
-//                                  : ObserverbuttonWidget(
-//                                      crt: can,
-//                                      model: o,
-//                                      color: Colors.green,
-//                                      icon: Icons.settings_backup_restore,
-//                                      controller: controller,
-//                                      cancelarOP: true,
-//                                      reativarOP: true,
-//                                    ),
-//                            ],
-//                          ),
-//                  ),
-//                ],
-//                crossAxisAlignment: CrossAxisAlignment.start,
-//                mainAxisAlignment: MainAxisAlignment.center,
-//              ),
-//            ),
-//          );
-//        },
-//      ),
-//    );
   }
 
   _showDialog(OpsModel model) {

@@ -71,7 +71,7 @@ _emArteFinal() {
     filtro: opsController.opsListEmArteFinal,
     can: opsController.setCancelarOP,
     check: opsController.setCheckOP,
-    save: testeFunc,
+    save: opsController.setInfoOP,
     prioridade: opsController.setPrioridadeOP,
     up: false,
   );
@@ -82,7 +82,7 @@ _emProducao() {
     filtro: opsController.opsListEmProducao,
     can: opsController.setCancelarOP,
     check: opsController.setCheckOP,
-    save: testeFunc,
+    save: opsController.setInfoOP,
     prioridade: opsController.setPrioridadeOP,
     up: false,
   );
@@ -93,7 +93,7 @@ _emUrgencia() {
     filtro: opsController.opsListEmUrgencia,
     can: opsController.setCancelarOP,
     check: opsController.setCheckOP,
-    save: testeFunc,
+    save: opsController.setInfoOP,
     prioridade: opsController.setPrioridadeOP,
     up: false,
   );
@@ -104,7 +104,7 @@ _emExpedicao() {
     filtro: opsController.opsListEmExpedicao,
     can: opsController.setCancelarOP,
     check: opsController.setCheckOP,
-    save: testeFunc,
+    save: opsController.setInfoOP,
     prioridade: opsController.setPrioridadeOP,
     up: false,
   );
@@ -115,12 +115,8 @@ _todasOps() {
     filtro: opsController.opsListAll,
     can: opsController.setCancelarOP,
     check: opsController.setCheckOP,
-    save: testeFunc,
+    save: opsController.setInfoOP,
     prioridade: opsController.setPrioridadeOP,
     up: false,
   );
-}
-
-testeFunc(OpsModel o) {
-  print("op: ${o.op}");
 }

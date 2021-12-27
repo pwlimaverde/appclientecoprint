@@ -324,7 +324,7 @@ class OpsController extends GetxController
   }
 
   void setPrioridadeOP(OpsModel model) {
-    if (model.cancelada == false) {
+    if (model.cancelada == false && model.entregue == null) {
       _mutationOps(
         parametros: ParametrosOpsMutation(
           nameFeature: 'Prioridade da Op',
@@ -346,14 +346,58 @@ class OpsController extends GetxController
           ),
         ),
       );
+    } else if (model.cancelada == true) {
+      coreModuleController.message(
+        MessageModel.error(
+          message: 'Prioridade da Op',
+          title:
+              'Erro ao alterar a Prioridade da Op, pois o status dela está cancelada!',
+        ),
+      );
     } else {
       coreModuleController.message(
         MessageModel.error(
           message: 'Prioridade da Op',
-          title: 'Erro ao alterar a Prioridade da Op, pois ela está cancelada!',
+          title:
+              'Erro ao alterar a Prioridade da Op, pois o status dela está entregue!',
         ),
       );
     }
+  }
+
+  void setInfoOP(OpsModel model) {
+    _mutationOps(
+      parametros: ParametrosOpsMutation(
+        nameFeature: 'Atualização de informações da OP',
+        error: ErroMutationOp(message: 'Erro ao Atualizar as informações'),
+        showRuntimeMilliseconds: false,
+        mutation: opsInfoMutation,
+        variables: {
+          "op": model.op,
+          "orderpcp": model.orderpcp,
+          "entrega": designSystemController.df.format(model.entrega),
+          "entregaprog": model.entregaprog != null
+              ? designSystemController.df.format(model.entregaprog!)
+              : null,
+          "obs": model.obs,
+          "ryobi": model.ryobi,
+          "sm2c": model.sm2c,
+          "ryobi750": model.ryobi750,
+          "flexo": model.flexo,
+          "impressao": model.impressao != null
+              ? designSystemController.df.format(model.impressao!)
+              : null,
+        },
+        messageError: MessageModel.error(
+          message: 'Atualização de informações da OP',
+          title: 'Erro ao Atualizar as informações da Op!',
+        ),
+        messageInfo: MessageModel.info(
+          title: "Atualização de informações da OP",
+          message: "A op ${model.op} foi atualizada com sucesso!",
+        ),
+      ),
+    );
   }
 
   Future<void> _mutationOps({required ParametrosOpsMutation parametros}) async {

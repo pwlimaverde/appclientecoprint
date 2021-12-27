@@ -167,10 +167,10 @@ class DesignSystemController extends GetxController {
   //Widgets OpsList
   Widget opslistWidget({
     required filtro,
-    required check,
+    required Function(OpsModel) check,
     required Function(OpsModel) can,
     required Function(OpsModel) prioridade,
-    required save,
+    required Function(OpsModel) save,
     required up,
   }) {
     return OpslistWidget(
