@@ -318,9 +318,14 @@ class OpslistWidget extends StatelessWidget {
                   width: 50,
                   height: 60,
                   child: TextFormField(
+                    keyboardType: TextInputType.number,
                     initialValue:
                         model.orderpcp != null ? model.orderpcp.toString() : "",
-                    onChanged: (value) => model.orderpcp = int.parse(value),
+                    onChanged: (value) => value.isEmpty
+                        ? model.orderpcp = null
+                        : int.tryParse(value) == null
+                            ? model.orderpcp = null
+                            : model.orderpcp = int.parse(value),
                     decoration: const InputDecoration(
                         border: OutlineInputBorder(), labelText: "N°"),
                   ),
