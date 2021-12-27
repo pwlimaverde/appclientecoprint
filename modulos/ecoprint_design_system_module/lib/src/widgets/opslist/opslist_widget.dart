@@ -479,9 +479,6 @@ class OpslistWidget extends StatelessWidget {
       ),
       actions: <Widget>[
         TextButton(
-          // style: ButtonStyle(
-          //   backgroundColor: MaterialStateProperty.all(Colors.red),
-          // ),
           onPressed: () {
             designSystemController.setColorCrtRyobi(false);
             designSystemController.setColorCrtryobi750(false);
@@ -497,9 +494,25 @@ class OpslistWidget extends StatelessWidget {
           ),
         ),
         TextButton(
-          // style: ButtonStyle(
-          //   backgroundColor: MaterialStateProperty.all(Colors.blue),
-          // ),
+          onPressed: () {
+            model.entregue = null;
+            model.produzido = null;
+            model.artefinal = null;
+            save(model);
+            designSystemController.setColorCrtRyobi(false);
+            designSystemController.setColorCrtryobi750(false);
+            designSystemController.setColorCrtSm2c(false);
+            designSystemController.setColorCrtFlexo(false);
+            Get.back();
+          },
+          child: const Text(
+            "Limpar Status",
+            style: TextStyle(
+              color: Colors.orange,
+            ),
+          ),
+        ),
+        TextButton(
           onPressed: () {
             save(model);
             designSystemController.setColorCrtRyobi(false);

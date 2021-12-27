@@ -91,7 +91,7 @@ packages:
       path: "../modulos/ecoprint_design_system_module"
       relative: true
     source: path
-    version: "0.0.0-alpha.3"
+    version: "0.0.0-alpha.4"
   either_dart:
     dependency: transitive
     description:
@@ -239,7 +239,7 @@ packages:
       path: "../modulos/ops_module"
       relative: true
     source: path
-    version: "0.0.0-alpha.3"
+    version: "0.0.0-alpha.4"
   path:
     dependency: transitive
     description:

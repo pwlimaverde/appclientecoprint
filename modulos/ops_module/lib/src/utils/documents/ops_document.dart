@@ -92,8 +92,8 @@ mutation EntOps(\$op: Int, \$entregue: date) {
 """;
 
 const String opsInfoMutation = """
-mutation InfoOps(\$op: Int, \$orderpcp : Int, \$entrega: date, \$entregaprog: date, \$obs: String, \$ryobi: Boolean, \$sm2c: Boolean, \$ryobi750: Boolean, \$flexo: Boolean, \$impressao: date) {
-  update_ops(where: {op: {_eq: \$op}}, _set: {orderpcp: \$orderpcp, entrega: \$entrega, entregaprog: \$entregaprog, obs: \$obs, ryobi: \$ryobi, sm2c: \$sm2c, ryobi750: \$ryobi750, flexo: \$flexo, impressao: \$impressao}) {
+mutation InfoOps(\$op: Int, \$orderpcp : Int, \$entrega: date, \$entregaprog: date, \$entregue: date, \$produzido: date, \$artefinal: date, \$obs: String, \$ryobi: Boolean, \$sm2c: Boolean, \$ryobi750: Boolean, \$flexo: Boolean, \$impressao: date) {
+  update_ops(where: {op: {_eq: \$op}}, _set: {orderpcp: \$orderpcp, entrega: \$entrega, entregaprog: \$entregaprog, entregue: \$entregue, produzido: \$produzido, artefinal: \$artefinal, obs: \$obs, ryobi: \$ryobi, sm2c: \$sm2c, ryobi750: \$ryobi750, flexo: \$flexo, impressao: \$impressao}) {
     affected_rows
   }
 }

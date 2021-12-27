@@ -316,7 +316,7 @@ class OpsController extends GetxController
           messageInfo: MessageModel.info(
             title: "Check Arte Final",
             message:
-                "O status Check Arte Final da op ${model.op} foi alterado com sucesso!",
+                "O status Check Entregue da op ${model.op} foi alterado com sucesso!",
           ),
         ),
       );
@@ -379,6 +379,9 @@ class OpsController extends GetxController
           "entregaprog": model.entregaprog != null
               ? designSystemController.df.format(model.entregaprog!)
               : null,
+          "entregue": model.entregue,
+          "produzido": model.produzido,
+          "artefinal": model.artefinal,
           "obs": model.obs,
           "ryobi": model.ryobi,
           "sm2c": model.sm2c,
