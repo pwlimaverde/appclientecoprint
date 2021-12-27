@@ -333,7 +333,8 @@ class OpsController extends GetxController
           mutation: opsPrioridadeMutation,
           variables: {
             "op": model.op,
-            "prioridade": model.prioridade == true ? false : true
+            "prioridade": model.prioridade == true ? false : true,
+            "orderpcp": model.prioridade == true ? null : model.orderpcp,
           },
           messageError: MessageModel.error(
             message: 'Prioridade da Op',
@@ -379,9 +380,15 @@ class OpsController extends GetxController
           "entregaprog": model.entregaprog != null
               ? designSystemController.df.format(model.entregaprog!)
               : null,
-          "entregue": model.entregue,
-          "produzido": model.produzido,
-          "artefinal": model.artefinal,
+          "entregue": model.entregue != null
+              ? designSystemController.df.format(model.entregue!)
+              : null,
+          "produzido": model.produzido != null
+              ? designSystemController.df.format(model.produzido!)
+              : null,
+          "artefinal": model.artefinal != null
+              ? designSystemController.df.format(model.artefinal!)
+              : null,
           "obs": model.obs,
           "ryobi": model.ryobi,
           "sm2c": model.sm2c,
@@ -413,11 +420,14 @@ class OpsController extends GetxController
           parametros.messageInfo,
         );
       } else {
+        print("teste falso");
+        print(result);
         coreModuleController.message(
           parametros.messageError,
         );
       }
     } catch (e) {
+      print("teste erro $e");
       coreModuleController.message(
         parametros.messageError,
       );

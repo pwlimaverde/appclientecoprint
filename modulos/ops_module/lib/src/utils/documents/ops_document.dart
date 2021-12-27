@@ -60,8 +60,8 @@ mutation CanOps(\$op: Int, \$cancelada: Boolean) {
 """;
 
 const String opsPrioridadeMutation = """
-mutation CanOps(\$op: Int, \$prioridade: Boolean) {
-  update_ops(where: {op: {_eq: \$op}}, _set: {prioridade: \$prioridade}) {
+mutation CanOps(\$op: Int, \$orderpcp : Int, \$prioridade: Boolean) {
+  update_ops(where: {op: {_eq: \$op}}, _set: {orderpcp: \$orderpcp, prioridade: \$prioridade}) {
     affected_rows
   }
 }
