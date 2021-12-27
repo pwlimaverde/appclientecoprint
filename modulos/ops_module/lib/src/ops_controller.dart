@@ -420,14 +420,11 @@ class OpsController extends GetxController
           parametros.messageInfo,
         );
       } else {
-        print("teste falso");
-        print(result);
         coreModuleController.message(
           parametros.messageError,
         );
       }
     } catch (e) {
-      print("teste erro $e");
       coreModuleController.message(
         parametros.messageError,
       );

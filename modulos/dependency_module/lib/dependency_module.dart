@@ -8,7 +8,6 @@ export 'package:font_awesome_flutter/font_awesome_flutter.dart';
 export 'package:hasura_connect/hasura_connect.dart';
 export 'package:intl/intl.dart';
 
-
 ///Modulos
 export 'package:ecoprint_design_system_module/ecoprint_design_system_module.dart';
 export 'package:core_module/core_module.dart';
@@ -16,3 +15,4 @@ export 'package:splash_module/splash_module.dart';
 export 'package:home_module/home_module.dart';
 export 'package:ops_module/ops_module.dart';
 export 'package:upload_csv_module/upload_csv_module.dart';
+export 'package:decoder_upload_csv_web_package/decoder_upload_csv_web_package.dart';

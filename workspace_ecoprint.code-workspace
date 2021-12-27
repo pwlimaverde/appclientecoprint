@@ -24,6 +24,9 @@
 		{
 			"path": "modulos\\upload_csv_module"
 		},
+		{
+			"path": "packages\\decoder_upload_csv_web_package"
+		}
 	],
 	"settings": {}
 }
