@@ -3,7 +3,7 @@ import 'dart:convert';
 class OpsModel {
   final int op;
   final String servico;
-  final bool cancelada;
+  bool cancelada;
   final String cliente;
   final int quant;
   final String vendedor;
@@ -17,9 +17,10 @@ class OpsModel {
   DateTime? impressao;
   bool? ryobi;
   bool? sm2c;
-  bool? sm4c;
+  bool? ryobi750;
   bool? flexo;
   DateTime? artefinal;
+  bool? prioridade;
   OpsModel({
     required this.op,
     required this.servico,
@@ -37,9 +38,10 @@ class OpsModel {
     this.impressao,
     this.ryobi,
     this.sm2c,
-    this.sm4c,
+    this.ryobi750,
     this.flexo,
     this.artefinal,
+    this.prioridade,
   });
 
   OpsModel copyWith({
@@ -59,9 +61,10 @@ class OpsModel {
     DateTime? impressao,
     bool? ryobi,
     bool? sm2c,
-    bool? sm4c,
+    bool? ryobi750,
     bool? flexo,
     DateTime? artefinal,
+    bool? prioridade,
   }) {
     return OpsModel(
       op: op ?? this.op,
@@ -80,9 +83,10 @@ class OpsModel {
       impressao: impressao ?? this.impressao,
       ryobi: ryobi ?? this.ryobi,
       sm2c: sm2c ?? this.sm2c,
-      sm4c: sm4c ?? this.sm4c,
+      ryobi750: ryobi750 ?? this.ryobi750,
       flexo: flexo ?? this.flexo,
       artefinal: artefinal ?? this.artefinal,
+      prioridade: prioridade ?? this.prioridade,
     );
   }
 
@@ -109,10 +113,11 @@ class OpsModel {
           map['impressao'] != null ? DateTime.parse(map['impressao']) : null,
       ryobi: map['ryobi'],
       sm2c: map['sm2c'],
-      sm4c: map['sm4c'],
+      ryobi750: map['ryobi750'],
       flexo: map['flexo'],
       artefinal:
           map['artefinal'] != null ? DateTime.parse(map['artefinal']) : null,
+      prioridade: map['prioridade'],
     );
   }
 
@@ -145,9 +150,10 @@ class OpsModel {
         other.impressao == impressao &&
         other.ryobi == ryobi &&
         other.sm2c == sm2c &&
-        other.sm4c == sm4c &&
+        other.ryobi750 == ryobi750 &&
         other.flexo == flexo &&
-        other.artefinal == artefinal;
+        other.artefinal == artefinal &&
+        other.prioridade == prioridade;
   }
 
   @override
@@ -168,8 +174,9 @@ class OpsModel {
         impressao.hashCode ^
         ryobi.hashCode ^
         sm2c.hashCode ^
-        sm4c.hashCode ^
+        ryobi750.hashCode ^
         flexo.hashCode ^
-        artefinal.hashCode;
+        artefinal.hashCode ^
+        prioridade.hashCode;
   }
 }

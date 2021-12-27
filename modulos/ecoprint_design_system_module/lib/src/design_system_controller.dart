@@ -1,7 +1,19 @@
+import 'dart:typed_data';
+
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:pdf/pdf.dart';
+import 'package:printing/printing.dart';
+
+import 'widgets/botoes/botao_form/botao_form_widget.dart';
+import 'widgets/botoes/botao_limpar/botao_limpar_widget.dart';
+import 'widgets/botoes/botao_print/botao_print_widget.dart';
+import 'widgets/botoes/botao_search/botao_search_widget.dart';
+import 'widgets/forms/form_geral/form_geral_widget.dart';
 import 'widgets/header/header_widget.dart';
 import 'widgets/menu/menu_widget.dart';
+import 'widgets/opslist/opslist_print_widget.dart';
 import 'widgets/opslist/opslist_widget.dart';
 import 'widgets/right/right_widget.dart';
 
@@ -22,10 +34,16 @@ class DesignSystemController extends GetxController {
               ),
             )
           : null,
-      appBar: const PreferredSize(
-        preferredSize: Size.fromHeight(hederHeight),
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(hederHeight),
         child: HeaderWidget(
           titulo: "Sistema Ecoprint",
+          actions: coreModuleController.pageAtual.value == 2
+              ? <Widget>[
+                  _iconButtonSearch(),
+                  _iconButtonPrint(),
+                ]
+              : [],
         ),
       ),
       backgroundColor: Get.theme.primaryColor,
@@ -40,6 +58,59 @@ class DesignSystemController extends GetxController {
         ],
       ),
     );
+  }
+
+  Widget _iconButtonSearch() {
+    return Obx(
+      () {
+        return opsController.buscando.value
+            ? BotaoForm(
+                form: FormGeral(
+                  controllerText: opsController.crtlBusca,
+                  hintText: "Digite a busca",
+                  labelText: "Busca",
+                  onChanged: (String value) {
+                    opsController.busca(value);
+                  },
+                ),
+                button: BotaoLimpar(
+                  size: 20,
+                  onPressed: _setLimpar,
+                ),
+              )
+            : BotaoSearch(
+                size: 20,
+                onPressed: _setBuscando,
+              );
+      },
+    );
+  }
+
+  Widget _iconButtonPrint() {
+    return Obx(
+      () {
+        return opsController.indexPrint.value != 4
+            ? BotaoPrint(
+                size: 20,
+                ativo: true,
+                onPressed: _showPrintDialog,
+              )
+            : const BotaoPrint(
+                size: 20,
+                ativo: false,
+              );
+      },
+    );
+  }
+
+  void _setBuscando() {
+    opsController.buscando(!opsController.buscando.value);
+  }
+
+  void _setLimpar() {
+    opsController.crtlBusca.clear();
+    opsController.busca.value = null;
+    _setBuscando();
   }
 
   Widget _body({
@@ -85,12 +156,21 @@ class DesignSystemController extends GetxController {
     );
   }
 
+  pw.Widget opslistPrintWidget({
+    required filtro,
+  }) {
+    return OpslistPrintWidget(
+      filtro: filtro,
+    );
+  }
+
   //Widgets OpsList
   Widget opslistWidget({
     required filtro,
-    required check,
+    required Function(OpsModel) check,
     required Function(OpsModel) can,
-    required save,
+    required Function(OpsModel) prioridade,
+    required Function(OpsModel) save,
     required up,
   }) {
     return OpslistWidget(
@@ -109,6 +189,11 @@ class DesignSystemController extends GetxController {
       },
       save: (OpsModel o) {
         save(o);
+      },
+      prioridade: (OpsModel o) {
+        setOpPrioridadeCheck(o);
+        prioridade(o);
+        setOpPrioridadeCheckCan();
       },
     );
   }
@@ -133,10 +218,10 @@ class DesignSystemController extends GetxController {
     colorCrtSm2c(crt);
   }
 
-  final colorCrtSm4c = false.obs;
+  final colorCrtryobi750 = false.obs;
 
-  void setColorCrtSm4c(bool crt) {
-    colorCrtSm4c(crt);
+  void setColorCrtryobi750(bool crt) {
+    colorCrtryobi750(crt);
   }
 
   final colorCrtFlexo = false.obs;
@@ -158,7 +243,7 @@ class DesignSystemController extends GetxController {
   }
 
   void setOpCheckCan() async {
-    await 300.milliseconds.delay();
+    await 800.milliseconds.delay();
     loadOpCheck(0);
   }
 
@@ -169,8 +254,19 @@ class DesignSystemController extends GetxController {
   }
 
   void setOpCanCan() async {
-    await 300.milliseconds.delay();
+    await 800.milliseconds.delay();
     loadOpCan(0);
+  }
+
+  final loadOpPrioridadeCheck = 0.obs;
+
+  void setOpPrioridadeCheck(OpsModel op) {
+    loadOpPrioridadeCheck(op.op);
+  }
+
+  void setOpPrioridadeCheckCan() async {
+    await 800.milliseconds.delay();
+    loadOpPrioridadeCheck(0);
   }
 
   String getAtraso(OpsModel model) {
@@ -235,5 +331,93 @@ class DesignSystemController extends GetxController {
       return Colors.yellowAccent[100];
     }
     return Colors.grey[100];
+  }
+
+  PdfColor? getPrintCorCard(OpsModel model) {
+    final df = DateFormat('yyyy-MM-dd');
+    var now = DateTime.parse(df.format(DateTime.now()));
+    int dif = int.parse(now.difference(model.entrega).inDays.toString());
+    if (model.cancelada == true) {
+      return PdfColors.grey100;
+    } else if (model.entregue != null) {
+      return PdfColors.grey100;
+    } else if (model.produzido != null) {
+      return PdfColors.grey100;
+    } else if (dif > 0) {
+      return PdfColors.red100;
+    } else if (dif == 0) {
+      return PdfColors.orange100;
+    } else if (dif == -1) {
+      return PdfColors.yellow100;
+    }
+    return PdfColors.grey100;
+  }
+
+  _showPrintDialog() {
+    return Get.dialog(
+      AlertDialog(
+        title: const Text("Impressão da listagem das Ops"),
+        content: SizedBox(
+          width: coreModuleController.getSizeProporcao(
+            size: coreModuleController.size,
+            proporcao: 70,
+          ),
+          height: coreModuleController.getSizeProporcao(
+            size: coreModuleController.sizeH,
+            proporcao: 70,
+          ),
+          child: _pdf2(
+            filtro: opsController.filtroPrint,
+            titulo: opsController.myTabs[opsController.indexPrint.value].text
+                .toString(),
+          ),
+        ),
+      ),
+    );
+  }
+
+  _pdf2({
+    required List<OpsModel> filtro,
+    required String titulo,
+  }) {
+    return PdfPreview(
+      build: (format) =>
+          _generatePdf2(format: format, title: titulo, filtro: filtro),
+    );
+  }
+
+  Future<Uint8List> _generatePdf2({
+    required PdfPageFormat format,
+    required String title,
+    required List<OpsModel> filtro,
+  }) async {
+    final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
+    final font = await PdfGoogleFonts.nunitoExtraLight();
+
+    pdf.addPage(
+      pw.MultiPage(
+        pageFormat: format.copyWith(
+          marginBottom: 10,
+          marginLeft: 20,
+          marginRight: 20,
+          marginTop: 20,
+        ),
+        build: (context) => [
+          pw.SizedBox(
+            height: 20,
+            child: pw.FittedBox(
+              child: pw.Text(title, style: pw.TextStyle(font: font)),
+            ),
+          ),
+          pw.SizedBox(height: 10),
+          designSystemController.opslistPrintWidget(
+            filtro: filtro,
+          ),
+          pw.SizedBox(height: 20),
+        ],
+      ),
+    );
+
+    return pdf.save();
   }
 }

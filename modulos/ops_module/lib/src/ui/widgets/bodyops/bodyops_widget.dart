@@ -1,5 +1,7 @@
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
+import 'package:ops_module/src/utils/errors/erros_ops.dart';
+import 'package:ops_module/src/utils/parametros/parametros.dart';
 
 class BodyOpsWidget extends StatelessWidget {
   const BodyOpsWidget({Key? key}) : super(key: key);
@@ -56,6 +58,7 @@ _tabBarView() {
       children: [
         _emArteFinal(),
         _emProducao(),
+        _emUrgencia(),
         _emExpedicao(),
         _todasOps(),
       ],
@@ -64,67 +67,45 @@ _tabBarView() {
 }
 
 _emArteFinal() {
-  final filtro = opsController.opsListAll
-      .where(
-        (element) =>
-            element.produzido == null &&
-            element.cancelada == false &&
-            element.artefinal == null &&
-            element.entregue == null,
-      )
-      .toList()
-    ..sort(
-      (a, b) => a.entrega.compareTo(b.entrega),
-    );
   return designSystemController.opslistWidget(
-    filtro: filtro,
-    can: testeFunc,
-    check: testeFunc,
-    save: testeFunc,
+    filtro: opsController.opsListEmArteFinal,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
 
 _emProducao() {
-  final filtro = opsController.opsListAll
-      .where(
-        (element) =>
-            element.produzido == null &&
-            element.cancelada == false &&
-            element.artefinal != null &&
-            element.entregue == null,
-      )
-      .toList()
-    ..sort(
-      (a, b) => a.entrega.compareTo(b.entrega),
-    );
   return designSystemController.opslistWidget(
-    filtro: filtro,
-    can: testeFunc,
-    check: testeFunc,
-    save: testeFunc,
+    filtro: opsController.opsListEmProducao,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
+    up: false,
+  );
+}
+
+_emUrgencia() {
+  return designSystemController.opslistWidget(
+    filtro: opsController.opsListEmUrgencia,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
 
 _emExpedicao() {
-  final filtro = opsController.opsListAll
-      .where(
-        (element) =>
-            element.produzido != null &&
-            element.cancelada == false &&
-            element.artefinal != null &&
-            element.entregue == null,
-      )
-      .toList()
-    ..sort(
-      (a, b) => a.entrega.compareTo(b.entrega),
-    );
   return designSystemController.opslistWidget(
-    filtro: filtro,
-    can: testeFunc,
-    check: testeFunc,
-    save: testeFunc,
+    filtro: opsController.opsListEmExpedicao,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
 }
@@ -132,13 +113,10 @@ _emExpedicao() {
 _todasOps() {
   return designSystemController.opslistWidget(
     filtro: opsController.opsListAll,
-    can: testeFunc,
-    check: testeFunc,
-    save: testeFunc,
+    can: opsController.setCancelarOP,
+    check: opsController.setCheckOP,
+    save: opsController.setInfoOP,
+    prioridade: opsController.setPrioridadeOP,
     up: false,
   );
-}
-
-testeFunc(OpsModel o) {
-  print("op: ${o.op}");
 }

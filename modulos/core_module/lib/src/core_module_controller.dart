@@ -12,6 +12,7 @@ class CoreModuleController extends GetxController
     messageListener(
       message: message,
     );
+    pageAtual(Get.find<GetStorage>().read("pageAtual"));
   }
 
   //Controller de Loading
@@ -19,6 +20,9 @@ class CoreModuleController extends GetxController
 
   //Controller de Messages
   final message = Rxn<MessageModel>();
+
+  //Controller de Pages
+  final pageAtual = 0.obs;
 
   //Controller de Query
   final _size = Get.size.obs;

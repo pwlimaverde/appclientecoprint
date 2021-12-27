@@ -1,7 +1,7 @@
 name: ecoprint_design_system_module
 description: Modulo responsável pelo gerenciamento do design system
 publish_to: 'none'
-version: 0.0.0-alpha.3
+version: 0.0.0-alpha.4
 homepage:
 
 environment:
@@ -9,6 +9,8 @@ environment:
   flutter: ">=2.8.1"
 
 dependencies:
+  pdf: ^3.6.5
+  printing: ^5.6.6
   flutter:
     sdk: flutter
   dependency_module:

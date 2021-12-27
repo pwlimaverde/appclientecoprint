@@ -10,7 +10,6 @@ mixin LoaderMixin on GetxController {
       (loading) {
         if (loading) {
           WidgetsBinding.instance?.addPostFrameCallback((duration) async {
-            print("teste $loading");
             await Get.dialog(
               const Center(
                 child: CircularProgressIndicator(),
@@ -19,7 +18,6 @@ mixin LoaderMixin on GetxController {
             );
           });
         } else {
-          print("teste $loading");
           Get.back();
         }
       },
