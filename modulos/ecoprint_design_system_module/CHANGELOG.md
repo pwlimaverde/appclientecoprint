@@ -8,3 +8,6 @@ Finalização da configuração do versionamento e inicio do desenvolvimento.
 
 ## [0.0.0-alpha.3] - 12/12/2021.
 Widget OpsList abilitado.
+
+## [0.0.0-alpha.4] - 29/12/2021.
+Ajustes e aprimoramento do Widget OpsList.
