@@ -1,7 +1,8 @@
 const String opsAllQuery = """
 subscription{
   ops(order_by: {op: desc}){
-    op 
+    op
+    orcamento 
     servico  
     cancelada 
     cliente 
@@ -28,7 +29,8 @@ subscription{
 const String opsAllQuery2 = """
 query{
   ops(order_by: {op: desc}){
-    op 
+    op
+    orcamento 
     servico  
     cancelada 
     cliente 

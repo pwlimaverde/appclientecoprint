@@ -2,12 +2,13 @@ import 'dart:convert';
 
 class OpsModel {
   final int op;
+  final int orcamento;
   final String servico;
-  bool cancelada;
   final String cliente;
   final int quant;
   final String vendedor;
   final DateTime entrada;
+  bool cancelada;
   DateTime entrega;
   int? orderpcp;
   String? obs;
@@ -23,12 +24,13 @@ class OpsModel {
   bool? prioridade;
   OpsModel({
     required this.op,
+    required this.orcamento,
     required this.servico,
-    required this.cancelada,
     required this.cliente,
     required this.quant,
     required this.vendedor,
     required this.entrada,
+    required this.cancelada,
     required this.entrega,
     this.orderpcp,
     this.obs,
@@ -46,6 +48,7 @@ class OpsModel {
 
   OpsModel copyWith({
     int? op,
+    int? orcamento,
     String? servico,
     bool? cancelada,
     String? cliente,
@@ -68,6 +71,7 @@ class OpsModel {
   }) {
     return OpsModel(
       op: op ?? this.op,
+      orcamento: orcamento ?? this.orcamento,
       servico: servico ?? this.servico,
       cancelada: cancelada ?? this.cancelada,
       cliente: cliente ?? this.cliente,
@@ -93,6 +97,7 @@ class OpsModel {
   factory OpsModel.fromMap(Map<String, dynamic> map) {
     return OpsModel(
       op: map['op'],
+      orcamento: map['orcamento'],
       servico: map['servico'],
       cancelada: map['cancelada'],
       cliente: map['cliente'],
@@ -135,6 +140,7 @@ class OpsModel {
 
     return other is OpsModel &&
         other.op == op &&
+        other.orcamento == orcamento &&
         other.servico == servico &&
         other.cancelada == cancelada &&
         other.cliente == cliente &&
@@ -159,6 +165,7 @@ class OpsModel {
   @override
   int get hashCode {
     return op.hashCode ^
+        orcamento.hashCode ^
         servico.hashCode ^
         cancelada.hashCode ^
         cliente.hashCode ^
