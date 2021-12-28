@@ -11,12 +11,12 @@ class UploadCsvController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    _testeUpload();
+    _uploadCsvOps();
   }
 
-  final testeList = <List<String>>[].obs;
+  final uploadCsvOpsList = <String>[].obs;
 
-  Future<void> _testeUpload() async {
+  Future<void> _uploadCsvOps() async {
     try {
       final result = await carregarCsvUsecase(
         parameters: NoParams(
@@ -25,6 +25,7 @@ class UploadCsvController extends GetxController {
             nameFeature: "Teste upload Csv"),
       );
       if (result is SuccessReturn<List<String>>) {
+        uploadCsvOpsList(result.result);
         coreModuleController.message(
           MessageModel.info(
             title: "Teste sucesso",
