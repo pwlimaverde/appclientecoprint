@@ -10,18 +10,26 @@ class BodyUploadCsvWidget extends StatelessWidget {
       height: coreModuleController.sizeH,
       child: Container(
         color: Colors.black12,
-        child: Center(
-          child: Obx(() {
-            if (uploadCsvController.uploadCsvOpsList.isEmpty) {
-              return const Text(
-                "UploadCsv.",
-                style: TextStyle(fontSize: 30),
-              );
-            } else {
-              return Text(uploadCsvController.uploadCsvOpsList.toString(),
-                  style: const TextStyle(fontSize: 10));
-            }
-          }),
+        child: Column(
+          children: [
+            Center(
+              child: Obx(() {
+                if (uploadCsvController.uploadCsvOpsList.isEmpty) {
+                  return const Text(
+                    "UploadCsv.",
+                    style: TextStyle(fontSize: 30),
+                  );
+                } else {
+                  return Text(uploadCsvController.uploadCsvOpsList.toString(),
+                      style: const TextStyle(fontSize: 10));
+                }
+              }),
+            ),
+            IconButton(
+              onPressed: uploadCsvController.uploadCsvOps,
+              icon: const Icon(Icons.update),
+            ),
+          ],
         ),
       ),
     );
