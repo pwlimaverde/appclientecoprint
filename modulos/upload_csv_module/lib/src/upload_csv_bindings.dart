@@ -9,6 +9,9 @@ class UploadCsvBiding implements Bindings {
         carregarCsvUsecase: CarregarCsvUsecase(
           datasource: UploadCsvHtmlDatasource(),
         ),
+        processarCsvUsecase: ProcessarCsvUsecase(
+          datasource: ProcessarCsvEmOpsDatasource(),
+        ),
       );
     });
   }
