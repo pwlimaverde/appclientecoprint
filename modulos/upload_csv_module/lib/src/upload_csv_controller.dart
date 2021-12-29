@@ -17,6 +17,7 @@ class UploadCsvController extends GetxController {
   }
 
   final uploadCsvOpsList = <OpsModel>[].obs;
+  final uploadCsvOpsListError = <OpsModel>[].obs;
 
   Future<void> uploadCsvOps() async {
     try {
@@ -42,27 +43,36 @@ class UploadCsvController extends GetxController {
 
         if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {
           uploadCsvOpsList(opsProcessadas.result["listOps"]);
+          uploadCsvOpsListError(opsProcessadas.result["listOpsError"]);
+          coreModuleController.message(
+            MessageModel.info(
+              title: "Processamento de OPS",
+              message:
+                  "${opsProcessadas.result["listOps"]?.length} Processadas com Sucesso! \n ${opsProcessadas.result["listOpsError"]?.length} Processadas com Erro!",
+            ),
+          );
+        } else {
+          coreModuleController.message(
+            MessageModel.error(
+              title: 'Processamento de OPS',
+              message: 'Erro ao processar as OPS!',
+            ),
+          );
         }
-
-        coreModuleController.message(
-          MessageModel.info(
-            title: "Teste sucesso",
-            message: "Arquivo lido com sucesso!",
-          ),
-        );
       } else {
         coreModuleController.message(
           MessageModel.error(
-            message: 'Teste Erro',
-            title: 'Erro ao Ler o arquivo! 2',
+            title: 'Carregamento de arquivo CVS',
+            message:
+                'Erro ao carregar o arquivo - ${stringList.fold(success: (value) => value.result, error: (erro) => erro.error)}',
           ),
         );
       }
     } catch (e) {
       coreModuleController.message(
         MessageModel.error(
-          message: 'Teste Erro catch',
-          title: 'Erro ao Ler o arquivo!3',
+          title: 'Erro Upload CSV',
+          message: 'Erro ao fazer o upload das OPS - Erro: $e',
         ),
       );
     }

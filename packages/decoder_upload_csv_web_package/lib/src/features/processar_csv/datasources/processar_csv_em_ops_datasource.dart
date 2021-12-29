@@ -11,33 +11,34 @@ class ProcessarCsvEmOpsDatasource
         List<OpsModel> listOpsError = [];
 
         for (String item in parameters.listaBruta) {
-          List<String> i2 = _processamentoCsv(listaBruta: item);
+          List<String> listaProcessamentoInicial =
+              _processamentoCsv(listaBruta: item);
 
-          if (i2.isNotEmpty) {
+          if (listaProcessamentoInicial.isNotEmpty) {
             DateTime? entrada = _processamentoCsvEntrada(
-              listaProcessamentoInicial: i2,
+              listaProcessamentoInicial: listaProcessamentoInicial,
             );
             DateTime? entrega = _processamentoCsvEntrega(
-              listaProcessamentoInicial: i2,
+              listaProcessamentoInicial: listaProcessamentoInicial,
               entrada: entrada,
             );
             int? op = _processamentoCsvOp(
-              listaProcessamentoInicial: i2,
+              listaProcessamentoInicial: listaProcessamentoInicial,
             );
             int? orcamento = _processamentoCsvOrcamento(
-              listaProcessamentoInicial: i2,
+              listaProcessamentoInicial: listaProcessamentoInicial,
             );
             int? quantidade = _processamentoCsvQuantidade(
-              listaProcessamentoInicial: i2,
+              listaProcessamentoInicial: listaProcessamentoInicial,
             );
             String? servico = _processamentoCsvServico(
-              listaProcessamentoInicial: i2,
+              listaProcessamentoInicial: listaProcessamentoInicial,
             );
             String? cliente = _processamentoCsvCliente(
-              listaProcessamentoInicial: i2,
+              listaProcessamentoInicial: listaProcessamentoInicial,
             );
             String? vendedor = _processamentoCsvVendedor(
-              listaProcessamentoInicial: i2,
+              listaProcessamentoInicial: listaProcessamentoInicial,
             );
 
             if (entrada != null &&
@@ -67,7 +68,7 @@ class ProcessarCsvEmOpsDatasource
                 op: op ?? 0,
                 orcamento: orcamento ?? 0,
                 quant: quantidade ?? 0,
-                servico: servico ?? "erro descrição",
+                servico: servico ?? "erro serviço",
                 cliente: cliente ?? "erro cliente",
                 vendedor: vendedor ?? "erro vendedor",
                 cancelada: false,
