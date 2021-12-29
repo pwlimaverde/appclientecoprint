@@ -40,8 +40,12 @@ class UploadCsvController extends GetxController {
           ),
         );
 
-        if (opsProcessadas is SuccessReturn<List<OpsModel>>) {
-          uploadCsvOpsList(opsProcessadas.result);
+        if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {
+          // print("listOps - ${opsProcessadas.result["listOps"]?.length}");
+          // print(
+          //     "listOpsError - ${opsProcessadas.result["listOpsError"]?.length}");
+
+          uploadCsvOpsList(opsProcessadas.result["listOpsError"]);
         }
 
         coreModuleController.message(

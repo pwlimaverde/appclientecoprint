@@ -1,13 +1,16 @@
 import 'package:dependency_module/dependency_module.dart';
 
-import '../../../utils/parametros/parametos.dart';
-
-class ProcessarCsvEmOpsDatasource implements Datasource<List<OpsModel>> {
+class ProcessarCsvEmOpsDatasource
+    implements Datasource<Map<String, List<OpsModel>>> {
   @override
-  Future<List<OpsModel>> call({required ParametersReturnResult parameters}) {
+  Future<Map<String, List<OpsModel>>> call(
+      {required ParametersReturnResult parameters}) {
     try {
       if (parameters is ParametrosProcessarCsvEmOps) {
         List<OpsModel> listOps = [];
+        List<OpsModel> listOpsError = [];
+
+        // print(parameters.listaBruta);
 
         for (String item in parameters.listaBruta) {
           List<String> i2 = _processamentoCsv(listaBruta: item);
@@ -48,22 +51,45 @@ class ProcessarCsvEmOpsDatasource implements Datasource<List<OpsModel>> {
                 cliente != null &&
                 vendedor != null) {
               OpsModel up = OpsModel(
-                orcamento: orcamento,
-                cliente: cliente,
-                servico: servico,
                 entrada: entrada,
                 entrega: entrega,
                 op: op,
+                orcamento: orcamento,
                 quant: quantidade,
+                servico: servico,
+                cliente: cliente,
                 vendedor: vendedor,
                 cancelada: false,
               );
               listOps.add(up);
+            } else {
+              // print(entrada);
+              // print(entrega);
+              // print(op);
+              // print(orcamento);
+              // print(quantidade);
+              // print(servico);
+              // print(cliente);
+              // print(vendedor);
+              OpsModel upError = OpsModel(
+                entrada: entrada ?? designSystemController.now,
+                entrega: entrega ?? designSystemController.now,
+                op: op ?? 0,
+                orcamento: orcamento ?? 0,
+                quant: quantidade ?? 0,
+                servico: servico ?? "erro descrição",
+                cliente: cliente ?? "erro cliente",
+                vendedor: vendedor ?? "erro vendedor",
+                cancelada: false,
+                obs:
+                    " Falha no processamento em um ou mais campos! A OP não será salva no banco de dados!",
+              );
+              listOpsError.add(upError);
             }
           }
         }
 
-        return Future.value(listOps);
+        return Future.value({"listOps": listOps, "listOpsError": listOpsError});
       } else {
         throw Exception("Erro ao processar arquivo");
       }
@@ -112,15 +138,12 @@ class ProcessarCsvEmOpsDatasource implements Datasource<List<OpsModel>> {
           .replaceFirst(',', ',"')
           .trim()
           .split(',"');
+      // print("listaBruta: ${listaBruta}");
+      // print("===========================");
+      // print("listaProcessamentoInicial: $listaProcessamentoInicial");
+      // print("===========================");
       return listaProcessamentoInicial;
     } catch (e) {
-      coreModuleController.message(
-        MessageModel.error(
-          title:
-              'Erro ao processar a OP. Parâmetros incarretos: ${listaBruta.substring(0, 5)}',
-          message: 'Teste Erro',
-        ),
-      );
       return [];
     }
   }

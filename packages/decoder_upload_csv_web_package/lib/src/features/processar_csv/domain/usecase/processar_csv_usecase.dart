@@ -1,14 +1,15 @@
 import 'package:dependency_module/dependency_module.dart';
 
-class ProcessarCsvUsecase extends UseCaseImplement<List<OpsModel>> {
-  final Datasource<List<OpsModel>> datasource;
+class ProcessarCsvUsecase
+    extends UseCaseImplement<Map<String, List<OpsModel>>> {
+  final Datasource<Map<String, List<OpsModel>>> datasource;
 
   ProcessarCsvUsecase({
     required this.datasource,
   });
 
   @override
-  Future<ReturnSuccessOrError<List<OpsModel>>> call({
+  Future<ReturnSuccessOrError<Map<String, List<OpsModel>>>> call({
     required ParametersReturnResult parameters,
   }) {
     final result = returnUseCase(
