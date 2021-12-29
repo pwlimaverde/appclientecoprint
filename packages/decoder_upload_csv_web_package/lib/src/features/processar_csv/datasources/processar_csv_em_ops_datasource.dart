@@ -178,8 +178,15 @@ class ProcessarCsvEmOpsDatasource
     required List<String> listaProcessamentoInicial,
   }) {
     try {
-      int? orcamento =
-          int.parse(listaProcessamentoInicial[0].replaceAll("|", " ").trim());
+      print(listaProcessamentoInicial);
+      print(listaProcessamentoInicial[0]
+          .replaceAll("|", " ")
+          .trim()
+          .substring(0, 5));
+      int? orcamento = int.parse(listaProcessamentoInicial[0]
+          .replaceAll("|", " ")
+          .trim()
+          .substring(0, 5));
       return orcamento;
     } catch (e) {
       return null;

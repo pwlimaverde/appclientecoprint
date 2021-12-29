@@ -42,7 +42,7 @@ class UploadCsvController extends GetxController {
 
         if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {
           // print("listOps - ${opsProcessadas.result["listOps"]?.length}");
-          print("listOps - ${opsProcessadas.result["listOps"]?[0].artefinal}");
+          print("listOps - ${opsProcessadas.result["listOpsError"]?[0].op}");
           print(
               "listOpsError - ${opsProcessadas.result["listOpsError"]?.length}");
 
