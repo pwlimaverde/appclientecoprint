@@ -25,7 +25,7 @@ class UploadCsvController extends GetxController {
             error: ErroUploadCsv(
               message: 'Erro ao carregar o arquivo CSV',
             ),
-            showRuntimeMilliseconds: true,
+            showRuntimeMilliseconds: false,
             nameFeature: "Upload Csv"),
       );
       if (stringList is SuccessReturn<List<String>>) {
@@ -33,7 +33,7 @@ class UploadCsvController extends GetxController {
           parameters: ParametrosProcessarCsvEmOps(
             listaBruta: stringList.result,
             nameFeature: "Processamento Csv",
-            showRuntimeMilliseconds: true,
+            showRuntimeMilliseconds: false,
             error: ErroProcessamentoCsv(
               message: 'Erro ao processar o arquivo CSV',
             ),
@@ -41,12 +41,7 @@ class UploadCsvController extends GetxController {
         );
 
         if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {
-          // print("listOps - ${opsProcessadas.result["listOps"]?.length}");
-          print("listOps - ${opsProcessadas.result["listOpsError"]?[0].op}");
-          print(
-              "listOpsError - ${opsProcessadas.result["listOpsError"]?.length}");
-
-          uploadCsvOpsList(opsProcessadas.result["listOpsError"]);
+          uploadCsvOpsList(opsProcessadas.result["listOps"]);
         }
 
         coreModuleController.message(

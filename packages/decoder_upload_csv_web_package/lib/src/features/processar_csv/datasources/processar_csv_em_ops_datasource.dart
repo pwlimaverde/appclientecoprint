@@ -10,8 +10,6 @@ class ProcessarCsvEmOpsDatasource
         List<OpsModel> listOps = [];
         List<OpsModel> listOpsError = [];
 
-        // print(parameters.listaBruta);
-
         for (String item in parameters.listaBruta) {
           List<String> i2 = _processamentoCsv(listaBruta: item);
 
@@ -63,14 +61,6 @@ class ProcessarCsvEmOpsDatasource
               );
               listOps.add(up);
             } else {
-              // print(entrada);
-              // print(entrega);
-              // print(op);
-              // print(orcamento);
-              // print(quantidade);
-              // print(servico);
-              // print(cliente);
-              // print(vendedor);
               OpsModel upError = OpsModel(
                 entrada: entrada ?? designSystemController.now,
                 entrega: entrega ?? designSystemController.now,
@@ -178,11 +168,6 @@ class ProcessarCsvEmOpsDatasource
     required List<String> listaProcessamentoInicial,
   }) {
     try {
-      print(listaProcessamentoInicial);
-      print(listaProcessamentoInicial[0]
-          .replaceAll("|", " ")
-          .trim()
-          .substring(0, 5));
       int? orcamento = int.parse(listaProcessamentoInicial[0]
           .replaceAll("|", " ")
           .trim()
