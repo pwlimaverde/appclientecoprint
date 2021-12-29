@@ -5,7 +5,14 @@ class UploadCsvBiding implements Bindings {
   @override
   void dependencies() {
     Get.lazyPut<UploadCsvController>(() {
-      return UploadCsvController();
+      return UploadCsvController(
+        carregarCsvUsecase: CarregarCsvUsecase(
+          datasource: UploadCsvHtmlDatasource(),
+        ),
+        processarCsvUsecase: ProcessarCsvUsecase(
+          datasource: ProcessarCsvEmOpsDatasource(),
+        ),
+      );
     });
   }
 }

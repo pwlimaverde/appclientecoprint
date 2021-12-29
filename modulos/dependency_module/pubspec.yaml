@@ -31,6 +31,8 @@ dependencies:
     path: ../ops_module
   upload_csv_module:
     path: ../upload_csv_module
+  decoder_upload_csv_web_package:
+    path: ../../packages/decoder_upload_csv_web_package
 
 dev_dependencies:
   flutter_test:

@@ -78,13 +78,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  decoder_upload_csv_web_package:
+    dependency: "direct main"
+    description:
+      path: "../../packages/decoder_upload_csv_web_package"
+      relative: true
+    source: path
+    version: "0.0.0-alpha.1"
   ecoprint_design_system_module:
     dependency: "direct main"
     description:
       path: "../ecoprint_design_system_module"
       relative: true
     source: path
-    version: "0.0.0-alpha.3"
+    version: "0.0.0-alpha.4"
   either_dart:
     dependency: transitive
     description:
@@ -232,7 +239,7 @@ packages:
       path: "../ops_module"
       relative: true
     source: path
-    version: "0.0.0-alpha.3"
+    version: "0.0.0-alpha.4"
   path:
     dependency: transitive
     description:
