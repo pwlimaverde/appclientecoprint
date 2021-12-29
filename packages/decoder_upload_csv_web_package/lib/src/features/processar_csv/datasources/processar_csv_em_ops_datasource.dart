@@ -138,10 +138,6 @@ class ProcessarCsvEmOpsDatasource
           .replaceFirst(',', ',"')
           .trim()
           .split(',"');
-      // print("listaBruta: ${listaBruta}");
-      // print("===========================");
-      // print("listaProcessamentoInicial: $listaProcessamentoInicial");
-      // print("===========================");
       return listaProcessamentoInicial;
     } catch (e) {
       return [];
