@@ -27,12 +27,15 @@ class UploadCsvHtmlDatasource implements Datasource<List<String>> {
           }
           dynamic bytes = convert.base64.decode(base64);
           String decoderByte = convert.utf8.decode(bytes);
+          print(decoderByte);
           String decoderSplitMap = decoderByte.splitMapJoin(
               (RegExp(r'\d{5},\D')),
               onMatch: (m) => '${m.group(0)}',
               onNonMatch: (n) => "$n--->---");
+          print(decoderSplitMap);
           List<String> decoderRow = decoderSplitMap.split(RegExp(r'--->---'));
           decoderRow.removeAt(0);
+          print(decoderRow);
           return decoderRow;
         });
 
