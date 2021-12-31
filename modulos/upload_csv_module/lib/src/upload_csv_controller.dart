@@ -15,6 +15,8 @@ class UploadCsvController extends GetxController {
   });
 
   final uploadCsvOpsList = <OpsModel>[].obs;
+  final updateCsvOpsList = <OpsModel>[].obs;
+  final duplicadasCsvOpsList = <OpsModel>[].obs;
   final uploadCsvOpsListError = <OpsModel>[].obs;
 
   Future<void> setUploadOps() async {
@@ -69,15 +71,29 @@ class UploadCsvController extends GetxController {
         : null;
 
     if (opsProcessadas is SuccessReturn<Map<String, List<OpsModel>>>) {
+      final listOps = opsProcessadas.result["listOps"] ?? [];
+      final listOpsError = opsProcessadas.result["listOpsError"] ?? [];
       coreModuleController.message(
         MessageModel.info(
           title: "Processamento de OPS",
           message:
-              "${opsProcessadas.result["listOps"]?.length} Processadas com Sucesso! \n ${opsProcessadas.result["listOpsError"]?.length} Processadas com Erro!",
+              "${listOps.length} Processadas com Sucesso! \n ${listOpsError.length} Processadas com Erro!",
         ),
       );
-
-      return opsProcessadas.result["listOps"];
+      if (listOpsError.isNotEmpty) {
+        uploadCsvOpsListError(listOpsError);
+      }
+      if (listOps.isNotEmpty) {
+        return listOps;
+      } else {
+        coreModuleController.message(
+          MessageModel.error(
+            title: 'Processamento de OPS',
+            message: 'Erro! nenhuma OP a ser processada!',
+          ),
+        );
+        return null;
+      }
     } else {
       coreModuleController.message(
         MessageModel.error(
@@ -122,6 +138,7 @@ class UploadCsvController extends GetxController {
     if (triagemOps != null) {
       final listOpsNovas = triagemOps["listOpsNovas"] ?? [];
       final listOpsUpdate = triagemOps["listOpsUpdate"] ?? [];
+      final listOpsDuplicadas = triagemOps["listOpsDuplicadas"] ?? [];
       if (listOpsNovas.isNotEmpty) {
         final Iterable<Future<OpsModel>> enviarOpsFuturo =
             listOpsNovas.map(_enviarNovaOp);
@@ -135,6 +152,7 @@ class UploadCsvController extends GetxController {
             message: "Upload de ${listOpsNovas.length} Ops com Sucesso!",
           ),
         );
+        uploadCsvOpsList(listOpsNovas);
       }
       if (listOpsUpdate.isNotEmpty) {
         final Iterable<Future<OpsModel>> enviarOpsFuturo =
@@ -149,6 +167,16 @@ class UploadCsvController extends GetxController {
             message: "Update de ${listOpsUpdate.length} Ops com Sucesso!",
           ),
         );
+        updateCsvOpsList(listOpsUpdate);
+      }
+      if (listOpsDuplicadas.isNotEmpty) {
+        coreModuleController.message(
+          MessageModel.info(
+            title: "Upload de OPS",
+            message: "${listOpsDuplicadas.length} Ops duplicadas!",
+          ),
+        );
+        duplicadasCsvOpsList(listOpsDuplicadas);
       }
     }
   }
