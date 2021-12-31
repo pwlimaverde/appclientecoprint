@@ -1,20 +1,18 @@
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
-import 'features/mutation_ops/domain/usecase/mutation_ops_mutation.dart';
-import 'utils/documents/ops_document.dart';
-import 'utils/errors/erros_ops.dart';
-import 'utils/parametros/parametros.dart';
 
 class OpsController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final CarregarTodasOpsUsecase carregarTodasOpsUsecase;
   final CarregarTodasOpsQueryUsecase carregarTodasOpsQueryUsecase;
-  final MutationOpsUsecase mutationOpsUsecase;
+  final MutationOpsUsecase mutationUpdateOpsUsecase;
+  final MutationOpsUsecase mutationInsetOpsUsecase;
 
   OpsController({
     required this.carregarTodasOpsUsecase,
     required this.carregarTodasOpsQueryUsecase,
-    required this.mutationOpsUsecase,
+    required this.mutationUpdateOpsUsecase,
+    required this.mutationInsetOpsUsecase,
   });
 
   final List<Tab> myTabs = <Tab>[
@@ -72,6 +70,8 @@ class OpsController extends GetxController
         return opsListEmArteFinal;
     }
   }
+
+  List<OpsModel> get opsListAllCompleta => _opsListAll;
 
   List<OpsModel> get opsListAll => buscando.value && busca.value != null
       ? _opsListAll.where(
@@ -222,7 +222,7 @@ class OpsController extends GetxController
   }
 
   void setCancelarOP(OpsModel model) {
-    _mutationOps(
+    mutationUpdateOps(
       parametros: ParametrosOpsMutation(
         nameFeature: 'Cancelar OP',
         error: ErroMutationOp(message: 'Erro ao alterar o cancelamento'),
@@ -252,7 +252,7 @@ class OpsController extends GetxController
       return;
     }
     if (model.artefinal == null) {
-      _mutationOps(
+      mutationUpdateOps(
         parametros: ParametrosOpsMutation(
           nameFeature: 'Check Arte Final',
           error: ErroMutationOp(message: 'Erro ao alterar o Check Arte Final'),
@@ -275,7 +275,7 @@ class OpsController extends GetxController
         ),
       );
     } else if (model.produzido == null) {
-      _mutationOps(
+      mutationUpdateOps(
         parametros: ParametrosOpsMutation(
           nameFeature: 'Check Produzido',
           error: ErroMutationOp(message: 'Erro ao alterar o Check Produzido'),
@@ -298,7 +298,7 @@ class OpsController extends GetxController
         ),
       );
     } else {
-      _mutationOps(
+      mutationUpdateOps(
         parametros: ParametrosOpsMutation(
           nameFeature: 'Check Entregue',
           error: ErroMutationOp(message: 'Erro ao alterar o Check Entregue'),
@@ -325,7 +325,7 @@ class OpsController extends GetxController
 
   void setPrioridadeOP(OpsModel model) {
     if (model.cancelada == false && model.entregue == null) {
-      _mutationOps(
+      mutationUpdateOps(
         parametros: ParametrosOpsMutation(
           nameFeature: 'Prioridade da Op',
           error: ErroMutationOp(message: 'Erro ao alterar a prioridade!'),
@@ -367,7 +367,7 @@ class OpsController extends GetxController
   }
 
   void setInfoOP(OpsModel model) {
-    _mutationOps(
+    mutationUpdateOps(
       parametros: ParametrosOpsMutation(
         nameFeature: 'Atualização de informações da OP',
         error: ErroMutationOp(message: 'Erro ao Atualizar as informações'),
@@ -410,9 +410,32 @@ class OpsController extends GetxController
     );
   }
 
-  Future<void> _mutationOps({required ParametrosOpsMutation parametros}) async {
+  Future<void> mutationUpdateOps(
+      {required ParametrosOpsMutation parametros}) async {
     try {
-      final result = await mutationOpsUsecase(
+      final result = await mutationUpdateOpsUsecase(
+        parameters: parametros,
+      );
+      if (result is SuccessReturn<bool>) {
+        coreModuleController.message(
+          parametros.messageInfo,
+        );
+      } else {
+        coreModuleController.message(
+          parametros.messageError,
+        );
+      }
+    } catch (e) {
+      coreModuleController.message(
+        parametros.messageError,
+      );
+    }
+  }
+
+  Future<void> mutationInsertOps(
+      {required ParametrosOpsMutation parametros}) async {
+    try {
+      final result = await mutationInsetOpsUsecase(
         parameters: parametros,
       );
       if (result is SuccessReturn<bool>) {

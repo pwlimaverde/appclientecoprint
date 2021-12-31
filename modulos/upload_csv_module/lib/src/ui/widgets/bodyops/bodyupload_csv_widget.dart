@@ -26,7 +26,9 @@ class BodyUploadCsvWidget extends StatelessWidget {
               }),
             ),
             IconButton(
-              onPressed: uploadCsvController.uploadCsvOps,
+              onPressed: () {
+                uploadCsvController.setUploadOps();
+              },
               icon: const Icon(Icons.update),
             ),
           ],

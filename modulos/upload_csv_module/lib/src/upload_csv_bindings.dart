@@ -1,5 +1,6 @@
 import 'package:dependency_module/dependency_module.dart';
-import 'upload_csv_controller.dart';
+import 'features/upload_ops/datasources/upload_ops_datasource.dart';
+import 'features/upload_ops/domain/usecase/upload_ops_usecase.dart';
 
 class UploadCsvBiding implements Bindings {
   @override
@@ -11,6 +12,9 @@ class UploadCsvBiding implements Bindings {
         ),
         processarCsvUsecase: ProcessarCsvUsecase(
           datasource: ProcessarCsvEmOpsDatasource(),
+        ),
+        uploadOpsUsecase: UploadOpsUsecase(
+          datasource: UploadOpsDatasource(),
         ),
       );
     });

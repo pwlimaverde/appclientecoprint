@@ -25,3 +25,16 @@ class ErroProcessamentoCsv implements AppError {
     return "ErroUploadCsv - $message";
   }
 }
+
+class ErroUploadOps implements AppError {
+  @override
+  String message;
+  ErroUploadOps({
+    required this.message,
+  });
+
+  @override
+  String toString() {
+    return "ErroUploadOps - $message";
+  }
+}
