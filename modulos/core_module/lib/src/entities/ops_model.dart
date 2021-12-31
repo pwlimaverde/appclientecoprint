@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class OpsModel {
+  int? id;
   final int op;
   final int orcamento;
   final String servico;
@@ -23,6 +24,7 @@ class OpsModel {
   DateTime? artefinal;
   bool? prioridade;
   OpsModel({
+    this.id,
     required this.op,
     required this.orcamento,
     required this.servico,
@@ -47,6 +49,7 @@ class OpsModel {
   });
 
   OpsModel copyWith({
+    int? id,
     int? op,
     int? orcamento,
     String? servico,
@@ -70,6 +73,7 @@ class OpsModel {
     bool? prioridade,
   }) {
     return OpsModel(
+      id: id ?? this.id,
       op: op ?? this.op,
       orcamento: orcamento ?? this.orcamento,
       servico: servico ?? this.servico,
@@ -96,6 +100,7 @@ class OpsModel {
 
   factory OpsModel.fromMap(Map<String, dynamic> map) {
     return OpsModel(
+      id: map['id'],
       op: map['op'],
       orcamento: map['orcamento'],
       servico: map['servico'],
@@ -131,7 +136,7 @@ class OpsModel {
 
   @override
   String toString() {
-    return 'OpsModel(op: $op, servico: $servico)';
+    return 'OpsModel(id: $id, op: $op, servico: $servico)';
   }
 
   @override
@@ -139,27 +144,28 @@ class OpsModel {
     if (identical(this, other)) return true;
 
     return other is OpsModel &&
-        other.op == op &&
-        other.orcamento == orcamento &&
-        other.servico == servico &&
-        other.cancelada == cancelada &&
-        other.cliente == cliente &&
-        other.obs == obs &&
-        other.quant == quant &&
-        other.vendedor == vendedor &&
-        other.entrada == entrada &&
-        other.produzido == produzido &&
-        other.entrega == entrega &&
-        other.orderpcp == orderpcp &&
-        other.entregue == entregue &&
-        other.entregaprog == entregaprog &&
-        other.impressao == impressao &&
-        other.ryobi == ryobi &&
-        other.sm2c == sm2c &&
-        other.ryobi750 == ryobi750 &&
-        other.flexo == flexo &&
-        other.artefinal == artefinal &&
-        other.prioridade == prioridade;
+            other.op == op &&
+            other.orcamento == orcamento &&
+            other.servico == servico &&
+            other.cliente == cliente &&
+            other.quant == quant &&
+            other.vendedor == vendedor &&
+            other.entrega == entrega
+        // other.cancelada == cancelada &&
+        // other.obs == obs &&
+        // other.entrada == entrada &&
+        // other.produzido == produzido &&
+        // other.orderpcp == orderpcp &&
+        // other.entregue == entregue &&
+        // other.entregaprog == entregaprog &&
+        // other.impressao == impressao &&
+        // other.ryobi == ryobi &&
+        // other.sm2c == sm2c &&
+        // other.ryobi750 == ryobi750 &&
+        // other.flexo == flexo &&
+        // other.artefinal == artefinal &&
+        // other.prioridade == prioridade
+        ;
   }
 
   @override

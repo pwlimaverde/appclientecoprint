@@ -19,8 +19,11 @@ class CoreModuleBindings implements Bindings {
         carregarTodasOpsQueryUsecase: CarregarTodasOpsQueryUsecase(
           datasource: CarregarTodasOpsQueryDatasource(),
         ),
-        mutationOpsUsecase: MutationOpsUsecase(
-          datasource: OpsMutationDatasource(),
+        mutationUpdateOpsUsecase: MutationOpsUsecase(
+          datasource: OpsUpdateMutationHasuraDatasource(),
+        ),
+        mutationInsetOpsUsecase: MutationOpsUsecase(
+          datasource: OpsInsertMutationHasuraDatasource(),
         ),
       ),
       permanent: true,

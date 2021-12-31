@@ -1,7 +1,7 @@
 import 'package:dependency_module/dependency_module.dart';
 import 'package:flutter/material.dart';
 import 'package:ops_module/src/utils/errors/erros_ops.dart';
-import 'package:ops_module/src/utils/parametros/parametros.dart';
+import 'package:ops_module/src/utils/parametros/parametros_ops_module.dart';
 
 class BodyOpsWidget extends StatelessWidget {
   const BodyOpsWidget({Key? key}) : super(key: key);

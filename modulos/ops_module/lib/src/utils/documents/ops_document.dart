@@ -1,6 +1,7 @@
 const String opsAllQuery = """
 subscription{
   ops(order_by: {op: desc}){
+    id
     op
     orcamento 
     servico  
@@ -29,6 +30,7 @@ subscription{
 const String opsAllQuery2 = """
 query{
   ops(order_by: {op: desc}){
+    id
     op
     orcamento 
     servico  
@@ -101,16 +103,18 @@ mutation InfoOps(\$op: Int, \$orderpcp : Int, \$entrega: date, \$entregaprog: da
 }
 """;
 
-const String opsCan = """
-query (\$op: Int) {
-  ops(where: {op: {_eq: \$op}}) {
-    cancelada
+const String opsUpdateMutation = """
+mutation InfoOps(\$op: Int, \$servico: String, \$cliente: String, \$quant : Int, \$vendedor: String, \$entrega: date) {
+  update_ops(where: {op: {_eq: \$op}}, _set: {servico: \$servico, cliente: \$cliente, quant: \$quant, vendedor: \$vendedor, entrega: \$entrega}) {
+    affected_rows
   }
 }
 """;
 
-
-
-//const String opsQuery = """
-//query{ops{op servico acabamento acm cancelada cliente coa colagem com corte cva cvm1 cvm2 entrada entrega entregue flexo id impressao lam1 laminacao obs orcamento produzido quant ryobi sm2c ryobi750 valor vendedor}}
-//""";
+const String uploadOpsMutation = """
+mutation InsertOps(\$cliente: String, \$op: Int, \$orcamento: Int, \$quant: Int, \$servico: String, \$vendedor: String, \$entrega: date, \$entrada: date) {
+  insert_ops(objects: {cliente: \$cliente, op: \$op, orcamento: \$orcamento, quant: \$quant, servico: \$servico, vendedor: \$vendedor, entrega: \$entrega, entrada: \$entrada}) {
+    affected_rows
+  }
+}
+""";
