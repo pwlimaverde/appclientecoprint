@@ -42,7 +42,9 @@ _tabBar() {
         color: Colors.white,
         fontSize: 13,
       ),
-      tabs: opsController.myTabs,
+      tabs: coreModuleController.showMenu
+          ? opsController.myTabsSmall
+          : opsController.myTabs,
     ),
   );
 }

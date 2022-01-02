@@ -23,7 +23,7 @@ class OpslistPrintWidget extends pw.StatelessWidget {
         itemCount: filtro.length,
         itemBuilder: (context, index) {
           OpsModel o = filtro[index];
-          double size = coreModuleController.size;
+          double size = 1300;
           String cliente =
               o.cliente.length >= 35 ? o.cliente.substring(0, 35) : o.cliente;
           return pw.Container(

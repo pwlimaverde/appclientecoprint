@@ -9,3 +9,6 @@ Configuração do load e mensagens gerais.
 
 ## [0.0.0-alpha.3.1] - 23/11/2021.
 Teste bug fix.
+
+## [1.0.0] - 02/01/2022.
+Inclusão da variavel global versaoAtual.
