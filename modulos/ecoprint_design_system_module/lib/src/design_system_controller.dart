@@ -378,11 +378,11 @@ class DesignSystemController extends GetxController {
         content: SizedBox(
           width: coreModuleController.getSizeProporcao(
             size: coreModuleController.size,
-            proporcao: 70,
+            proporcao: 60,
           ),
           height: coreModuleController.getSizeProporcao(
             size: coreModuleController.sizeH,
-            proporcao: 70,
+            proporcao: 60,
           ),
           child: _pdf2(
             filtro: opsController.filtroPrint,

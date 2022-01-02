@@ -30,3 +30,6 @@ Reinicio do versionamento pelo Gitflow.
 
 ## [0.0.0-alpha.9] - 26/12/2021.
 Configuração da api hasura no modulo OPS finalizada.
+
+## [1.0.0] - 02/01/2022.
+Configuração deploy inicial.
