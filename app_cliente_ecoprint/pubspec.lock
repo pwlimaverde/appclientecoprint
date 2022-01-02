@@ -63,7 +63,7 @@ packages:
       path: "../modulos/core_module"
       relative: true
     source: path
-    version: "0.0.0-alpha.3.1"
+    version: "1.0.0"
   crypto:
     dependency: transitive
     description:
@@ -98,7 +98,7 @@ packages:
       path: "../modulos/ecoprint_design_system_module"
       relative: true
     source: path
-    version: "0.0.0-alpha.4"
+    version: "1.0.0"
   either_dart:
     dependency: transitive
     description:
@@ -246,7 +246,7 @@ packages:
       path: "../modulos/ops_module"
       relative: true
     source: path
-    version: "0.0.0-alpha.4"
+    version: "1.0.0"
   path:
     dependency: transitive
     description:
@@ -440,7 +440,7 @@ packages:
       path: "../modulos/upload_csv_module"
       relative: true
     source: path
-    version: "0.0.0-alpha.2"
+    version: "1.0.0"
   uuid:
     dependency: transitive
     description:
