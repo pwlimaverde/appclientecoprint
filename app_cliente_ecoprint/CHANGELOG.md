@@ -33,3 +33,11 @@ Configuração da api hasura no modulo OPS finalizada.
 
 ## [1.0.0] - 02/01/2022.
 Configuração deploy inicial.
+1 - ecoprint_design_system_module - 1.0.0:
+    1.1 - Ajuste na proporção do print.
+    1.2 - Visualização da versão atual no header.
+2 - upload_csv_module - 1.0.0:
+    2.1 - Limpeza das listas ao setar upload.
+    2.2 - Criada myTabsSmall para alternar quando o showmenu estiver ativo.
+3 - core_module - 1.0.0 - Inclusão da variavel global versaoAtual.
+4 - ops_module - 1.0.0 - Criada myTabsSmall para alternar quando o showmenu estiver ativo.

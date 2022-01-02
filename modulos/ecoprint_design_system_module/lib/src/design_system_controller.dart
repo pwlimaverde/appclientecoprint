@@ -39,6 +39,7 @@ class DesignSystemController extends GetxController {
         preferredSize: const Size.fromHeight(hederHeight),
         child: HeaderWidget(
           titulo: "Sistema Ecoprint",
+          subtitulo: versaoAtual,
           actions: coreModuleController.pageAtual.value == 2
               ? <Widget>[
                   _iconButtonSearch(),
