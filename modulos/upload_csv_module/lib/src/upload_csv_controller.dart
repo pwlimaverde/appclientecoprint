@@ -23,6 +23,13 @@ class UploadCsvController extends GetxController
     const Tab(text: "Ops com erro"),
   ];
 
+  final List<Tab> myTabsSmall = <Tab>[
+    const Tab(text: "Novas"),
+    const Tab(text: "Atual."),
+    const Tab(text: "Dupli."),
+    const Tab(text: "Erro"),
+  ];
+
   late TabController _tabController;
 
   TabController get tabController => _tabController;
@@ -41,10 +48,7 @@ class UploadCsvController extends GetxController
 
   @override
   InternalFinalCallback<void> get onDelete {
-    uploadCsvOpsList.clear();
-    updateCsvOpsList.clear();
-    duplicadasCsvOpsList.clear();
-    uploadCsvOpsListError.clear();
+    _clearLists();
     return super.onDelete;
   }
 
@@ -53,7 +57,15 @@ class UploadCsvController extends GetxController
   final duplicadasCsvOpsList = <OpsModel>[].obs;
   final uploadCsvOpsListError = <OpsModel>[].obs;
 
+  void _clearLists() {
+    uploadCsvOpsList.clear();
+    updateCsvOpsList.clear();
+    duplicadasCsvOpsList.clear();
+    uploadCsvOpsListError.clear();
+  }
+
   Future<void> setUploadOps() async {
+    _clearLists();
     await _uploadOps(
       triagemOps: await _triagemOps(
         listaOps: await _processarOps(

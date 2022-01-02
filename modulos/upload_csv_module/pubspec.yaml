@@ -1,7 +1,7 @@
 name: upload_csv_module
 description: Modulo de upload das OPS por arquivo CSV
 publish_to: 'none'
-version: 0.0.0-alpha.2
+version: 1.0.0
 homepage:
 
 environment:

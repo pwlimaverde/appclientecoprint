@@ -11,3 +11,7 @@ Widget OpsList abilitado.
 
 ## [0.0.0-alpha.4] - 29/12/2021.
 Ajustes e aprimoramento do Widget OpsList.
+
+## [1.0.0] - 02/01/2022.
+1 - Ajuste na proporção do print.
+2 - Visualização da versão atual no header

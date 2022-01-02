@@ -45,7 +45,9 @@ _tabBar() {
         color: Colors.white,
         fontSize: 13,
       ),
-      tabs: uploadCsvController.myTabs,
+      tabs: coreModuleController.showMenu
+          ? uploadCsvController.myTabsSmall
+          : uploadCsvController.myTabs,
     ),
   );
 }

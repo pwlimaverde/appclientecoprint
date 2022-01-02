@@ -23,6 +23,14 @@ class OpsController extends GetxController
     const Tab(text: "Todas Ops"),
   ];
 
+  final List<Tab> myTabsSmall = <Tab>[
+    const Tab(text: "Art. Fin."),
+    const Tab(text: "Prod."),
+    const Tab(text: "Urgên."),
+    const Tab(text: "Exped."),
+    const Tab(text: "Todas"),
+  ];
+
   late TabController _tabController;
 
   TabController get tabController => _tabController;
