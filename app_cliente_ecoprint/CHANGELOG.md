@@ -41,3 +41,6 @@ Configuração deploy inicial.
     2.2 - Criada myTabsSmall para alternar quando o showmenu estiver ativo.
 3 - core_module - 1.0.0 - Inclusão da variavel global versaoAtual.
 4 - ops_module - 1.0.0 - Criada myTabsSmall para alternar quando o showmenu estiver ativo.
+
+## [1.0.1] - 03/01/2022.
+1 - decoder_upload_csv_web_package - 1.0.1 - Ajuste para evitar upload de ops com mais de 60 dais de entrada.
