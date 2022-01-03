@@ -8,6 +8,6 @@ final UploadCsvController uploadCsvController = Get.find();
 const double menuWidth = 200;
 const double hederHeight = 60;
 const double tabHeight = 40;
-const String versaoAtual = "1.0.0";
+const String versaoAtual = "1.0.2";
 
 const String baseHasura = "https://sistemaecoprint.herokuapp.com/v1/graphql";

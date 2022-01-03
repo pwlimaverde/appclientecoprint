@@ -12,3 +12,6 @@ Teste bug fix.
 
 ## [1.0.0] - 02/01/2022.
 Inclusão da variavel global versaoAtual.
+
+## [1.0.2] - 03/01/2022.
+Atualização da verção versaoAtual.
