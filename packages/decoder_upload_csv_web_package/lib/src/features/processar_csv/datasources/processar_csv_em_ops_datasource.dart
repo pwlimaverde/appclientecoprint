@@ -159,7 +159,17 @@ class ProcessarCsvEmOpsDatasource
       DateTime? entradaProcessada = DateTime.parse(
         "${entradaBruta.substring(6, 10)}-${entradaBruta.substring(3, 5)}-${entradaBruta.substring(0, 2)}",
       );
-      return entradaProcessada;
+      int dif = int.parse(
+        designSystemController.now
+            .difference(entradaProcessada)
+            .inDays
+            .toString(),
+      );
+      if (dif < 60) {
+        return entradaProcessada;
+      } else {
+        null;
+      }
     } catch (e) {
       return null;
     }
