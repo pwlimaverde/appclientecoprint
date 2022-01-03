@@ -44,3 +44,6 @@ Configuração deploy inicial.
 
 ## [1.0.1] - 03/01/2022.
 1 - decoder_upload_csv_web_package - 1.0.1 - Ajuste para evitar upload de ops com mais de 60 dais de entrada.
+
+## [1.0.2] - 03/01/2022.
+1 - core_module - 1.0.2 - Atualização de versão.
