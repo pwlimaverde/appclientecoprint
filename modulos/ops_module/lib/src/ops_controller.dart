@@ -203,7 +203,7 @@ class OpsController extends GetxController
           error: ErroCarregarTodasOps(
             message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
           ),
-          showRuntimeMilliseconds: true,
+          showRuntimeMilliseconds: false,
           nameFeature: "Carregar Todas Ops",
         ),
       );
@@ -379,7 +379,7 @@ class OpsController extends GetxController
       parametros: ParametrosOpsMutation(
         nameFeature: 'Atualização de informações da OP',
         error: ErroMutationOp(message: 'Erro ao Atualizar as informações'),
-        showRuntimeMilliseconds: false,
+        showRuntimeMilliseconds: true,
         mutation: opsInfoMutation,
         variables: {
           "op": model.op,

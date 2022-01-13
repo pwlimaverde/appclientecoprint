@@ -1,4 +1,13 @@
 import 'dart:convert';
+import 'package:dependency_module/dependency_module.dart';
+
+class RxOpsModel {
+  final ryobi = false.obs;
+  final sm2c = false.obs;
+  final ryobi750 = false.obs;
+  final flexo = false.obs;
+  final prioridade = false.obs;
+}
 
 class OpsModel {
   int? id;
@@ -17,12 +26,25 @@ class OpsModel {
   DateTime? entregue;
   DateTime? entregaprog;
   DateTime? impressao;
-  bool? ryobi;
-  bool? sm2c;
-  bool? ryobi750;
-  bool? flexo;
   DateTime? artefinal;
-  bool? prioridade;
+
+  final rx = RxOpsModel();
+
+  bool get ryobi => rx.ryobi.value;
+  set ryobi(bool value) => rx.ryobi.value = value;
+
+  bool get sm2c => rx.sm2c.value;
+  set sm2c(bool value) => rx.sm2c.value = value;
+
+  bool get ryobi750 => rx.ryobi750.value;
+  set ryobi750(bool value) => rx.ryobi750.value = value;
+
+  bool get flexo => rx.flexo.value;
+  set flexo(bool value) => rx.flexo.value = value;
+
+  bool get prioridade => rx.prioridade.value;
+  set prioridade(bool value) => rx.prioridade.value = value;
+
   OpsModel({
     this.id,
     required this.op,
@@ -40,12 +62,12 @@ class OpsModel {
     this.entregue,
     this.entregaprog,
     this.impressao,
-    this.ryobi,
-    this.sm2c,
-    this.ryobi750,
-    this.flexo,
     this.artefinal,
-    this.prioridade,
+    bool ryobi = false,
+    bool sm2c = false,
+    bool ryobi750 = false,
+    bool flexo = false,
+    bool prioridade = false,
   });
 
   OpsModel copyWith({
@@ -99,7 +121,7 @@ class OpsModel {
   }
 
   factory OpsModel.fromMap(Map<String, dynamic> map) {
-    return OpsModel(
+    OpsModel model = OpsModel(
       id: map['id'],
       op: map['op'],
       orcamento: map['orcamento'],
@@ -121,14 +143,15 @@ class OpsModel {
           : null,
       impressao:
           map['impressao'] != null ? DateTime.parse(map['impressao']) : null,
-      ryobi: map['ryobi'],
-      sm2c: map['sm2c'],
-      ryobi750: map['ryobi750'],
-      flexo: map['flexo'],
       artefinal:
           map['artefinal'] != null ? DateTime.parse(map['artefinal']) : null,
       prioridade: map['prioridade'],
     );
+    model.ryobi = map['ryobi'] ?? false;
+    model.sm2c = map['sm2c'] ?? false;
+    model.ryobi750 = map['ryobi750'] ?? false;
+    model.flexo = map['flexo'] ?? false;
+    return model;
   }
 
   factory OpsModel.fromJson(String source) =>

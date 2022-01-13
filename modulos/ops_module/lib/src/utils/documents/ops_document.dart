@@ -103,6 +103,14 @@ mutation InfoOps(\$op: Int, \$orderpcp : Int, \$entrega: date, \$entregaprog: da
 }
 """;
 
+const String opsRyobiMutation = """
+mutation InfoOps(\$op: Int, \$ryobi: Boolean,) {
+  update_ops(where: {op: {_eq: \$op}}, _set: {ryobi: \$ryobi}) {
+    affected_rows
+  }
+}
+""";
+
 const String opsUpdateMutation = """
 mutation InfoOps(\$op: Int, \$servico: String, \$cliente: String, \$quant : Int, \$vendedor: String, \$entrega: date) {
   update_ops(where: {op: {_eq: \$op}}, _set: {servico: \$servico, cliente: \$cliente, quant: \$quant, vendedor: \$vendedor, entrega: \$entrega}) {
