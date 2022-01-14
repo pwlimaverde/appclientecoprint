@@ -117,64 +117,67 @@ class OpslistWidget extends StatelessWidget {
                     },
                   ),
                   up == false
-                      ? Card(
-                          elevation: 0.5,
-                          child: Container(
-                            padding: const EdgeInsets.all(2),
-                            width: 75,
-                            height: 82,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SwitcherWidget(
-                                  imp: opModel.impressao,
-                                  title: "Ryobi ",
-                                  crtL: opModel.ryobi,
-                                  mini: true,
-                                  onTap: () {
-                                    opModel.ryobi = opModel.impressao != null
-                                        ? false
-                                        : !opModel.ryobi;
-                                    save(opModel);
-                                  },
-                                ),
-                                SwitcherWidget(
-                                  imp: opModel.impressao,
-                                  title: "Ry750 ",
-                                  crtL: opModel.ryobi750,
-                                  mini: true,
-                                  onTap: () {
-                                    opModel.ryobi750 = opModel.impressao != null
-                                        ? false
-                                        : !opModel.ryobi750;
-                                    save(opModel);
-                                  },
-                                ),
-                                SwitcherWidget(
-                                  imp: opModel.impressao,
-                                  title: "SM 2c ",
-                                  crtL: opModel.sm2c,
-                                  mini: true,
-                                  onTap: () {
-                                    opModel.sm2c = opModel.impressao != null
-                                        ? false
-                                        : !opModel.sm2c;
-                                    save(opModel);
-                                  },
-                                ),
-                                SwitcherWidget(
-                                  imp: opModel.impressao,
-                                  title: "Flexo ",
-                                  crtL: opModel.flexo,
-                                  mini: true,
-                                  onTap: () {
-                                    opModel.flexo = opModel.impressao != null
-                                        ? false
-                                        : !opModel.flexo;
-                                    save(opModel);
-                                  },
-                                ),
-                              ],
+                      ? Obx(
+                          () => Card(
+                            elevation: 0.5,
+                            child: Container(
+                              padding: const EdgeInsets.all(2),
+                              width: 75,
+                              height: 82,
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  SwitcherWidget(
+                                    imp: opModel.impressao,
+                                    title: "Ryobi ",
+                                    crtL: opModel.ryobi,
+                                    mini: true,
+                                    onTap: () {
+                                      opModel.ryobi = opModel.impressao != null
+                                          ? false
+                                          : !opModel.ryobi;
+                                      save(opModel);
+                                    },
+                                  ),
+                                  SwitcherWidget(
+                                    imp: opModel.impressao,
+                                    title: "Ry750 ",
+                                    crtL: opModel.ryobi750,
+                                    mini: true,
+                                    onTap: () {
+                                      opModel.ryobi750 =
+                                          opModel.impressao != null
+                                              ? false
+                                              : !opModel.ryobi750;
+                                      save(opModel);
+                                    },
+                                  ),
+                                  SwitcherWidget(
+                                    imp: opModel.impressao,
+                                    title: "SM 2c ",
+                                    crtL: opModel.sm2c,
+                                    mini: true,
+                                    onTap: () {
+                                      opModel.sm2c = opModel.impressao != null
+                                          ? false
+                                          : !opModel.sm2c;
+                                      save(opModel);
+                                    },
+                                  ),
+                                  SwitcherWidget(
+                                    imp: opModel.impressao,
+                                    title: "Flexo ",
+                                    crtL: opModel.flexo,
+                                    mini: true,
+                                    onTap: () {
+                                      opModel.flexo = opModel.impressao != null
+                                          ? false
+                                          : !opModel.flexo;
+                                      save(opModel);
+                                    },
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         )

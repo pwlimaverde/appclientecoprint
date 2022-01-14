@@ -388,7 +388,6 @@ class OpsController extends GetxController
   }
 
   void setInfoOP(OpsModel model) {
-    // opModel.ryobi = opModel.impressao != null ? false : !opModel.ryobi;
     mutationUpdateOps(
       parametros: ParametrosOpsMutation(
         nameFeature: 'Atualização de informações da OP',
