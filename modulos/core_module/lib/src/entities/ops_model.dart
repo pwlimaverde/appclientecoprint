@@ -7,6 +7,14 @@ class RxOpsModel {
   final ryobi750 = false.obs;
   final flexo = false.obs;
   final prioridade = false.obs;
+  final cancelada = false.obs;
+  final orderpcp = Rxn<int>();
+  final obs = Rxn<String>();
+  final artefinal = Rxn<DateTime>();
+  final produzido = Rxn<DateTime>();
+  final entregue = Rxn<DateTime>();
+  final entregaprog = Rxn<DateTime>();
+  final impressao = Rxn<DateTime>();
 }
 
 class OpsModel {
@@ -18,15 +26,7 @@ class OpsModel {
   final int quant;
   final String vendedor;
   final DateTime entrada;
-  bool cancelada;
   DateTime entrega;
-  int? orderpcp;
-  String? obs;
-  DateTime? produzido;
-  DateTime? entregue;
-  DateTime? entregaprog;
-  DateTime? impressao;
-  DateTime? artefinal;
 
   final rx = RxOpsModel();
 
@@ -45,6 +45,30 @@ class OpsModel {
   bool get prioridade => rx.prioridade.value;
   set prioridade(bool value) => rx.prioridade.value = value;
 
+  bool get cancelada => rx.cancelada.value;
+  set cancelada(bool value) => rx.cancelada.value = value;
+
+  int? get orderpcp => rx.orderpcp.value;
+  set orderpcp(int? value) => rx.orderpcp.value = value;
+
+  String? get obs => rx.obs.value;
+  set obs(String? value) => rx.obs.value = value;
+
+  DateTime? get artefinal => rx.artefinal.value;
+  set artefinal(DateTime? value) => rx.artefinal.value = value;
+
+  DateTime? get produzido => rx.produzido.value;
+  set produzido(DateTime? value) => rx.produzido.value = value;
+
+  DateTime? get entregue => rx.entregue.value;
+  set entregue(DateTime? value) => rx.entregue.value = value;
+
+  DateTime? get entregaprog => rx.entregaprog.value;
+  set entregaprog(DateTime? value) => rx.entregaprog.value = value;
+
+  DateTime? get impressao => rx.impressao.value;
+  set impressao(DateTime? value) => rx.impressao.value = value;
+
   OpsModel({
     this.id,
     required this.op,
@@ -54,71 +78,8 @@ class OpsModel {
     required this.quant,
     required this.vendedor,
     required this.entrada,
-    required this.cancelada,
     required this.entrega,
-    this.orderpcp,
-    this.obs,
-    this.produzido,
-    this.entregue,
-    this.entregaprog,
-    this.impressao,
-    this.artefinal,
-    bool ryobi = false,
-    bool sm2c = false,
-    bool ryobi750 = false,
-    bool flexo = false,
-    bool prioridade = false,
   });
-
-  OpsModel copyWith({
-    int? id,
-    int? op,
-    int? orcamento,
-    String? servico,
-    bool? cancelada,
-    String? cliente,
-    String? obs,
-    int? quant,
-    String? vendedor,
-    DateTime? entrada,
-    DateTime? produzido,
-    DateTime? entrega,
-    int? orderpcp,
-    DateTime? entregue,
-    DateTime? entregaprog,
-    DateTime? impressao,
-    bool? ryobi,
-    bool? sm2c,
-    bool? ryobi750,
-    bool? flexo,
-    DateTime? artefinal,
-    bool? prioridade,
-  }) {
-    return OpsModel(
-      id: id ?? this.id,
-      op: op ?? this.op,
-      orcamento: orcamento ?? this.orcamento,
-      servico: servico ?? this.servico,
-      cancelada: cancelada ?? this.cancelada,
-      cliente: cliente ?? this.cliente,
-      obs: obs ?? this.obs,
-      quant: quant ?? this.quant,
-      vendedor: vendedor ?? this.vendedor,
-      entrada: entrada ?? this.entrada,
-      produzido: produzido ?? this.produzido,
-      entrega: entrega ?? this.entrega,
-      orderpcp: orderpcp ?? this.orderpcp,
-      entregue: entregue ?? this.entregue,
-      entregaprog: entregaprog ?? this.entregaprog,
-      impressao: impressao ?? this.impressao,
-      ryobi: ryobi ?? this.ryobi,
-      sm2c: sm2c ?? this.sm2c,
-      ryobi750: ryobi750 ?? this.ryobi750,
-      flexo: flexo ?? this.flexo,
-      artefinal: artefinal ?? this.artefinal,
-      prioridade: prioridade ?? this.prioridade,
-    );
-  }
 
   factory OpsModel.fromMap(Map<String, dynamic> map) {
     OpsModel model = OpsModel(
@@ -126,31 +87,30 @@ class OpsModel {
       op: map['op'],
       orcamento: map['orcamento'],
       servico: map['servico'],
-      cancelada: map['cancelada'],
       cliente: map['cliente'],
-      obs: map['obs'],
       quant: map['quant'],
       vendedor: map['vendedor'],
       entrada: DateTime.parse(map['entrada']),
-      produzido:
-          map['produzido'] != null ? DateTime.parse(map['produzido']) : null,
       entrega: DateTime.parse(map['entrega']),
-      orderpcp: map['orderpcp'],
-      entregue:
-          map['entregue'] != null ? DateTime.parse(map['entregue']) : null,
-      entregaprog: map['entregaprog'] != null
-          ? DateTime.parse(map['entregaprog'])
-          : null,
-      impressao:
-          map['impressao'] != null ? DateTime.parse(map['impressao']) : null,
-      artefinal:
-          map['artefinal'] != null ? DateTime.parse(map['artefinal']) : null,
-      prioridade: map['prioridade'],
     );
     model.ryobi = map['ryobi'] ?? false;
     model.sm2c = map['sm2c'] ?? false;
     model.ryobi750 = map['ryobi750'] ?? false;
     model.flexo = map['flexo'] ?? false;
+    model.prioridade = map['prioridade'] ?? false;
+    model.cancelada = map['cancelada'];
+    model.obs = map['obs'];
+    model.orderpcp = map['orderpcp'];
+    model.artefinal =
+        map['artefinal'] != null ? DateTime.parse(map['artefinal']) : null;
+    model.produzido =
+        map['produzido'] != null ? DateTime.parse(map['produzido']) : null;
+    model.entregue =
+        map['entregue'] != null ? DateTime.parse(map['entregue']) : null;
+    model.entregaprog =
+        map['entregaprog'] != null ? DateTime.parse(map['entregaprog']) : null;
+    model.impressao =
+        map['impressao'] != null ? DateTime.parse(map['impressao']) : null;
     return model;
   }
 

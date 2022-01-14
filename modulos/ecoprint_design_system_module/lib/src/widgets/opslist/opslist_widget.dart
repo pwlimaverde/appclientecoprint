@@ -32,293 +32,272 @@ class OpslistWidget extends StatelessWidget {
   }
 
   _listOpsProdL(context) {
-    final listaOps = <OpsModel>[].obs;
-    listaOps(filtro);
-    return Obx(
-      () => Container(
-        padding: const EdgeInsets.all(4),
-        child: ListView.builder(
-          scrollDirection: Axis.vertical,
-          controller: ScrollController(),
-          shrinkWrap: true,
-          itemCount: listaOps.length,
-          itemBuilder: (context, index) {
-            OpsModel opModel = listaOps[index];
-            double size = coreModuleController.size;
-            String cliente = opModel.cliente.length >= 35
-                ? opModel.cliente.substring(0, 35)
-                : opModel.cliente;
-            return Card(
-              color: designSystemController.getCorCard(opModel),
-              child: SizedBox(
-                width: size,
-                child: Row(
-                  children: <Widget>[
-                    // Text(cliente),
-                    OpslisttileWidget(
-                      sizeGeral: size,
-                      sizeCont: 10,
-                      sizeFontTile: 1.8,
-                      sizeFontSubTile: 1.5,
-                      title: "${opModel.op}",
-                      labelT: "OP:",
-                      labelS: "Entrada:",
-                      subTile: designSystemController.f.format(opModel.entrada),
-                      heightT: 30,
-                      heightS: 40,
-                    ),
-                    Expanded(
-                      child: OpslisttileWidget(
-                        cardAux: true,
-                        heightT: 30,
-                        heightS: 40,
-                        sizeGeral: size,
-                        sizeCont: 65,
-                        sizeFontTile: 1.5,
-                        sizeFontSubTile: 1.4,
-                        line: 2,
-                        alingL: true,
-                        title:
-                            "${opModel.cancelada == true ? cliente + " - OP CANCELADA" : opModel.entregue != null ? cliente + " - OP ENTREGUE" : opModel.produzido != null ? cliente + " - OP PRODUZIDA" : cliente} ${designSystemController.getAtraso(opModel)} ${opModel.impressao != null ? " - Impresso" : ""}",
-                        subTile: opModel.servico.length >= 300
-                            ? opModel.servico.substring(0, 300)
-                            : opModel.servico,
-                      ),
-                    ),
-                    OpslisttileWidget(
+    return Container(
+      padding: const EdgeInsets.all(4),
+      child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        controller: ScrollController(),
+        shrinkWrap: true,
+        itemCount: filtro.length,
+        itemBuilder: (context, index) {
+          OpsModel opModel = filtro[index];
+          double size = coreModuleController.size;
+          String cliente = opModel.cliente.length >= 35
+              ? opModel.cliente.substring(0, 35)
+              : opModel.cliente;
+          return Card(
+            color: designSystemController.getCorCard(opModel),
+            child: SizedBox(
+              width: size,
+              child: Row(
+                children: <Widget>[
+                  // Text(cliente),
+                  OpslisttileWidget(
+                    sizeGeral: size,
+                    sizeCont: 10,
+                    sizeFontTile: 1.8,
+                    sizeFontSubTile: 1.5,
+                    title: "${opModel.op}",
+                    labelT: "OP:",
+                    labelS: "Entrada:",
+                    subTile: designSystemController.f.format(opModel.entrada),
+                    heightT: 30,
+                    heightS: 40,
+                  ),
+                  Expanded(
+                    child: OpslisttileWidget(
+                      cardAux: true,
                       heightT: 30,
                       heightS: 40,
                       sizeGeral: size,
-                      sizeCont: 10,
-                      sizeFontTile: 1.8,
-                      sizeFontSubTile: 1.5,
-                      labelT: "QT:",
-                      title: designSystemController.numMilhar
-                          .format(opModel.quant),
-                      labelS: "Vend:",
-                      subTile: opModel.vendedor.length >= 12
-                          ? opModel.vendedor.substring(0, 12)
-                          : opModel.vendedor,
-                    ),
-                    OpslisttileWidget(
-                      select: false,
-                      heightT: 30,
-                      heightS: 40,
-                      sizeGeral: size,
-                      sizeCont: 10,
-                      sizeFontTile: 1.3,
-                      sizeFontSubTile: 1.2,
+                      sizeCont: 65,
+                      sizeFontTile: 1.5,
+                      sizeFontSubTile: 1.4,
                       line: 2,
-                      labelT: opModel.entregaprog != null
-                          ? "Ini ${designSystemController.f2.format(opModel.entregaprog!)}:"
-                          : "Entrega:",
-                      title: designSystemController.f.format(opModel.entrega),
-                      subTile:
-                          "${opModel.orderpcp != null ? "Sequência: ${opModel.orderpcp}; " : ""} ${opModel.obs != null ? opModel.obs!.length >= 68 ? opModel.obs!.substring(0, 68) : opModel.obs : ""}",
-                      ontap: () {
-                        _showDialog(opModel);
-                      },
+                      alingL: true,
+                      title:
+                          "${opModel.cancelada == true ? cliente + " - OP CANCELADA" : opModel.entregue != null ? cliente + " - OP ENTREGUE" : opModel.produzido != null ? cliente + " - OP PRODUZIDA" : cliente} ${designSystemController.getAtraso(opModel)} ${opModel.impressao != null ? " - Impresso" : ""}",
+                      subTile: opModel.servico.length >= 300
+                          ? opModel.servico.substring(0, 300)
+                          : opModel.servico,
                     ),
-                    up == false
-                        ? Obx(
-                            () => Card(
-                              elevation: 0.5,
-                              child: Container(
-                                padding: const EdgeInsets.all(2),
-                                width: 75,
-                                height: 82,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    SwitcherWidget(
-                                      imp: opModel.impressao,
-                                      title: "Ryobi ",
-                                      crtL: opModel.ryobi,
-                                      mini: true,
-                                      onTap: () {
-                                        opModel.ryobi =
-                                            opModel.impressao != null
-                                                ? false
-                                                : !opModel.ryobi;
-                                        save(opModel);
-                                      },
-                                    ),
-                                    SwitcherWidget(
-                                      imp: opModel.impressao,
-                                      title: "Ry750 ",
-                                      crtL: opModel.ryobi750,
-                                      mini: true,
-                                      onTap: () {
-                                        opModel.ryobi750 =
-                                            opModel.impressao != null
-                                                ? false
-                                                : !opModel.ryobi750;
-                                        save(opModel);
-                                      },
-                                    ),
-                                    SwitcherWidget(
-                                      imp: opModel.impressao,
-                                      title: "SM 2c ",
-                                      crtL: opModel.sm2c,
-                                      mini: true,
-                                      onTap: () {
-                                        opModel.sm2c = opModel.impressao != null
-                                            ? false
-                                            : !opModel.sm2c;
-                                        save(opModel);
-                                      },
-                                    ),
-                                    SwitcherWidget(
-                                      imp: opModel.impressao,
-                                      title: "Flexo ",
-                                      crtL: opModel.flexo,
-                                      mini: true,
-                                      onTap: () {
-                                        opModel.flexo =
-                                            opModel.impressao != null
-                                                ? false
-                                                : !opModel.flexo;
-                                        save(opModel);
-                                      },
-                                    ),
-                                  ],
+                  ),
+                  OpslisttileWidget(
+                    heightT: 30,
+                    heightS: 40,
+                    sizeGeral: size,
+                    sizeCont: 10,
+                    sizeFontTile: 1.8,
+                    sizeFontSubTile: 1.5,
+                    labelT: "QT:",
+                    title:
+                        designSystemController.numMilhar.format(opModel.quant),
+                    labelS: "Vend:",
+                    subTile: opModel.vendedor.length >= 12
+                        ? opModel.vendedor.substring(0, 12)
+                        : opModel.vendedor,
+                  ),
+                  OpslisttileWidget(
+                    select: false,
+                    heightT: 30,
+                    heightS: 40,
+                    sizeGeral: size,
+                    sizeCont: 10,
+                    sizeFontTile: 1.3,
+                    sizeFontSubTile: 1.2,
+                    line: 2,
+                    labelT: opModel.entregaprog != null
+                        ? "Ini ${designSystemController.f2.format(opModel.entregaprog!)}:"
+                        : "Entrega:",
+                    title: designSystemController.f.format(opModel.entrega),
+                    subTile:
+                        "${opModel.orderpcp != null ? "Sequência: ${opModel.orderpcp}; " : ""} ${opModel.obs != null ? opModel.obs!.length >= 68 ? opModel.obs!.substring(0, 68) : opModel.obs : ""}",
+                    ontap: () {
+                      _showDialog(opModel);
+                    },
+                  ),
+                  up == false
+                      ? Card(
+                          elevation: 0.5,
+                          child: Container(
+                            padding: const EdgeInsets.all(2),
+                            width: 75,
+                            height: 82,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                SwitcherWidget(
+                                  imp: opModel.impressao,
+                                  title: "Ryobi ",
+                                  crtL: opModel.ryobi,
+                                  mini: true,
+                                  onTap: () {
+                                    opModel.ryobi = opModel.impressao != null
+                                        ? false
+                                        : !opModel.ryobi;
+                                    save(opModel);
+                                  },
                                 ),
-                              ),
+                                SwitcherWidget(
+                                  imp: opModel.impressao,
+                                  title: "Ry750 ",
+                                  crtL: opModel.ryobi750,
+                                  mini: true,
+                                  onTap: () {
+                                    opModel.ryobi750 = opModel.impressao != null
+                                        ? false
+                                        : !opModel.ryobi750;
+                                    save(opModel);
+                                  },
+                                ),
+                                SwitcherWidget(
+                                  imp: opModel.impressao,
+                                  title: "SM 2c ",
+                                  crtL: opModel.sm2c,
+                                  mini: true,
+                                  onTap: () {
+                                    opModel.sm2c = opModel.impressao != null
+                                        ? false
+                                        : !opModel.sm2c;
+                                    save(opModel);
+                                  },
+                                ),
+                                SwitcherWidget(
+                                  imp: opModel.impressao,
+                                  title: "Flexo ",
+                                  crtL: opModel.flexo,
+                                  mini: true,
+                                  onTap: () {
+                                    opModel.flexo = opModel.impressao != null
+                                        ? false
+                                        : !opModel.flexo;
+                                    save(opModel);
+                                  },
+                                ),
+                              ],
                             ),
-                          )
-                        : Container(),
-                    Card(
-                      elevation: 0.5,
-                      color: opModel.entregue != null
-                          ? Colors.green[100]
-                          : opModel.cancelada == true
-                              ? Colors.red[100]
-                              : opModel.prioridade == true
-                                  ? Colors.yellow[100]
-                                  : null,
-                      child: SizedBox(
-                        width: 30,
-                        height: 82,
-                        child: Column(
-                          children: <Widget>[
-                            SizedBox(
-                              height: 22,
-                              child: Obx(() {
-                                if (designSystemController
-                                        .loadOpPrioridadeCheck.value ==
-                                    opModel.op) {
-                                  return const CircularprogressWidget(
-                                    left: 0,
-                                    right: 0,
-                                    top: 6,
-                                    bottom: 6,
-                                    swidth: 9,
-                                    sheight: 9,
-                                    strok: 1,
-                                    color: Colors.orange,
-                                  );
-                                } else {
-                                  return IconbuttonWidget(
-                                    isImp: true,
-                                    icon: Icons.priority_high,
-                                    color: opModel.prioridade == true
-                                        ? Colors.orange
-                                        : Colors.grey,
-                                    onPressed: () {
-                                      prioridade(opModel);
-                                      if (opModel.cancelada == false &&
-                                          opModel.entregue == null) {
-                                        opModel.prioridade =
-                                            opModel.prioridade == true
-                                                ? false
-                                                : true;
-                                      }
-                                    },
-                                  );
-                                }
-                              }),
-                            ),
-                            SizedBox(
-                              height: 22,
-                              child: Obx(() {
-                                if (designSystemController.loadOpCheck.value ==
-                                    opModel.op) {
-                                  return const CircularprogressWidget(
-                                    left: 0,
-                                    right: 0,
-                                    top: 6,
-                                    bottom: 6,
-                                    swidth: 9,
-                                    sheight: 9,
-                                    strok: 1,
-                                    color: Colors.green,
-                                  );
-                                } else {
-                                  return IconbuttonWidget(
-                                    isImp: opModel.ryobi ||
-                                        opModel.sm2c ||
-                                        opModel.ryobi750 ||
-                                        opModel.flexo,
-                                    icon: Icons.check,
-                                    color: opModel.ryobi ||
-                                            opModel.sm2c ||
-                                            opModel.ryobi750 ||
-                                            opModel.flexo
-                                        ? Colors.green
-                                        : Colors.grey,
-                                    onPressed: () {
-                                      if (opsController.indexPrint <= 3) {
-                                        listaOps.removeAt(index);
-                                      }
-
-                                      check(opModel);
-                                    },
-                                  );
-                                }
-                              }),
-                            ),
-                            SizedBox(
-                              height: 22,
-                              child: Obx(() {
-                                if (designSystemController.loadOpCan.value ==
-                                    opModel.op) {
-                                  return const CircularprogressWidget(
-                                    left: 0,
-                                    right: 0,
-                                    top: 6,
-                                    bottom: 6,
-                                    swidth: 9,
-                                    sheight: 9,
-                                    strok: 1,
-                                    color: Colors.red,
-                                  );
-                                } else {
-                                  return IconbuttonWidget(
-                                    isImp: true,
-                                    icon: Icons.cancel,
-                                    color: opModel.cancelada == true
-                                        ? Colors.red
-                                        : Colors.grey,
-                                    onPressed: () {
-                                      can(opModel);
-                                      opModel.cancelada = !opModel.cancelada;
-                                    },
-                                  );
-                                }
-                              }),
-                            ),
-                          ],
-                        ),
+                          ),
+                        )
+                      : Container(),
+                  Card(
+                    elevation: 0.5,
+                    color: opModel.entregue != null
+                        ? Colors.green[100]
+                        : opModel.cancelada == true
+                            ? Colors.red[100]
+                            : opModel.prioridade == true
+                                ? Colors.yellow[100]
+                                : null,
+                    child: SizedBox(
+                      width: 30,
+                      height: 82,
+                      child: Column(
+                        children: <Widget>[
+                          SizedBox(
+                            height: 22,
+                            child: Obx(() {
+                              if (designSystemController
+                                      .loadOpPrioridadeCheck.value ==
+                                  opModel.op) {
+                                return const CircularprogressWidget(
+                                  left: 0,
+                                  right: 0,
+                                  top: 6,
+                                  bottom: 6,
+                                  swidth: 9,
+                                  sheight: 9,
+                                  strok: 1,
+                                  color: Colors.orange,
+                                );
+                              } else {
+                                return IconbuttonWidget(
+                                  isImp: true,
+                                  icon: Icons.priority_high,
+                                  color: opModel.prioridade == true
+                                      ? Colors.orange
+                                      : Colors.grey,
+                                  onPressed: () {
+                                    prioridade(opModel);
+                                  },
+                                );
+                              }
+                            }),
+                          ),
+                          SizedBox(
+                            height: 22,
+                            child: Obx(() {
+                              if (designSystemController.loadOpCheck.value ==
+                                  opModel.op) {
+                                return const CircularprogressWidget(
+                                  left: 0,
+                                  right: 0,
+                                  top: 6,
+                                  bottom: 6,
+                                  swidth: 9,
+                                  sheight: 9,
+                                  strok: 1,
+                                  color: Colors.green,
+                                );
+                              } else {
+                                return IconbuttonWidget(
+                                  isImp: opModel.ryobi ||
+                                      opModel.sm2c ||
+                                      opModel.ryobi750 ||
+                                      opModel.flexo,
+                                  icon: Icons.check,
+                                  color: opModel.ryobi ||
+                                          opModel.sm2c ||
+                                          opModel.ryobi750 ||
+                                          opModel.flexo
+                                      ? Colors.green
+                                      : Colors.grey,
+                                  onPressed: () {
+                                    check(opModel);
+                                  },
+                                );
+                              }
+                            }),
+                          ),
+                          SizedBox(
+                            height: 22,
+                            child: Obx(() {
+                              if (designSystemController.loadOpCan.value ==
+                                  opModel.op) {
+                                return const CircularprogressWidget(
+                                  left: 0,
+                                  right: 0,
+                                  top: 6,
+                                  bottom: 6,
+                                  swidth: 9,
+                                  sheight: 9,
+                                  strok: 1,
+                                  color: Colors.red,
+                                );
+                              } else {
+                                return IconbuttonWidget(
+                                  isImp: true,
+                                  icon: Icons.cancel,
+                                  color: opModel.cancelada == true
+                                      ? Colors.red
+                                      : Colors.grey,
+                                  onPressed: () {
+                                    can(opModel);
+                                  },
+                                );
+                              }
+                            }),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
-                ),
+                  ),
+                ],
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
               ),
-            );
-          },
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -229,6 +229,14 @@ class OpsController extends GetxController
     }
   }
 
+  OpsModel _whereOpList({required OpsModel model}) {
+    return opsListAllCompleta
+        .where(
+          (element) => element.op == model.op,
+        )
+        .first;
+  }
+
   void setCancelarOP(OpsModel model) {
     mutationUpdateOps(
       parametros: ParametrosOpsMutation(
@@ -248,6 +256,7 @@ class OpsController extends GetxController
                 : "A op ${model.op} foi cancelada com sucesso!"),
       ),
     );
+    _whereOpList(model: model).cancelada = !model.cancelada;
     if (model.prioridade == true) {
       setPrioridadeOP(model);
     }
@@ -260,6 +269,7 @@ class OpsController extends GetxController
       return;
     }
     if (model.artefinal == null) {
+      _whereOpList(model: model).artefinal = designSystemController.now;
       mutationUpdateOps(
         parametros: ParametrosOpsMutation(
           nameFeature: 'Check Arte Final',
@@ -283,6 +293,7 @@ class OpsController extends GetxController
         ),
       );
     } else if (model.produzido == null) {
+      _whereOpList(model: model).produzido = designSystemController.now;
       mutationUpdateOps(
         parametros: ParametrosOpsMutation(
           nameFeature: 'Check Produzido',
@@ -306,6 +317,7 @@ class OpsController extends GetxController
         ),
       );
     } else {
+      _whereOpList(model: model).entregue = designSystemController.now;
       mutationUpdateOps(
         parametros: ParametrosOpsMutation(
           nameFeature: 'Check Entregue',
@@ -341,7 +353,7 @@ class OpsController extends GetxController
           mutation: opsPrioridadeMutation,
           variables: {
             "op": model.op,
-            "prioridade": model.prioridade == true ? false : true,
+            "prioridade": !model.prioridade,
             "orderpcp": model.prioridade == true ? null : model.orderpcp,
           },
           messageError: MessageModel.error(
@@ -355,6 +367,7 @@ class OpsController extends GetxController
           ),
         ),
       );
+      _whereOpList(model: model).prioridade = !model.prioridade;
     } else if (model.cancelada == true) {
       coreModuleController.message(
         MessageModel.error(
@@ -375,6 +388,7 @@ class OpsController extends GetxController
   }
 
   void setInfoOP(OpsModel model) {
+    // opModel.ryobi = opModel.impressao != null ? false : !opModel.ryobi;
     mutationUpdateOps(
       parametros: ParametrosOpsMutation(
         nameFeature: 'Atualização de informações da OP',
@@ -416,6 +430,18 @@ class OpsController extends GetxController
         ),
       ),
     );
+    _whereOpList(model: model).orderpcp = model.orderpcp;
+    _whereOpList(model: model).entrega = model.entrega;
+    _whereOpList(model: model).entregaprog = model.entregaprog;
+    _whereOpList(model: model).entregue = model.entregue;
+    _whereOpList(model: model).produzido = model.produzido;
+    _whereOpList(model: model).artefinal = model.artefinal;
+    _whereOpList(model: model).obs = model.obs;
+    _whereOpList(model: model).ryobi = model.ryobi;
+    _whereOpList(model: model).sm2c = model.sm2c;
+    _whereOpList(model: model).ryobi750 = model.ryobi750;
+    _whereOpList(model: model).flexo = model.flexo;
+    _whereOpList(model: model).impressao = model.impressao;
   }
 
   Future<void> mutationUpdateOps(

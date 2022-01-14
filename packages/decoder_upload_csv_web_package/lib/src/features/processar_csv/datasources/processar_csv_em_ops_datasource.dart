@@ -58,11 +58,6 @@ class ProcessarCsvEmOpsDatasource
                 servico: servico,
                 cliente: cliente,
                 vendedor: vendedor,
-                cancelada: false,
-                ryobi: false,
-                sm2c: false,
-                ryobi750: false,
-                flexo: false,
               );
               listOps.add(up);
             } else {
@@ -75,14 +70,9 @@ class ProcessarCsvEmOpsDatasource
                 servico: servico ?? "erro serviço",
                 cliente: cliente ?? "erro cliente",
                 vendedor: vendedor ?? "erro vendedor",
-                cancelada: false,
-                ryobi: false,
-                sm2c: false,
-                ryobi750: false,
-                flexo: false,
-                obs:
-                    " Falha no processamento em um ou mais campos! A OP não será salva no banco de dados!",
               );
+              upError.obs =
+                  " Falha no processamento em um ou mais campos! A OP não será salva no banco de dados!";
               listOpsError.add(upError);
             }
           }
