@@ -45,6 +45,7 @@ class OpsController extends GetxController
     _getOpsQueryListAll();
     _getOpsListArteFinal();
     _getOpsListProducao();
+    _getOpsListExpedicao();
     _tabController = TabController(vsync: this, length: myTabs.length);
     await _setIndex();
   }
