@@ -38,7 +38,7 @@ class OpsController extends GetxController
   @override
   void onInit() async {
     super.onInit();
-    getOpsListAll();
+    getOpsQueryListAll();
     _tabController = TabController(vsync: this, length: myTabs.length);
     await _setIndex();
   }
@@ -50,6 +50,9 @@ class OpsController extends GetxController
     _tabController.addListener(() {
       Get.find<GetStorage>().write("opstabIndex", _tabController.index);
       indexPrint(_tabController.index);
+    });
+    indexPrint.listen((evento) {
+      getOpsQueryListAll();
     });
     super.onReady();
   }
@@ -64,7 +67,9 @@ class OpsController extends GetxController
 
   final indexPrint = 4.obs;
 
-  final _opsListAll = <OpsModel>[].obs;
+  final opsListAllLength = 0.obs;
+
+  final List<OpsModel> _opsListAll = [];
 
   List<OpsModel> get filtroPrint {
     switch (indexPrint.value) {
@@ -163,38 +168,39 @@ class OpsController extends GetxController
     }
   }
 
-  void getOpsListAll() async {
-    try {
-      final allOps = await carregarTodasOpsUsecase(
-        parameters: NoParams(
-          error: ErroCarregarTodasOps(
-            message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
-          ),
-          showRuntimeMilliseconds: true,
-          nameFeature: "Carregar Todas Ops",
-        ),
-      );
-      if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
-        _opsListAll.bindStream(allOps.result);
-      } else {
-        coreModuleController.message(
-          MessageModel(
-            message: 'Erro ao carregar as Ops',
-            title: 'Erro Ops',
-            type: MessageType.error,
-          ),
-        );
-      }
-    } catch (e) {
-      coreModuleController.message(
-        MessageModel(
-          message: 'Erro ao carregar as Ops',
-          title: 'Erro Ops',
-          type: MessageType.error,
-        ),
-      );
-    }
-  }
+  // void getOpsListAll() async {
+  //   print("Execursão getall");
+  //   try {
+  //     final allOps = await carregarTodasOpsUsecase(
+  //       parameters: NoParams(
+  //         error: ErroCarregarTodasOps(
+  //           message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
+  //         ),
+  //         showRuntimeMilliseconds: true,
+  //         nameFeature: "Carregar Todas Ops",
+  //       ),
+  //     );
+  //     if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
+  //       _opsListAll.bindStream(allOps.result);
+  //     } else {
+  //       coreModuleController.message(
+  //         MessageModel(
+  //           message: 'Erro ao carregar as Ops',
+  //           title: 'Erro Ops',
+  //           type: MessageType.error,
+  //         ),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     coreModuleController.message(
+  //       MessageModel(
+  //         message: 'Erro ao carregar as Ops',
+  //         title: 'Erro Ops',
+  //         type: MessageType.error,
+  //       ),
+  //     );
+  //   }
+  // }
 
   void getOpsQueryListAll() async {
     try {
@@ -208,7 +214,8 @@ class OpsController extends GetxController
         ),
       );
       if (allOps is SuccessReturn<List<OpsModel>>) {
-        _opsListAll(allOps.result);
+        _opsListAll.assignAll(allOps.result);
+        opsListAllLength(_opsListAll.length);
       } else {
         coreModuleController.message(
           MessageModel(
@@ -388,6 +395,7 @@ class OpsController extends GetxController
   }
 
   void setInfoOP(OpsModel model) {
+    print(opsListAllCompleta.length);
     mutationUpdateOps(
       parametros: ParametrosOpsMutation(
         nameFeature: 'Atualização de informações da OP',
@@ -426,21 +434,14 @@ class OpsController extends GetxController
         messageInfo: null,
       ),
     );
-    _whereOpList(model: model).orderpcp = model.orderpcp;
-    _whereOpList(model: model).entrega = model.entrega;
-    _whereOpList(model: model).entregaprog = model.entregaprog;
-    _whereOpList(model: model).entregue = model.entregue;
-    _whereOpList(model: model).produzido = model.produzido;
-    _whereOpList(model: model).artefinal = model.artefinal;
-    _whereOpList(model: model).obs = model.obs;
-    print("teste model ryobi: ${model.ryobi}");
-    print("teste listmodel antes ryobi: ${_whereOpList(model: model).ryobi}");
-    // _whereOpList(model: model).ryobi = model.ryobi;
-    print("teste listmodel depois ryobi: ${_whereOpList(model: model).ryobi}");
-    // _whereOpList(model: model).sm2c = model.sm2c;
-    // _whereOpList(model: model).ryobi750 = model.ryobi750;
-    // _whereOpList(model: model).flexo = model.flexo;
-    _whereOpList(model: model).impressao = model.impressao;
+    // _whereOpList(model: model).orderpcp = model.orderpcp;
+    // _whereOpList(model: model).entrega = model.entrega;
+    // _whereOpList(model: model).entregaprog = model.entregaprog;
+    // _whereOpList(model: model).entregue = model.entregue;
+    // _whereOpList(model: model).produzido = model.produzido;
+    // _whereOpList(model: model).artefinal = model.artefinal;
+    // _whereOpList(model: model).obs = model.obs;
+    // _whereOpList(model: model).impressao = model.impressao;
   }
 
   Future<void> mutationUpdateOps(

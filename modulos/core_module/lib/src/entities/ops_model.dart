@@ -127,6 +127,7 @@ class OpsModel {
         map['entregaprog'] != null ? DateTime.parse(map['entregaprog']) : null;
     model.impressao =
         map['impressao'] != null ? DateTime.parse(map['impressao']) : null;
+    print("teste ${model.op}");
     return model;
   }
 

@@ -63,7 +63,7 @@ packages:
       path: "../core_module"
       relative: true
     source: path
-    version: "1.0.0"
+    version: "1.0.2"
   crypto:
     dependency: transitive
     description:
@@ -84,7 +84,7 @@ packages:
       path: "../../packages/decoder_upload_csv_web_package"
       relative: true
     source: path
-    version: "0.0.0-alpha.1"
+    version: "1.0.1"
   dependency_module:
     dependency: "direct main"
     description:

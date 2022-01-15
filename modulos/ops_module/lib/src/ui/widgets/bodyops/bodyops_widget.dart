@@ -12,7 +12,7 @@ class BodyOpsWidget extends StatelessWidget {
         color: Colors.black12,
         child: Center(
           child: Obx(() {
-            if (opsController.opsListAll.isEmpty) {
+            if (opsController.opsListAllLength.value == 0) {
               coreModuleController.statusLoad(true);
             } else {
               coreModuleController.statusLoad(false);

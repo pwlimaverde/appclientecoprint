@@ -5,6 +5,7 @@ class CarregarTodasOpsDatasource implements Datasource<Stream<List<OpsModel>>> {
   Future<Stream<List<OpsModel>>> call(
       {required ParametersReturnResult parameters}) async {
     try {
+      print("CarregarTodasOpsDatasource ");
       final Snapshot snapshot =
           await Get.find<HasuraConnect>().subscription(opsAllQuery);
 

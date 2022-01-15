@@ -40,7 +40,7 @@ class OpslistWidget extends StatelessWidget {
         shrinkWrap: true,
         itemCount: filtro.length,
         itemBuilder: (context, index) {
-          OpsModel opModel = filtro[index];
+          final opModel = filtro[index];
           double size = coreModuleController.size;
           String cliente = opModel.cliente.length >= 35
               ? opModel.cliente.substring(0, 35)
