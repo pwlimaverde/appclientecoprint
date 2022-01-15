@@ -130,9 +130,13 @@ class OpslistWidget extends StatelessWidget {
                                   SwitcherWidget(
                                     imp: opModel.impressao,
                                     title: "Ryobi ",
-                                    crtL: opModel.ryobi,
+                                    crtL: opModel.ryobiBuff ?? opModel.ryobi,
                                     mini: true,
                                     onTap: () {
+                                      opModel.ryobiBuff =
+                                          opModel.impressao != null
+                                              ? false
+                                              : !opModel.ryobi;
                                       opModel.ryobi = opModel.impressao != null
                                           ? false
                                           : !opModel.ryobi;
@@ -142,9 +146,14 @@ class OpslistWidget extends StatelessWidget {
                                   SwitcherWidget(
                                     imp: opModel.impressao,
                                     title: "Ry750 ",
-                                    crtL: opModel.ryobi750,
+                                    crtL: opModel.ryobi750Buff ??
+                                        opModel.ryobi750,
                                     mini: true,
                                     onTap: () {
+                                      opModel.ryobi750Buff =
+                                          opModel.impressao != null
+                                              ? false
+                                              : !opModel.ryobi750;
                                       opModel.ryobi750 =
                                           opModel.impressao != null
                                               ? false
@@ -155,9 +164,13 @@ class OpslistWidget extends StatelessWidget {
                                   SwitcherWidget(
                                     imp: opModel.impressao,
                                     title: "SM 2c ",
-                                    crtL: opModel.sm2c,
+                                    crtL: opModel.sm2cBuff ?? opModel.sm2c,
                                     mini: true,
                                     onTap: () {
+                                      opModel.sm2cBuff =
+                                          opModel.impressao != null
+                                              ? false
+                                              : !opModel.sm2c;
                                       opModel.sm2c = opModel.impressao != null
                                           ? false
                                           : !opModel.sm2c;
@@ -167,9 +180,13 @@ class OpslistWidget extends StatelessWidget {
                                   SwitcherWidget(
                                     imp: opModel.impressao,
                                     title: "Flexo ",
-                                    crtL: opModel.flexo,
+                                    crtL: opModel.flexoBuff ?? opModel.flexo,
                                     mini: true,
                                     onTap: () {
+                                      opModel.flexoBuff =
+                                          opModel.impressao != null
+                                              ? false
+                                              : !opModel.flexo;
                                       opModel.flexo = opModel.impressao != null
                                           ? false
                                           : !opModel.flexo;

@@ -423,10 +423,7 @@ class OpsController extends GetxController
           message: 'Atualização de informações da OP',
           title: 'Erro ao Atualizar as informações da Op!',
         ),
-        messageInfo: MessageModel.info(
-          title: "Atualização de informações da OP",
-          message: "A op ${model.op} foi atualizada com sucesso!",
-        ),
+        messageInfo: null,
       ),
     );
     _whereOpList(model: model).orderpcp = model.orderpcp;
@@ -436,10 +433,13 @@ class OpsController extends GetxController
     _whereOpList(model: model).produzido = model.produzido;
     _whereOpList(model: model).artefinal = model.artefinal;
     _whereOpList(model: model).obs = model.obs;
-    _whereOpList(model: model).ryobi = model.ryobi;
-    _whereOpList(model: model).sm2c = model.sm2c;
-    _whereOpList(model: model).ryobi750 = model.ryobi750;
-    _whereOpList(model: model).flexo = model.flexo;
+    print("teste model ryobi: ${model.ryobi}");
+    print("teste listmodel antes ryobi: ${_whereOpList(model: model).ryobi}");
+    // _whereOpList(model: model).ryobi = model.ryobi;
+    print("teste listmodel depois ryobi: ${_whereOpList(model: model).ryobi}");
+    // _whereOpList(model: model).sm2c = model.sm2c;
+    // _whereOpList(model: model).ryobi750 = model.ryobi750;
+    // _whereOpList(model: model).flexo = model.flexo;
     _whereOpList(model: model).impressao = model.impressao;
   }
 

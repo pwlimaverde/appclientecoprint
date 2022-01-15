@@ -3,9 +3,13 @@ import 'package:dependency_module/dependency_module.dart';
 
 class RxOpsModel {
   final ryobi = false.obs;
+  final ryobiBuff = Rxn<bool>();
   final sm2c = false.obs;
+  final sm2cBuff = Rxn<bool>();
   final ryobi750 = false.obs;
+  final ryobi750Buff = Rxn<bool>();
   final flexo = false.obs;
+  final flexoBuff = Rxn<bool>();
   final prioridade = false.obs;
   final cancelada = false.obs;
   final orderpcp = Rxn<int>();
@@ -33,14 +37,26 @@ class OpsModel {
   bool get ryobi => rx.ryobi.value;
   set ryobi(bool value) => rx.ryobi.value = value;
 
+  bool? get ryobiBuff => rx.ryobiBuff.value;
+  set ryobiBuff(bool? value) => rx.ryobiBuff.value = value;
+
   bool get sm2c => rx.sm2c.value;
   set sm2c(bool value) => rx.sm2c.value = value;
+
+  bool? get sm2cBuff => rx.sm2cBuff.value;
+  set sm2cBuff(bool? value) => rx.sm2cBuff.value = value;
 
   bool get ryobi750 => rx.ryobi750.value;
   set ryobi750(bool value) => rx.ryobi750.value = value;
 
+  bool? get ryobi750Buff => rx.ryobi750Buff.value;
+  set ryobi750Buff(bool? value) => rx.ryobi750Buff.value = value;
+
   bool get flexo => rx.flexo.value;
   set flexo(bool value) => rx.flexo.value = value;
+
+  bool? get flexoBuff => rx.flexoBuff.value;
+  set flexoBuff(bool? value) => rx.flexoBuff.value = value;
 
   bool get prioridade => rx.prioridade.value;
   set prioridade(bool value) => rx.prioridade.value = value;
@@ -98,7 +114,7 @@ class OpsModel {
     model.ryobi750 = map['ryobi750'] ?? false;
     model.flexo = map['flexo'] ?? false;
     model.prioridade = map['prioridade'] ?? false;
-    model.cancelada = map['cancelada'];
+    model.cancelada = map['cancelada'] ?? false;
     model.obs = map['obs'];
     model.orderpcp = map['orderpcp'];
     model.artefinal =
