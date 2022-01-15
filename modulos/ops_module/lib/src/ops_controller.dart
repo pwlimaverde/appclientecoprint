@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 
 class OpsController extends GetxController
     with GetSingleTickerProviderStateMixin {
-  final CarregarTodasOpsUsecase carregarTodasOpsUsecase;
+  final SubscriptionHasuraOpsUsecase carregarArteFinalOpsUsecase;
+  final SubscriptionHasuraOpsUsecase carregarProducaoOpsUsecase;
+  final SubscriptionHasuraOpsUsecase carregarExpedicaoOpsUsecase;
   final CarregarTodasOpsQueryUsecase carregarTodasOpsQueryUsecase;
   final MutationOpsUsecase mutationUpdateOpsUsecase;
   final MutationOpsUsecase mutationInsetOpsUsecase;
 
   OpsController({
-    required this.carregarTodasOpsUsecase,
+    required this.carregarArteFinalOpsUsecase,
+    required this.carregarProducaoOpsUsecase,
+    required this.carregarExpedicaoOpsUsecase,
     required this.carregarTodasOpsQueryUsecase,
     required this.mutationUpdateOpsUsecase,
     required this.mutationInsetOpsUsecase,
@@ -38,7 +42,9 @@ class OpsController extends GetxController
   @override
   void onInit() async {
     super.onInit();
-    getOpsQueryListAll();
+    _getOpsQueryListAll();
+    _getOpsListArteFinal();
+    _getOpsListProducao();
     _tabController = TabController(vsync: this, length: myTabs.length);
     await _setIndex();
   }
@@ -50,9 +56,6 @@ class OpsController extends GetxController
     _tabController.addListener(() {
       Get.find<GetStorage>().write("opstabIndex", _tabController.index);
       indexPrint(_tabController.index);
-    });
-    indexPrint.listen((evento) {
-      getOpsQueryListAll();
     });
     super.onReady();
   }
@@ -67,9 +70,13 @@ class OpsController extends GetxController
 
   final indexPrint = 4.obs;
 
-  final opsListAllLength = 0.obs;
-
   final List<OpsModel> _opsListAll = [];
+
+  final _opsListEmArteFinal = <OpsModel>[].obs;
+
+  final _opsListEmProducao = <OpsModel>[].obs;
+
+  final _opsListEmExpedicao = <OpsModel>[].obs;
 
   List<OpsModel> get filtroPrint {
     switch (indexPrint.value) {
@@ -96,40 +103,45 @@ class OpsController extends GetxController
         ).toList()
       : _opsListAll;
 
-  List<OpsModel> get opsListEmArteFinal => opsListAll
-      .where(
-        (element) =>
-            element.produzido == null &&
-            element.cancelada == false &&
-            element.artefinal == null &&
-            element.entregue == null,
-      )
-      .toList()
+  List<OpsModel> get _opsListArtefinalFiltro =>
+      buscando.value && busca.value != null
+          ? _opsListEmArteFinal.where(
+              (element) {
+                String termos =
+                    "${element.op} - ${element.cliente} - ${element.servico} - ${element.quant} - ${element.vendedor} - ${element.obs}";
+                return termos
+                    .toLowerCase()
+                    .contains(busca.value!.toLowerCase());
+              },
+            ).toList()
+          : _opsListEmArteFinal;
+
+  List<OpsModel> get opsListEmArteFinal => _opsListArtefinalFiltro
     ..sort(
       (a, b) => a.entrega.compareTo(b.entrega),
     );
 
-  List<OpsModel> get opsListEmProducao => opsListAll
-      .where(
-        (element) =>
-            element.produzido == null &&
-            element.cancelada == false &&
-            element.artefinal != null &&
-            element.entregue == null,
-      )
-      .toList()
+  List<OpsModel> get _opsListEmProducaoFiltro =>
+      buscando.value && busca.value != null
+          ? _opsListEmProducao.where(
+              (element) {
+                String termos =
+                    "${element.op} - ${element.cliente} - ${element.servico} - ${element.quant} - ${element.vendedor} - ${element.obs}";
+                return termos
+                    .toLowerCase()
+                    .contains(busca.value!.toLowerCase());
+              },
+            ).toList()
+          : _opsListEmProducao;
+
+  List<OpsModel> get opsListEmProducao => _opsListEmProducaoFiltro
     ..sort(
       (a, b) => a.entrega.compareTo(b.entrega),
     );
 
-  List<OpsModel> get opsListEmUrgencia => opsListAll
+  List<OpsModel> get opsListEmUrgencia => _opsListEmProducaoFiltro
       .where(
-        (element) =>
-            element.produzido == null &&
-            element.cancelada == false &&
-            element.artefinal != null &&
-            element.entregue == null &&
-            element.prioridade == true,
+        (element) => element.prioridade == true,
       )
       .toList()
     ..sort(
@@ -142,15 +154,20 @@ class OpsController extends GetxController
       ),
     );
 
-  List<OpsModel> get opsListEmExpedicao => opsListAll
-      .where(
-        (element) =>
-            element.produzido != null &&
-            element.cancelada == false &&
-            element.artefinal != null &&
-            element.entregue == null,
-      )
-      .toList()
+  List<OpsModel> get _opsListEmExpedicaoFiltro =>
+      buscando.value && busca.value != null
+          ? _opsListEmExpedicao.where(
+              (element) {
+                String termos =
+                    "${element.op} - ${element.cliente} - ${element.servico} - ${element.quant} - ${element.vendedor} - ${element.obs}";
+                return termos
+                    .toLowerCase()
+                    .contains(busca.value!.toLowerCase());
+              },
+            ).toList()
+          : _opsListEmExpedicao;
+
+  List<OpsModel> get opsListEmExpedicao => _opsListEmExpedicaoFiltro
     ..sort(
       (a, b) => a.entrega.compareTo(b.entrega),
     );
@@ -168,41 +185,106 @@ class OpsController extends GetxController
     }
   }
 
-  // void getOpsListAll() async {
-  //   print("Execursão getall");
-  //   try {
-  //     final allOps = await carregarTodasOpsUsecase(
-  //       parameters: NoParams(
-  //         error: ErroCarregarTodasOps(
-  //           message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
-  //         ),
-  //         showRuntimeMilliseconds: true,
-  //         nameFeature: "Carregar Todas Ops",
-  //       ),
-  //     );
-  //     if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
-  //       _opsListAll.bindStream(allOps.result);
-  //     } else {
-  //       coreModuleController.message(
-  //         MessageModel(
-  //           message: 'Erro ao carregar as Ops',
-  //           title: 'Erro Ops',
-  //           type: MessageType.error,
-  //         ),
-  //       );
-  //     }
-  //   } catch (e) {
-  //     coreModuleController.message(
-  //       MessageModel(
-  //         message: 'Erro ao carregar as Ops',
-  //         title: 'Erro Ops',
-  //         type: MessageType.error,
-  //       ),
-  //     );
-  //   }
-  // }
+  void _getOpsListArteFinal() async {
+    try {
+      final allOps = await carregarArteFinalOpsUsecase(
+        parameters: NoParams(
+          error: ErroCarregarTodasOps(
+            message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
+          ),
+          showRuntimeMilliseconds: true,
+          nameFeature: "Carregar Ops em Arte Final",
+        ),
+      );
+      if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
+        _opsListEmArteFinal.bindStream(allOps.result);
+      } else {
+        coreModuleController.message(
+          MessageModel(
+            message: 'Erro ao carregar as Ops',
+            title: 'Erro Ops',
+            type: MessageType.error,
+          ),
+        );
+      }
+    } catch (e) {
+      coreModuleController.message(
+        MessageModel(
+          message: 'Erro ao carregar as Ops',
+          title: 'Erro Ops',
+          type: MessageType.error,
+        ),
+      );
+    }
+  }
 
-  void getOpsQueryListAll() async {
+  void _getOpsListProducao() async {
+    try {
+      final allOps = await carregarProducaoOpsUsecase(
+        parameters: NoParams(
+          error: ErroCarregarTodasOps(
+            message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
+          ),
+          showRuntimeMilliseconds: true,
+          nameFeature: "Carregar Ops em Producao",
+        ),
+      );
+      if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
+        _opsListEmProducao.bindStream(allOps.result);
+      } else {
+        coreModuleController.message(
+          MessageModel(
+            message: 'Erro ao carregar as Ops',
+            title: 'Erro Ops',
+            type: MessageType.error,
+          ),
+        );
+      }
+    } catch (e) {
+      coreModuleController.message(
+        MessageModel(
+          message: 'Erro ao carregar as Ops',
+          title: 'Erro Ops',
+          type: MessageType.error,
+        ),
+      );
+    }
+  }
+
+  void _getOpsListExpedicao() async {
+    try {
+      final allOps = await carregarExpedicaoOpsUsecase(
+        parameters: NoParams(
+          error: ErroCarregarTodasOps(
+            message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
+          ),
+          showRuntimeMilliseconds: true,
+          nameFeature: "Carregar Ops em Expedicao",
+        ),
+      );
+      if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
+        _opsListEmProducao.bindStream(allOps.result);
+      } else {
+        coreModuleController.message(
+          MessageModel(
+            message: 'Erro ao carregar as Ops',
+            title: 'Erro Ops',
+            type: MessageType.error,
+          ),
+        );
+      }
+    } catch (e) {
+      coreModuleController.message(
+        MessageModel(
+          message: 'Erro ao carregar as Ops',
+          title: 'Erro Ops',
+          type: MessageType.error,
+        ),
+      );
+    }
+  }
+
+  void _getOpsQueryListAll() async {
     try {
       final allOps = await carregarTodasOpsQueryUsecase(
         parameters: NoParams(
@@ -215,7 +297,6 @@ class OpsController extends GetxController
       );
       if (allOps is SuccessReturn<List<OpsModel>>) {
         _opsListAll.assignAll(allOps.result);
-        opsListAllLength(_opsListAll.length);
       } else {
         coreModuleController.message(
           MessageModel(
@@ -395,7 +476,8 @@ class OpsController extends GetxController
   }
 
   void setInfoOP(OpsModel model) {
-    print(opsListAllCompleta.length);
+    print(opsListEmArteFinal.length);
+    print(opsListEmProducao.length);
     mutationUpdateOps(
       parametros: ParametrosOpsMutation(
         nameFeature: 'Atualização de informações da OP',

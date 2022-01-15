@@ -13,9 +13,6 @@ class CoreModuleBindings implements Bindings {
     );
     Get.put<OpsController>(
       OpsController(
-        carregarTodasOpsUsecase: CarregarTodasOpsUsecase(
-          datasource: CarregarTodasOpsDatasource(),
-        ),
         carregarTodasOpsQueryUsecase: CarregarTodasOpsQueryUsecase(
           datasource: CarregarTodasOpsQueryDatasource(),
         ),
@@ -24,6 +21,21 @@ class CoreModuleBindings implements Bindings {
         ),
         mutationInsetOpsUsecase: MutationOpsUsecase(
           datasource: OpsInsertMutationHasuraDatasource(),
+        ),
+        carregarArteFinalOpsUsecase: SubscriptionHasuraOpsUsecase(
+          datasource: SubscriptionHasuraOpsDatasource(
+            subscription: opsArteFinalSubscription,
+          ),
+        ),
+        carregarProducaoOpsUsecase: SubscriptionHasuraOpsUsecase(
+          datasource: SubscriptionHasuraOpsDatasource(
+            subscription: opsProducaoSubscription,
+          ),
+        ),
+        carregarExpedicaoOpsUsecase: SubscriptionHasuraOpsUsecase(
+          datasource: SubscriptionHasuraOpsDatasource(
+            subscription: opsExpedicaoSubscription,
+          ),
         ),
       ),
       permanent: true,

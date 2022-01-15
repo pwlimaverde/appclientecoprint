@@ -1,6 +1,6 @@
-const String opsAllQuery = """
+const String opsArteFinalSubscription = """
 subscription{
-  ops(order_by: {op: desc}){
+  ops(order_by: {op: desc}, where: {cancelada: {_eq: false}, produzido: {_is_null: true}, entregue: {_is_null: true}, artefinal: {_is_null: true},}){
     id
     op
     orcamento 
@@ -27,7 +27,65 @@ subscription{
 }
 """;
 
-const String opsAllQuery2 = """
+const String opsProducaoSubscription = """
+subscription{
+  ops(order_by: {op: desc}, where: {cancelada: {_eq: false}, produzido: {_is_null: true}, entregue: {_is_null: true}, artefinal: {_is_null: false},}){
+    id
+    op
+    orcamento 
+    servico  
+    cancelada 
+    cliente 
+    obs 
+    quant 
+    vendedor
+    entrada 
+    produzido
+    entrega
+    entregue
+    entregaprog
+    impressao
+    ryobi
+    sm2c
+    ryobi750
+    flexo
+    artefinal
+    orderpcp
+    prioridade
+  }
+}
+""";
+
+const String opsExpedicaoSubscription = """
+subscription{
+  ops(order_by: {op: desc}, where: {cancelada: {_eq: false}, produzido: {_is_null: false}, entregue: {_is_null: true},}){
+    id
+    op
+    orcamento 
+    servico  
+    cancelada 
+    cliente 
+    obs 
+    quant 
+    vendedor
+    entrada 
+    produzido
+    entrega
+    entregue
+    entregaprog
+    impressao
+    ryobi
+    sm2c
+    ryobi750
+    flexo
+    artefinal
+    orderpcp
+    prioridade
+  }
+}
+""";
+
+const String opsAllQuery = """
 query{
   ops(order_by: {op: desc}){
     id
