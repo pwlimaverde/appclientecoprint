@@ -5,7 +5,7 @@ class CarregarTodasOpsQueryDatasource implements Datasource<List<OpsModel>> {
   Future<List<OpsModel>> call(
       {required ParametersReturnResult parameters}) async {
     try {
-      final result = await Get.find<HasuraConnect>().query(opsAllQuery2);
+      final result = await Get.find<HasuraConnect>().query(opsAllQuery);
 
       return (result['data']['ops'] as List)
           .map((map) => OpsModel.fromMap(map))

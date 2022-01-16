@@ -14,7 +14,6 @@ mixin LoaderMixin on GetxController {
               const Center(
                 child: CircularProgressIndicator(),
               ),
-              barrierDismissible: false,
             );
           });
         } else {
