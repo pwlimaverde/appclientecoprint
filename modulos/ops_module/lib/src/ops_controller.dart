@@ -44,7 +44,7 @@ class OpsController extends GetxController
   @override
   void onInit() async {
     super.onInit();
-    _getOpsListAll();
+    _getOpsQueryListAll();
     _getOpsListArteFinal();
     _getOpsListProducao();
     _getOpsListExpedicao();
@@ -59,6 +59,12 @@ class OpsController extends GetxController
     _tabController.addListener(() {
       Get.find<GetStorage>().write("opstabIndex", _tabController.index);
       indexPrint(_tabController.index);
+    });
+    indexPrint.listen((index) {
+      if (index == 4) {
+        _opsListAll.clear();
+        _getOpsQueryListAll();
+      }
     });
     super.onReady();
   }
@@ -268,7 +274,7 @@ class OpsController extends GetxController
         ),
       );
       if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
-        _opsListEmProducao.bindStream(allOps.result);
+        _opsListEmExpedicao.bindStream(allOps.result);
       } else {
         coreModuleController.message(
           MessageModel(
@@ -289,52 +295,19 @@ class OpsController extends GetxController
     }
   }
 
-  void _getOpsListAll() async {
-    try {
-      final allOps = await carregarTodasOpsUsecase(
-        parameters: NoParams(
-          error: ErroCarregarTodasOps(
-            message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
-          ),
-          showRuntimeMilliseconds: true,
-          nameFeature: "Carregar Ops em Expedicao",
-        ),
-      );
-      if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
-        _opsListAll.bindStream(allOps.result);
-      } else {
-        coreModuleController.message(
-          MessageModel(
-            message: 'Erro ao carregar as Ops',
-            title: 'Erro Ops',
-            type: MessageType.error,
-          ),
-        );
-      }
-    } catch (e) {
-      coreModuleController.message(
-        MessageModel(
-          message: 'Erro ao carregar as Ops',
-          title: 'Erro Ops',
-          type: MessageType.error,
-        ),
-      );
-    }
-  }
-
-  // void _getOpsQueryListAll() async {
+  // void _getOpsListAll() async {
   //   try {
-  //     final allOps = await carregarTodasOpsQueryUsecase(
+  //     final allOps = await carregarTodasOpsUsecase(
   //       parameters: NoParams(
   //         error: ErroCarregarTodasOps(
   //           message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
   //         ),
-  //         showRuntimeMilliseconds: false,
-  //         nameFeature: "Carregar Todas Ops",
+  //         showRuntimeMilliseconds: true,
+  //         nameFeature: "Carregar Ops em Expedicao",
   //       ),
   //     );
-  //     if (allOps is SuccessReturn<List<OpsModel>>) {
-  //       _opsListAll.assignAll(allOps.result);
+  //     if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
+  //       _opsListAll.bindStream(allOps.result);
   //     } else {
   //       coreModuleController.message(
   //         MessageModel(
@@ -354,6 +327,39 @@ class OpsController extends GetxController
   //     );
   //   }
   // }
+
+  void _getOpsQueryListAll() async {
+    try {
+      final allOps = await carregarTodasOpsQueryUsecase(
+        parameters: NoParams(
+          error: ErroCarregarTodasOps(
+            message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
+          ),
+          showRuntimeMilliseconds: false,
+          nameFeature: "Carregar Todas Ops",
+        ),
+      );
+      if (allOps is SuccessReturn<List<OpsModel>>) {
+        _opsListAll.assignAll(allOps.result);
+      } else {
+        coreModuleController.message(
+          MessageModel(
+            message: 'Erro ao carregar as Ops',
+            title: 'Erro Ops',
+            type: MessageType.error,
+          ),
+        );
+      }
+    } catch (e) {
+      coreModuleController.message(
+        MessageModel(
+          message: 'Erro ao carregar as Ops',
+          title: 'Erro Ops',
+          type: MessageType.error,
+        ),
+      );
+    }
+  }
 
   OpsModel _whereOpList({required OpsModel model}) {
     return opsListAllCompleta
