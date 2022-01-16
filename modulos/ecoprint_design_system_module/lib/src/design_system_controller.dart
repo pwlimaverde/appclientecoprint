@@ -216,7 +216,7 @@ class DesignSystemController extends GetxController {
   }
 
   //Controle OpsList
-  DateTime now = DateTime.now();
+  DateTime get now => DateTime.now();
   // var formatAno = DateFormat('yyyy');
   final ano = DateFormat('yyyy').format(DateTime.now());
   final f = DateFormat('dd/MM/yy');

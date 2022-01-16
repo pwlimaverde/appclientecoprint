@@ -1,4 +1,25 @@
 import 'dart:convert';
+import 'package:dependency_module/dependency_module.dart';
+
+class RxOpsModel {
+  final ryobi = false.obs;
+  final ryobiBuff = Rxn<bool>();
+  final sm2c = false.obs;
+  final sm2cBuff = Rxn<bool>();
+  final ryobi750 = false.obs;
+  final ryobi750Buff = Rxn<bool>();
+  final flexo = false.obs;
+  final flexoBuff = Rxn<bool>();
+  final prioridade = false.obs;
+  final cancelada = false.obs;
+  final orderpcp = Rxn<int>();
+  final obs = Rxn<String>();
+  final artefinal = Rxn<DateTime>();
+  final produzido = Rxn<DateTime>();
+  final entregue = Rxn<DateTime>();
+  final entregaprog = Rxn<DateTime>();
+  final impressao = Rxn<DateTime>();
+}
 
 class OpsModel {
   int? id;
@@ -9,20 +30,61 @@ class OpsModel {
   final int quant;
   final String vendedor;
   final DateTime entrada;
-  bool cancelada;
   DateTime entrega;
-  int? orderpcp;
-  String? obs;
-  DateTime? produzido;
-  DateTime? entregue;
-  DateTime? entregaprog;
-  DateTime? impressao;
-  bool? ryobi;
-  bool? sm2c;
-  bool? ryobi750;
-  bool? flexo;
-  DateTime? artefinal;
-  bool? prioridade;
+
+  final rx = RxOpsModel();
+
+  bool get ryobi => rx.ryobi.value;
+  set ryobi(bool value) => rx.ryobi.value = value;
+
+  bool? get ryobiBuff => rx.ryobiBuff.value;
+  set ryobiBuff(bool? value) => rx.ryobiBuff.value = value;
+
+  bool get sm2c => rx.sm2c.value;
+  set sm2c(bool value) => rx.sm2c.value = value;
+
+  bool? get sm2cBuff => rx.sm2cBuff.value;
+  set sm2cBuff(bool? value) => rx.sm2cBuff.value = value;
+
+  bool get ryobi750 => rx.ryobi750.value;
+  set ryobi750(bool value) => rx.ryobi750.value = value;
+
+  bool? get ryobi750Buff => rx.ryobi750Buff.value;
+  set ryobi750Buff(bool? value) => rx.ryobi750Buff.value = value;
+
+  bool get flexo => rx.flexo.value;
+  set flexo(bool value) => rx.flexo.value = value;
+
+  bool? get flexoBuff => rx.flexoBuff.value;
+  set flexoBuff(bool? value) => rx.flexoBuff.value = value;
+
+  bool get prioridade => rx.prioridade.value;
+  set prioridade(bool value) => rx.prioridade.value = value;
+
+  bool get cancelada => rx.cancelada.value;
+  set cancelada(bool value) => rx.cancelada.value = value;
+
+  int? get orderpcp => rx.orderpcp.value;
+  set orderpcp(int? value) => rx.orderpcp.value = value;
+
+  String? get obs => rx.obs.value;
+  set obs(String? value) => rx.obs.value = value;
+
+  DateTime? get artefinal => rx.artefinal.value;
+  set artefinal(DateTime? value) => rx.artefinal.value = value;
+
+  DateTime? get produzido => rx.produzido.value;
+  set produzido(DateTime? value) => rx.produzido.value = value;
+
+  DateTime? get entregue => rx.entregue.value;
+  set entregue(DateTime? value) => rx.entregue.value = value;
+
+  DateTime? get entregaprog => rx.entregaprog.value;
+  set entregaprog(DateTime? value) => rx.entregaprog.value = value;
+
+  DateTime? get impressao => rx.impressao.value;
+  set impressao(DateTime? value) => rx.impressao.value = value;
+
   OpsModel({
     this.id,
     required this.op,
@@ -32,103 +94,41 @@ class OpsModel {
     required this.quant,
     required this.vendedor,
     required this.entrada,
-    required this.cancelada,
     required this.entrega,
-    this.orderpcp,
-    this.obs,
-    this.produzido,
-    this.entregue,
-    this.entregaprog,
-    this.impressao,
-    this.ryobi,
-    this.sm2c,
-    this.ryobi750,
-    this.flexo,
-    this.artefinal,
-    this.prioridade,
   });
 
-  OpsModel copyWith({
-    int? id,
-    int? op,
-    int? orcamento,
-    String? servico,
-    bool? cancelada,
-    String? cliente,
-    String? obs,
-    int? quant,
-    String? vendedor,
-    DateTime? entrada,
-    DateTime? produzido,
-    DateTime? entrega,
-    int? orderpcp,
-    DateTime? entregue,
-    DateTime? entregaprog,
-    DateTime? impressao,
-    bool? ryobi,
-    bool? sm2c,
-    bool? ryobi750,
-    bool? flexo,
-    DateTime? artefinal,
-    bool? prioridade,
-  }) {
-    return OpsModel(
-      id: id ?? this.id,
-      op: op ?? this.op,
-      orcamento: orcamento ?? this.orcamento,
-      servico: servico ?? this.servico,
-      cancelada: cancelada ?? this.cancelada,
-      cliente: cliente ?? this.cliente,
-      obs: obs ?? this.obs,
-      quant: quant ?? this.quant,
-      vendedor: vendedor ?? this.vendedor,
-      entrada: entrada ?? this.entrada,
-      produzido: produzido ?? this.produzido,
-      entrega: entrega ?? this.entrega,
-      orderpcp: orderpcp ?? this.orderpcp,
-      entregue: entregue ?? this.entregue,
-      entregaprog: entregaprog ?? this.entregaprog,
-      impressao: impressao ?? this.impressao,
-      ryobi: ryobi ?? this.ryobi,
-      sm2c: sm2c ?? this.sm2c,
-      ryobi750: ryobi750 ?? this.ryobi750,
-      flexo: flexo ?? this.flexo,
-      artefinal: artefinal ?? this.artefinal,
-      prioridade: prioridade ?? this.prioridade,
-    );
-  }
-
   factory OpsModel.fromMap(Map<String, dynamic> map) {
-    return OpsModel(
+    OpsModel model = OpsModel(
       id: map['id'],
       op: map['op'],
       orcamento: map['orcamento'],
       servico: map['servico'],
-      cancelada: map['cancelada'],
       cliente: map['cliente'],
-      obs: map['obs'],
       quant: map['quant'],
       vendedor: map['vendedor'],
       entrada: DateTime.parse(map['entrada']),
-      produzido:
-          map['produzido'] != null ? DateTime.parse(map['produzido']) : null,
       entrega: DateTime.parse(map['entrega']),
-      orderpcp: map['orderpcp'],
-      entregue:
-          map['entregue'] != null ? DateTime.parse(map['entregue']) : null,
-      entregaprog: map['entregaprog'] != null
-          ? DateTime.parse(map['entregaprog'])
-          : null,
-      impressao:
-          map['impressao'] != null ? DateTime.parse(map['impressao']) : null,
-      ryobi: map['ryobi'],
-      sm2c: map['sm2c'],
-      ryobi750: map['ryobi750'],
-      flexo: map['flexo'],
-      artefinal:
-          map['artefinal'] != null ? DateTime.parse(map['artefinal']) : null,
-      prioridade: map['prioridade'],
     );
+    model.ryobi = map['ryobi'] ?? false;
+    model.sm2c = map['sm2c'] ?? false;
+    model.ryobi750 = map['ryobi750'] ?? false;
+    model.flexo = map['flexo'] ?? false;
+    model.prioridade = map['prioridade'] ?? false;
+    model.cancelada = map['cancelada'] ?? false;
+    model.obs = map['obs'];
+    model.orderpcp = map['orderpcp'];
+    model.artefinal =
+        map['artefinal'] != null ? DateTime.parse(map['artefinal']) : null;
+    model.produzido =
+        map['produzido'] != null ? DateTime.parse(map['produzido']) : null;
+    model.entregue =
+        map['entregue'] != null ? DateTime.parse(map['entregue']) : null;
+    model.entregaprog =
+        map['entregaprog'] != null ? DateTime.parse(map['entregaprog']) : null;
+    model.impressao =
+        map['impressao'] != null ? DateTime.parse(map['impressao']) : null;
+    print("teste ${model.op}");
+    return model;
   }
 
   factory OpsModel.fromJson(String source) =>

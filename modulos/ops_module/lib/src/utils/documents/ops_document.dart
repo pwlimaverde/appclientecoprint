@@ -1,4 +1,91 @@
-const String opsAllQuery = """
+const String opsArteFinalSubscription = """
+subscription{
+  ops(order_by: {op: desc}, where: {cancelada: {_eq: false}, produzido: {_is_null: true}, entregue: {_is_null: true}, artefinal: {_is_null: true},}){
+    id
+    op
+    orcamento 
+    servico  
+    cancelada 
+    cliente 
+    obs 
+    quant 
+    vendedor
+    entrada 
+    produzido
+    entrega
+    entregue
+    entregaprog
+    impressao
+    ryobi
+    sm2c
+    ryobi750
+    flexo
+    artefinal
+    orderpcp
+    prioridade
+  }
+}
+""";
+
+const String opsProducaoSubscription = """
+subscription{
+  ops(order_by: {op: desc}, where: {cancelada: {_eq: false}, produzido: {_is_null: true}, entregue: {_is_null: true}, artefinal: {_is_null: false},}){
+    id
+    op
+    orcamento 
+    servico  
+    cancelada 
+    cliente 
+    obs 
+    quant 
+    vendedor
+    entrada 
+    produzido
+    entrega
+    entregue
+    entregaprog
+    impressao
+    ryobi
+    sm2c
+    ryobi750
+    flexo
+    artefinal
+    orderpcp
+    prioridade
+  }
+}
+""";
+
+const String opsExpedicaoSubscription = """
+subscription{
+  ops(order_by: {op: desc}, where: {cancelada: {_eq: false}, produzido: {_is_null: false}, entregue: {_is_null: true},}){
+    id
+    op
+    orcamento 
+    servico  
+    cancelada 
+    cliente 
+    obs 
+    quant 
+    vendedor
+    entrada 
+    produzido
+    entrega
+    entregue
+    entregaprog
+    impressao
+    ryobi
+    sm2c
+    ryobi750
+    flexo
+    artefinal
+    orderpcp
+    prioridade
+  }
+}
+""";
+
+const String opsAllSubscription = """
 subscription{
   ops(order_by: {op: desc}){
     id
@@ -27,7 +114,7 @@ subscription{
 }
 """;
 
-const String opsAllQuery2 = """
+const String opsAllQuery = """
 query{
   ops(order_by: {op: desc}){
     id
@@ -98,6 +185,14 @@ mutation EntOps(\$op: Int, \$entregue: date) {
 const String opsInfoMutation = """
 mutation InfoOps(\$op: Int, \$orderpcp : Int, \$entrega: date, \$entregaprog: date, \$entregue: date, \$produzido: date, \$artefinal: date, \$obs: String, \$ryobi: Boolean, \$sm2c: Boolean, \$ryobi750: Boolean, \$flexo: Boolean, \$impressao: date) {
   update_ops(where: {op: {_eq: \$op}}, _set: {orderpcp: \$orderpcp, entrega: \$entrega, entregaprog: \$entregaprog, entregue: \$entregue, produzido: \$produzido, artefinal: \$artefinal, obs: \$obs, ryobi: \$ryobi, sm2c: \$sm2c, ryobi750: \$ryobi750, flexo: \$flexo, impressao: \$impressao}) {
+    affected_rows
+  }
+}
+""";
+
+const String opsRyobiMutation = """
+mutation InfoOps(\$op: Int, \$ryobi: Boolean,) {
+  update_ops(where: {op: {_eq: \$op}}, _set: {ryobi: \$ryobi}) {
     affected_rows
   }
 }

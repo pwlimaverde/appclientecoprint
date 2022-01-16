@@ -12,10 +12,43 @@ class BodyOpsWidget extends StatelessWidget {
         color: Colors.black12,
         child: Center(
           child: Obx(() {
-            if (opsController.opsListAll.isEmpty) {
-              coreModuleController.statusLoad(true);
-            } else {
-              coreModuleController.statusLoad(false);
+            switch (opsController.indexPrint.value) {
+              case 0:
+                if (opsController.opsListEmArteFinal.isEmpty) {
+                  coreModuleController.statusLoad(true);
+                } else {
+                  coreModuleController.statusLoad(false);
+                }
+                break;
+              case 1:
+                if (opsController.opsListEmProducao.isEmpty) {
+                  coreModuleController.statusLoad(true);
+                } else {
+                  coreModuleController.statusLoad(false);
+                }
+                break;
+              case 2:
+                if (opsController.opsListEmUrgencia.isEmpty) {
+                  coreModuleController.statusLoad(true);
+                } else {
+                  coreModuleController.statusLoad(false);
+                }
+                break;
+              case 3:
+                if (opsController.opsListEmExpedicao.isEmpty) {
+                  coreModuleController.statusLoad(true);
+                } else {
+                  coreModuleController.statusLoad(false);
+                }
+                break;
+
+              default:
+                if (opsController.opsListAll.isEmpty) {
+                  coreModuleController.statusLoad(true);
+                } else {
+                  coreModuleController.statusLoad(false);
+                }
+                break;
             }
             return Column(
               children: <Widget>[

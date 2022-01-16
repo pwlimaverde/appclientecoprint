@@ -1,9 +1,10 @@
 import 'package:dependency_module/dependency_module.dart';
 
-class CarregarTodasOpsUsecase extends UseCaseImplement<Stream<List<OpsModel>>> {
+class SubscriptionHasuraOpsUsecase
+    extends UseCaseImplement<Stream<List<OpsModel>>> {
   final Datasource<Stream<List<OpsModel>>> datasource;
 
-  CarregarTodasOpsUsecase({
+  SubscriptionHasuraOpsUsecase({
     required this.datasource,
   });
 
