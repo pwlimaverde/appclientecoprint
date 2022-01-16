@@ -15,3 +15,6 @@ Inclusão da variavel global versaoAtual.
 
 ## [1.0.2] - 03/01/2022.
 Atualização da verção versaoAtual.
+
+## [1.0.3] - 16/01/2022.
+Converção de campos do opsModel em reativo.
