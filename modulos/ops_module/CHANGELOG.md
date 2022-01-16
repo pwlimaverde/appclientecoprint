@@ -12,3 +12,6 @@ Configuração da api hasura finalizada.
 
 ## [1.0.0] - 02/01/2022.
 Criada myTabsSmall para alternar quando o showmenu estiver ativo.
+
+## [1.0.1] - 16/01/2022.
+Separação das listas para melhorar o desempenho geral.

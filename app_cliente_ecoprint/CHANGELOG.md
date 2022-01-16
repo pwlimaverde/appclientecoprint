@@ -47,3 +47,8 @@ Configuração deploy inicial.
 
 ## [1.0.2] - 03/01/2022.
 1 - core_module - 1.0.2 - Atualização de versão.
+
+## [1.0.3] - 16/01/2022.
+Melhora geral de desempenho.
+1 - ops_module - 1.0.1 - Separação das listas para melhorar o desempenho geral.
+2 - core_module - 1.0.3 - Converção de campos do opsModel em reativo..
