@@ -85,6 +85,35 @@ subscription{
 }
 """;
 
+const String opsAllSubscription = """
+subscription{
+  ops(order_by: {op: desc}){
+    id
+    op
+    orcamento 
+    servico  
+    cancelada 
+    cliente 
+    obs 
+    quant 
+    vendedor
+    entrada 
+    produzido
+    entrega
+    entregue
+    entregaprog
+    impressao
+    ryobi
+    sm2c
+    ryobi750
+    flexo
+    artefinal
+    orderpcp
+    prioridade
+  }
+}
+""";
+
 const String opsAllQuery = """
 query{
   ops(order_by: {op: desc}){

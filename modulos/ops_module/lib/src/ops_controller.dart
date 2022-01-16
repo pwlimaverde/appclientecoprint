@@ -6,6 +6,7 @@ class OpsController extends GetxController
   final SubscriptionHasuraOpsUsecase carregarArteFinalOpsUsecase;
   final SubscriptionHasuraOpsUsecase carregarProducaoOpsUsecase;
   final SubscriptionHasuraOpsUsecase carregarExpedicaoOpsUsecase;
+  final SubscriptionHasuraOpsUsecase carregarTodasOpsUsecase;
   final CarregarTodasOpsQueryUsecase carregarTodasOpsQueryUsecase;
   final MutationOpsUsecase mutationUpdateOpsUsecase;
   final MutationOpsUsecase mutationInsetOpsUsecase;
@@ -14,6 +15,7 @@ class OpsController extends GetxController
     required this.carregarArteFinalOpsUsecase,
     required this.carregarProducaoOpsUsecase,
     required this.carregarExpedicaoOpsUsecase,
+    required this.carregarTodasOpsUsecase,
     required this.carregarTodasOpsQueryUsecase,
     required this.mutationUpdateOpsUsecase,
     required this.mutationInsetOpsUsecase,
@@ -42,7 +44,7 @@ class OpsController extends GetxController
   @override
   void onInit() async {
     super.onInit();
-    _getOpsQueryListAll();
+    _getOpsListAll();
     _getOpsListArteFinal();
     _getOpsListProducao();
     _getOpsListExpedicao();
@@ -71,13 +73,15 @@ class OpsController extends GetxController
 
   final indexPrint = 4.obs;
 
-  final List<OpsModel> _opsListAll = [];
+  // final List<OpsModel> _opsListAll = [];
 
   final _opsListEmArteFinal = <OpsModel>[].obs;
 
   final _opsListEmProducao = <OpsModel>[].obs;
 
   final _opsListEmExpedicao = <OpsModel>[].obs;
+
+  final _opsListAll = <OpsModel>[].obs;
 
   List<OpsModel> get filtroPrint {
     switch (indexPrint.value) {
@@ -285,19 +289,19 @@ class OpsController extends GetxController
     }
   }
 
-  void _getOpsQueryListAll() async {
+  void _getOpsListAll() async {
     try {
-      final allOps = await carregarTodasOpsQueryUsecase(
+      final allOps = await carregarTodasOpsUsecase(
         parameters: NoParams(
           error: ErroCarregarTodasOps(
             message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
           ),
-          showRuntimeMilliseconds: false,
-          nameFeature: "Carregar Todas Ops",
+          showRuntimeMilliseconds: true,
+          nameFeature: "Carregar Ops em Expedicao",
         ),
       );
-      if (allOps is SuccessReturn<List<OpsModel>>) {
-        _opsListAll.assignAll(allOps.result);
+      if (allOps is SuccessReturn<Stream<List<OpsModel>>>) {
+        _opsListAll.bindStream(allOps.result);
       } else {
         coreModuleController.message(
           MessageModel(
@@ -317,6 +321,39 @@ class OpsController extends GetxController
       );
     }
   }
+
+  // void _getOpsQueryListAll() async {
+  //   try {
+  //     final allOps = await carregarTodasOpsQueryUsecase(
+  //       parameters: NoParams(
+  //         error: ErroCarregarTodasOps(
+  //           message: "Falha ao carregar os dados: Error usecase - Cod.01-1",
+  //         ),
+  //         showRuntimeMilliseconds: false,
+  //         nameFeature: "Carregar Todas Ops",
+  //       ),
+  //     );
+  //     if (allOps is SuccessReturn<List<OpsModel>>) {
+  //       _opsListAll.assignAll(allOps.result);
+  //     } else {
+  //       coreModuleController.message(
+  //         MessageModel(
+  //           message: 'Erro ao carregar as Ops',
+  //           title: 'Erro Ops',
+  //           type: MessageType.error,
+  //         ),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     coreModuleController.message(
+  //       MessageModel(
+  //         message: 'Erro ao carregar as Ops',
+  //         title: 'Erro Ops',
+  //         type: MessageType.error,
+  //       ),
+  //     );
+  //   }
+  // }
 
   OpsModel _whereOpList({required OpsModel model}) {
     return opsListAllCompleta

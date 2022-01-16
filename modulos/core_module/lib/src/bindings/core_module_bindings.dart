@@ -37,6 +37,11 @@ class CoreModuleBindings implements Bindings {
             subscription: opsExpedicaoSubscription,
           ),
         ),
+        carregarTodasOpsUsecase: SubscriptionHasuraOpsUsecase(
+          datasource: SubscriptionHasuraOpsDatasource(
+            subscription: opsAllSubscription,
+          ),
+        ),
       ),
       permanent: true,
     );
